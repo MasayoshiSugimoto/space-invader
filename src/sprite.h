@@ -9,13 +9,25 @@
 
 
 enum SpriteId {
+  SPRITE_ID_NONE,
   SPRITE_ID_SPACESHIP,
   SPRITE_ID_MAX,
 };
 
 
+struct Sprite {
+  enum SpriteId sprite_id;
+  const char* file_name;
+  const char* as_string;
+  const char* const* as_matrix;
+  int width;
+  int height;
+};
+
+
 void sprite_init();
 const char* sprite_as_string(enum SpriteId);
+const struct Sprite* sprite_get_sprite(enum SpriteId);
 
 
 #endif

@@ -323,9 +323,10 @@ void render_ship(struct Game* game) {
 }
 
 
-void render(struct Vector center, struct UI* ui, struct Game* game) {
+void render(struct UI* ui, struct Game* game) {
   enum GameState game_state = game->game_state;
   struct WindowManager* window_manager = &ui->window_manager;
+  //struct Vector center = terminal_center(&ui->terminal);
 
   erase();
   window_manager_erase(window_manager);
@@ -334,61 +335,10 @@ void render(struct Vector center, struct UI* ui, struct Game* game) {
   }
 
   switch (game_state) {
-    case GAME_STATE_START_MENU:
-      log_info("Game menu is enabled.");
-      render_game_menu(
-          &ui->game_menu,
-          &game->game_board,
-          window_manager,
-          center.x,
-          center.y
-      );
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
     case GAME_STATE_IN_GAME:
-      //render_game();
-      render_ship(game);
+      screen_render(&ui->screen, &ui->terminal, game);
+      //render_ship(game);
       curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      break;
-    case GAME_STATE_GAME_OVER:
-      render_in_game(game, center);
-      render_game_over(window_manager, center);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
-    case GAME_STATE_GAME_WON:
-      render_in_game(game, center);
-      render_game_won(window_manager, center);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
-    case GAME_STATE_MENU:
-      render_menu(&ui->menu, window_manager, center);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
-    case GAME_STATE_MANUAL:
-      render_manual(&ui->manual, window_manager, center);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
-    case GAME_STATE_START_SCREEN:
-      render_start_screen(&ui->terminal);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
-      break;
-    case GAME_STATE_CREDITS:
-      render_credits(&ui->terminal);
-
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
-      move(0, 0);
       break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);

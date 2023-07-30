@@ -79,7 +79,6 @@ int main() {
     struct Terminal* terminal = &ui.terminal;
     terminal_init(terminal);
     log_info_f("terminal={width:%d, height:%d}", terminal->width, terminal->height);
-    struct Vector center = terminal_center(terminal);
 
     if (terminal->height < TERMINAL_MIN_HEIGHT || terminal->width < TERMINAL_MIN_WIDTH) {
       log_info("Terminal is too small. Please resize the terminal.");
@@ -93,7 +92,7 @@ int main() {
       continue;
     }
 
-    render(center, &ui, &game);
+    render(&ui, &game);
 
     input_update(&game, &ui);
     game_print_state(game.game_state);

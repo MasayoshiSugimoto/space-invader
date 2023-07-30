@@ -8,8 +8,23 @@
 #include "sprite.h"
 
 
+#define ENTITY_MAX 100
+
+
 typedef size_t EntityId;
-struct EntitySystem;
+
+
+struct SpriteComponent {
+  enum SpriteId sprite_id[ENTITY_MAX];
+};
+
+
+struct EntitySystem {
+  EntityId next_entity;
+  bool active[ENTITY_MAX];
+  struct Vector coordinates[ENTITY_MAX];
+  struct SpriteComponent sprite_component;
+};
 
 
 struct EntitySystem* entity_system_create();

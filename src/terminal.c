@@ -6,7 +6,7 @@ void terminal_init(struct Terminal* terminal) {
 }
 
 
-struct Vector terminal_center(struct Terminal* terminal) {
+struct Vector terminal_center(const struct Terminal* terminal) {
   struct Vector v;
   v.x = terminal->width / 2;
   v.y = terminal->height / 2;

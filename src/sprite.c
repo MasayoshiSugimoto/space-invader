@@ -1,13 +1,7 @@
 #include "sprite.h"
 
 
-struct Sprite {
-  enum SpriteId sprite_id;
-  const char* file_name;
-  const char* as_string;
-  int width;
-  int height;
-};
+#define SPRITE_BUFFER_MAX 2048
 
 
 struct SpriteConfig {
@@ -26,7 +20,7 @@ struct Sprite sprites[SPRITE_ID_MAX];
 
 
 const char* load_sprite(const char* file_name) {
-  char path_buf[1024];
+  char* path_buf = malloc(sizeof(char) * SPRITE_BUFFER_MAX);
   strcpy(path_buf, SPRITE_DIRECTORY);
   strcat(path_buf, "/");
   strcat(path_buf, file_name);
@@ -36,6 +30,7 @@ const char* load_sprite(const char* file_name) {
     log_fatal_f("Could not load `%s`.", path_buf);
   }
   log_info_f("Loading sprite: %s", path_buf);
+  free(path_buf);
 
   fseek(file, 0L, SEEK_END);
   int length = ftell(file);
@@ -52,7 +47,32 @@ const char* load_sprite(const char* file_name) {
 }
 
 
-int sprite_get_height(const char* sprite_as_string) {
+const char* const* string_to_matrix(const char* sprite_as_string, int width, int height) {
+  char** matrix = malloc(sizeof(char*) * height);
+  for (int y = 0; y < height; y++) {
+    matrix[y] = malloc(sizeof(char) * width);
+    for (int x = 0; x < width; x++) {
+      matrix[y][x] = ' '; 
+    }
+  }
+
+  int y = 0;
+  int x = 0;
+  for (int i = 0; sprite_as_string[i] != 0; i++) {
+    if (sprite_as_string[i] == '\n') {
+      y++;
+      x = 0;
+    } else {
+      matrix[y][x] = sprite_as_string[i];
+      x++;
+    }
+  }
+
+  return (const char* const*) matrix;
+}
+
+
+int get_height(const char* sprite_as_string) {
   int count = 0; 
   for (int i = 0; i < strlen(sprite_as_string); i++) {
     if (sprite_as_string[i] == '\n') {
@@ -63,7 +83,7 @@ int sprite_get_height(const char* sprite_as_string) {
 }
 
 
-int sprite_get_width(const char* sprite_as_string) {
+int get_width(const char* sprite_as_string) {
   int width = 0;
   int line_size = 0;
   for (int i = 0; i < strlen(sprite_as_string); i++) {
@@ -112,13 +132,16 @@ void sprite_init() {
   for (int i = 0; i < array_size(sprite_configs); i++) {
     const struct SpriteConfig* config = &sprite_configs[i];
     const char* sprite_as_string = load_sprite(config->file_name);
+    int width = get_width(sprite_as_string);
+    int height = get_height(sprite_as_string);
 
     struct Sprite* sprite = &sprites[config->sprite_id];
     sprite->sprite_id = config->sprite_id;
     sprite->file_name = config->file_name;
     sprite->as_string = sprite_as_string;
-    sprite->width = sprite_get_width(sprite_as_string);
-    sprite->height = sprite_get_height(sprite_as_string);
+    sprite->as_matrix = string_to_matrix(sprite_as_string, width, height);
+    sprite->width = width;
+    sprite->height = height;
 
     sprite_log(sprite);
   }
@@ -130,3 +153,8 @@ const char* sprite_as_string(enum SpriteId sprite_id) {
 }
 
 
+const struct Sprite* sprite_get_sprite(enum SpriteId sprite_id) {
+  if (sprite_id >= SPRITE_ID_MAX) log_fatal_f("Invalid sprite_id: %d", sprite_id);
+
+  return &sprites[sprite_id];
+}

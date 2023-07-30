@@ -26,8 +26,8 @@ void game_init(struct Game* game, int width, int height) {
 
   game->entity_system = entity_system_create();
   entity_system_init(game->entity_system);
-  EntityId entity_id = entity_spaceship_create(game->entity_system);
-  game->spaceship_id = entity_id;
+  game->spaceship_id = entity_spaceship_create(game->entity_system);
+;
 }
 
 

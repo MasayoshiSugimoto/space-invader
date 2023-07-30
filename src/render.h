@@ -12,7 +12,7 @@
 #include "sprite.h"
 
 
-void render(struct Vector center, struct UI* ui, struct Game* game);
+void render(struct UI* ui, struct Game* game);
 
 
 #endif
