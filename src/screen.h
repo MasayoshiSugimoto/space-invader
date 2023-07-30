@@ -6,6 +6,7 @@
 #include "sprite.h"
 #include "terminal.h"
 #include "game.h"
+#include "consts.h"
 
 
 #define SCREEN_WINDOW_MAX 100

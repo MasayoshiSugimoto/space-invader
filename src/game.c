@@ -17,6 +17,18 @@ const char* g_game_state_strings[] = {
 };
 
 
+void game_init_spaceship(struct Game* game) {
+  EntityId entity_id = entity_spaceship_create(game->entity_system);
+  game->spaceship_id = entity_id;
+  const struct Sprite* sprite = sprite_get_sprite(SPRITE_ID_SPACESHIP);
+  struct Vector v = {
+    SCREEN_WIDTH / 2 - sprite->width / 2,
+    SCREEN_HEIGHT - sprite->height
+  };
+  entity_system_set_coordinates(game->entity_system, entity_id, v);
+}
+
+
 void game_init(struct Game* game, int width, int height) {
   log_info_f("game_init(game, %d, %d)", width, height);
   game->cursor.x = 0;
@@ -26,8 +38,7 @@ void game_init(struct Game* game, int width, int height) {
 
   game->entity_system = entity_system_create();
   entity_system_init(game->entity_system);
-  game->spaceship_id = entity_spaceship_create(game->entity_system);
-;
+  game_init_spaceship(game);
 }
 
 

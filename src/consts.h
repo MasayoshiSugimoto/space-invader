@@ -13,5 +13,9 @@
 #define SPRITE_DIRECTORY "sprites"
 
 
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGHT 20
+
+
 #endif
 

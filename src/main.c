@@ -63,8 +63,8 @@ void main_update_game(struct Game* game, struct UI* ui) {
 int main() {
   log_init();
   srand(time(NULL));
-  game_init_medium_mode(&game);
   ui_init(&ui);
+  game_init_medium_mode(&game);
 
 
 #if DEBUG_ENABLE_TEST

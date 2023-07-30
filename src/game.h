@@ -6,6 +6,8 @@
 #include "cursor.h"
 #include "entity_system.h"
 #include "entity_spaceship.h"
+#include "consts.h"
+#include "sprite.h"
 
 
 enum GameState {

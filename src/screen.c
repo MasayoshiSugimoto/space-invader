@@ -1,10 +1,6 @@
 #include "screen.h"
 
 
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 20
-
-
 void screen_init(struct Screen* screen) {
   int width = SCREEN_WIDTH;
   int height = SCREEN_HEIGHT;
