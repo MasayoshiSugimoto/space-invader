@@ -11,6 +11,7 @@
 enum SpriteId {
   SPRITE_ID_NONE,
   SPRITE_ID_SPACESHIP,
+  SPRITE_ID_ALIEN,
   SPRITE_ID_MAX,
 };
 

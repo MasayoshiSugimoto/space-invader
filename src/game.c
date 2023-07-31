@@ -18,7 +18,7 @@ const char* g_game_state_strings[] = {
 void game_init_spaceship(struct Game* game) {
   EntityId entity_id = entity_spaceship_create(game->entity_system);
   game->spaceship_id = entity_id;
-  const struct Sprite* sprite = sprite_get_sprite(SPRITE_ID_SPACESHIP);
+  const struct Sprite* sprite = sprite_get_sprite(SPRITE_ID_ALIEN);
   struct Vector v = {
     SCREEN_WIDTH / 2 - sprite->width / 2,
     SCREEN_HEIGHT - sprite->height
