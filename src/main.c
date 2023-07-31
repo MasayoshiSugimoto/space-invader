@@ -64,7 +64,7 @@ int main() {
   log_init();
   srand(time(NULL));
   ui_init(&ui);
-  game_init_medium_mode(&game);
+  game_init(&game);
 
 
 #if DEBUG_ENABLE_TEST
