@@ -2,7 +2,6 @@
 #define GAME_H
 
 
-#include "game_board.h"
 #include "cursor.h"
 #include "entity_system.h"
 #include "entity_spaceship.h"
@@ -25,7 +24,6 @@ enum GameState {
 
 
 struct Game {
-  struct GameBoard game_board;
   struct Cursor cursor; 
   enum GameState game_state;
   struct EntitySystem* entity_system;

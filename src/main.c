@@ -29,11 +29,6 @@ void main_update_game(struct Game* game, struct UI* ui) {
   uint64_t delta_time_millisecond;
   switch (game->game_state) {
     case GAME_STATE_IN_GAME:
-      if (game_board_is_lost(&game->game_board)) {
-        game_set_game_state(game, GAME_STATE_GAME_OVER);
-      } else if (game_board_is_win(&game->game_board)) {
-        game_set_game_state(game, GAME_STATE_GAME_WON);
-      }
       break;
     case GAME_STATE_START_SCREEN:
       now_millisecond = get_current_millisecond();
@@ -74,7 +69,6 @@ int main() {
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
-    if (DEBUG_GAME_BOARD_SHOW_ALL) game_board_show_all(&game.game_board);
 
     struct Terminal* terminal = &ui.terminal;
     terminal_init(terminal);

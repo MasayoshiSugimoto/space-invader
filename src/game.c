@@ -33,9 +33,6 @@ void game_init(struct Game* game) {
   game->cursor.y = 0;
   game->game_state = GAME_STATE_IN_GAME;
 
-
-  game_board_init(&game->game_board, 2, 2);
-
   game->entity_system = entity_system_create();
   entity_system_init(game->entity_system);
   game_init_spaceship(game);

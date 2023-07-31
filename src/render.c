@@ -19,124 +19,6 @@ void render_center_text(
 }
 
 
-void render_game_board_border_cell() {
-  addch(' ');
-}
-
-
-void render_game_board(struct GameBoard* game_board, int left, int top) {
-  int width = game_board->width;
-  int height = game_board->height;
-  char* board = game_board->board;
-  bool* visibility_map = game_board->visibility_map;
-  char* markers = game_board->markers;
-
-  int line = top;
-  move(line, left);
-  render_game_board_border_cell();
-  for (int x = 0; x < width; x++) {
-    render_game_board_border_cell();
-  }
-  render_game_board_border_cell();
-
-  line++;
-
-  for (int y = 0; y < height; y++) {
-    move(line, left);
-    render_game_board_border_cell();
-    for (int x = 0; x < width; x++) {
-      int i = game_board_get_index(game_board, x, y);
-      if (visibility_map[i]) {
-        if (board[i] == BOARD_CELL_TYPE_MINE) {
-          attron(COLOR_PAIR(COLOR_PAIR_ID_MINE));
-          addch(BOARD_CELL_TYPE_MINE);
-          attroff(COLOR_PAIR(COLOR_PAIR_ID_MINE));
-        } else if (board[i] == BOARD_CELL_TYPE_EMPTY) {
-          addch(BOARD_CELL_TYPE_EMPTY);
-        } else {
-          attron(COLOR_PAIR(COLOR_PAIR_ID_ZERO + board[i]));
-          addch((char)'0' + board[i]);
-          attroff(COLOR_PAIR(COLOR_PAIR_ID_ZERO + board[i]));
-        }
-      } else if (markers[i] == BOARD_CELL_TYPE_OK_MARKER) {
-        attron(COLOR_PAIR(COLOR_PAIR_ID_OK_MARKER));
-        addch(BOARD_CELL_TYPE_OK_MARKER);
-        attroff(COLOR_PAIR(COLOR_PAIR_ID_OK_MARKER));
-      } else if (markers[i] == BOARD_CELL_TYPE_MINE_MARKER) {
-        attron(COLOR_PAIR(COLOR_PAIR_ID_MINE_MARKER));
-        addch(BOARD_CELL_TYPE_MINE_MARKER);
-        attroff(COLOR_PAIR(COLOR_PAIR_ID_MINE_MARKER));
-      } else {
-        addch(BOARD_CELL_TYPE_HIDDEN);
-      }
-    }
-    render_game_board_border_cell();
-    line++;
-  }
-
-  move(line, left);
-  render_game_board_border_cell();
-  for (int x = 0; x < width; x++) {
-    render_game_board_border_cell();
-  }
-  render_game_board_border_cell();
-}
-
-
-void render_in_game(struct Game* game, struct Vector center) {
-  struct GameBoard* game_board = &game->game_board;
-  struct Cursor* cursor = &game->cursor;
-  int game_board_left = center.x - (game_board->width + 2) / 2;
-  int game_board_top = center.y - (game_board->height + 2) / 2;
-
-  render_game_board(game_board, game_board_left, game_board_top);
-
-  const int border = 1;
-  move(
-      cursor->y + border + game_board_top,
-      cursor->x + border + game_board_left
-  );
-}
-
-
-void render_game_menu(
-    struct ItemSelection* game_menu,
-    struct GameBoard* game_board,
-    struct WindowManager* window_manager,
-    int center_x,
-    int center_y
-) {
-  enum WindowId id = WINDOW_ID_GAME_MENU;
-  WINDOW* window = window_manager_setup_window(
-      window_manager,
-      id,
-      center_x,
-      center_y
-  );
-
-  char* title = "MENU";
-  int text_x = (window_manager_get_width(window_manager, id) - strlen(title)) / 2;
-  int text_y = 2;
-  mvwaddstr(window, text_y, text_x, title);
-  mvwaddstr(window, text_y + 1, text_x, "====");
-
-  text_x = 12;
-  int space_y = 2;
-  if (game_board_is_playing(game_board)) {
-    text_y += 3;
-    mvwaddstr(window, text_y + space_y * 0, text_x, "Resume");
-  } else {
-    text_y += 2;
-  }
-  mvwaddstr(window, text_y + space_y * 1, text_x, "New Game");
-  mvwaddstr(window, text_y + space_y * 2, text_x, "Manual");
-  mvwaddstr(window, text_y + space_y * 3, text_x, "Quit");
-
-  // Render cursor.
-  mvwaddch(window, text_y + (item_selection_get_selection(game_menu) * space_y), 9, '>');
-}
-
-
 void render_menu(
     struct Menu* menu,
     struct WindowManager* window_manager,
@@ -314,15 +196,6 @@ void render_sprite(enum SpriteId sprite_id, int left, int top) {
 }
 
 
-void render_ship(struct Game* game) {
-  struct EntitySystem* entity_system = game->entity_system;
-  EntityId spaceship_id = game->spaceship_id;
-  struct Vector coordinates = entity_system_get_coordinates(entity_system, spaceship_id);
-  enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_system, spaceship_id);
-  render_sprite(sprite_id, coordinates.x, coordinates.y);
-}
-
-
 void render(struct UI* ui, struct Game* game) {
   enum GameState game_state = game->game_state;
   struct WindowManager* window_manager = &ui->window_manager;
@@ -337,7 +210,6 @@ void render(struct UI* ui, struct Game* game) {
   switch (game_state) {
     case GAME_STATE_IN_GAME:
       screen_render(&ui->screen, &ui->terminal, game);
-      //render_ship(game);
       curs_set(CURSOR_VISIBILITY_INVISIBLE);
       break;
     default: 
