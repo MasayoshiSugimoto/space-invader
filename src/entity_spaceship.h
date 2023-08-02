@@ -3,9 +3,10 @@
 
 
 #include "entity_system.h"
+#include "game.h"
 
 
-EntityId entity_spaceship_create(struct EntitySystem* entity_system);
+void entity_spaceship_fire(struct Game* game);
 
 
 #endif

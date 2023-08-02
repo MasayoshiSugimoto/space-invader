@@ -3,6 +3,7 @@
 #include "render.h"
 #include "ui.h"
 #include "consts.h"
+#include "game.h"
 
 
 /********************************************************************************
@@ -29,6 +30,7 @@ void main_update_game(struct Game* game, struct UI* ui) {
   uint64_t delta_time_millisecond;
   switch (game->game_state) {
     case GAME_STATE_IN_GAME:
+      game_update(game);
       break;
     case GAME_STATE_START_SCREEN:
       now_millisecond = get_current_millisecond();

@@ -15,7 +15,14 @@ typedef size_t EntityId;
 
 
 struct SpriteComponent {
+  bool active[ENTITY_MAX];
   enum SpriteId sprite_id[ENTITY_MAX];
+};
+
+
+struct Entity {
+  EntityId entity_id;
+  struct Vector coordinates;
 };
 
 
@@ -56,6 +63,8 @@ void sprite_component_setup(
     enum SpriteId sprite_id
 );
 enum SpriteId sprite_component_get_sprite_id(struct EntitySystem* entity_system, EntityId entity_id);
+bool sprite_component_is_active(struct EntitySystem* entity_system, EntityId entity_id);
+void sprite_component_set_active(struct EntitySystem* entity_system, EntityId entity_id, bool active);
 
 
 #endif

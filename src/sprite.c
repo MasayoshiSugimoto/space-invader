@@ -12,8 +12,10 @@ struct SpriteConfig {
 
 
 const struct SpriteConfig sprite_configs[] = {
+  {SPRITE_ID_NONE, "SPRITE_ID_NONE", ""},
   {SPRITE_ID_SPACESHIP, "SPRITE_ID_SPACESHIP", "spaceship.txt"},
   {SPRITE_ID_ALIEN, "SPRITE_ID_ALIEN", "alien.txt"},
+  {SPRITE_ID_SPACESHIP_BULLET, "SPRITE_ID_SPACESHIP_BULLET", "spaceship_bullet.txt"},
 };
 
 
@@ -132,6 +134,7 @@ void sprite_init() {
   // TODO: Add a bunch of assert to avoid apocalypse.
   for (int i = 0; i < array_size(sprite_configs); i++) {
     const struct SpriteConfig* config = &sprite_configs[i];
+    if (config->sprite_id == SPRITE_ID_NONE) continue;
     const char* sprite_as_string = load_sprite(config->file_name);
     int width = get_width(sprite_as_string);
     int height = get_height(sprite_as_string);
@@ -146,6 +149,11 @@ void sprite_init() {
 
     sprite_log(sprite);
   }
+}
+
+
+const char* sprite_get_file_name(enum SpriteId sprite_id) {
+  return sprite_configs[sprite_id].file_name;
 }
 
 

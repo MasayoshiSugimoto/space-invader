@@ -12,6 +12,7 @@ enum SpriteId {
   SPRITE_ID_NONE,
   SPRITE_ID_SPACESHIP,
   SPRITE_ID_ALIEN,
+  SPRITE_ID_SPACESHIP_BULLET,
   SPRITE_ID_MAX,
 };
 
@@ -27,6 +28,7 @@ struct Sprite {
 
 
 void sprite_init();
+const char* sprite_get_file_name(enum SpriteId);
 const char* sprite_as_string(enum SpriteId);
 const struct Sprite* sprite_get_sprite(enum SpriteId);
 

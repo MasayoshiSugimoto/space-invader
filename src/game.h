@@ -4,9 +4,9 @@
 
 #include "cursor.h"
 #include "entity_system.h"
-#include "entity_spaceship.h"
 #include "consts.h"
 #include "sprite.h"
+#include "enemy_ai_basic.h"
 
 
 enum GameState {
@@ -28,12 +28,14 @@ struct Game {
   enum GameState game_state;
   struct EntitySystem* entity_system;
   EntityId spaceship_id;
+  uint64_t last_frame_time_millisecond;
 };
 
 
 void game_init(struct Game* game);
 void game_print_state(enum GameState game_state);
 void game_set_game_state(struct Game* game, enum GameState game_state);
+void game_update(struct Game* game);
 
 
 #endif

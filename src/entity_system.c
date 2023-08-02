@@ -21,11 +21,13 @@ struct EntitySystem* entity_system_create() {
 }
 
 void entity_system_init(struct EntitySystem* entity_system) {
+  entity_system->next_entity = 0;
   for (int i = 0; i < ENTITY_MAX; i++) {
     entity_system->active[i] = false;
     entity_system->coordinates[i] = VZERO;
 
     entity_system->sprite_component.sprite_id[i] = SPRITE_ID_NONE;
+    entity_system->sprite_component.active[i] = false;
   }
 }
 
@@ -92,10 +94,24 @@ void sprite_component_setup(
   assert_entity_id(entity_id);
   struct SpriteComponent* sprite_component = &entity_system->sprite_component;
   sprite_component->sprite_id[entity_id] = sprite_id;
+  sprite_component->active[entity_id] = false;
 }
 
 
 enum SpriteId sprite_component_get_sprite_id(struct EntitySystem* entity_system, EntityId entity_id) {
   assert_entity_id(entity_id);
   return entity_system->sprite_component.sprite_id[entity_id];
+}
+
+
+bool sprite_component_is_active(struct EntitySystem* entity_system, EntityId entity_id) {
+  assert_entity_id(entity_id);
+  return entity_system->sprite_component.sprite_id[entity_id] < ENTITY_MAX
+    && entity_system->sprite_component.active[entity_id];
+}
+
+
+void sprite_component_set_active(struct EntitySystem* entity_system, EntityId entity_id, bool active) {
+  assert_entity_id(entity_id);
+  entity_system->sprite_component.active[entity_id] = active;
 }

@@ -61,7 +61,7 @@ void screen_render_entities(const struct Screen* screen, const struct Vector scr
   const struct SpriteComponent* sprite_component = &entity_system->sprite_component;
   for (int i = 0; i < ENTITY_MAX; i++) {
     enum SpriteId sprite_id = sprite_component->sprite_id[i];
-    if (sprite_id == SPRITE_ID_NONE) continue;
+    if (sprite_id == SPRITE_ID_NONE || !sprite_component->active[i]) continue;
     struct Vector top_left = vector_add(entity_system->coordinates[i], screen_offset);
     const struct Sprite* sprite = sprite_get_sprite(sprite_id);
     for (int y = 0; y < sprite->height; y++) {

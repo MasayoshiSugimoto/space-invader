@@ -26,17 +26,8 @@ const struct KeyNamePair key_name_map[] = {
   {KEY_UP, "KEY_UP"},
   {KEY_LEFT, "KEY_LEFT"},
   {KEY_RIGHT, "KEY_RIGHT"},
-  {KEY_HOME, "KEY_HOME"},
-  {KEY_BACKSPACE, "KEY_BACKSPACE"},
-  {KEY_F0, "KEY_F0"},
-  {KEY_DL, "KEY_DL"},
-  {KEY_IL, "KEY_IL"},
-  {KEY_DC, "KEY_DC"},
-  {KEY_IC, "KEY_IC"},
   {KEY_EIC, "KEY_EIC"},
   {KEY_CLEAR, "KEY_CLEAR"},
-  {KEY_LEFT, "KEY_LEFT"},
-  {KEY_RIGHT, "KEY_RIGHT"},
   {KEY_HOME, "KEY_HOME"},
   {KEY_BACKSPACE, "KEY_BACKSPACE"},
   {KEY_F0, "KEY_F0"},
@@ -163,9 +154,15 @@ void input_update_move_space_ship_right(struct Game* game, struct UI* ui, Keyboa
 }
 
 
+void input_update_spaceship_fire(struct Game* game, struct UI* ui, KeyboardKey key) {
+  entity_spaceship_fire(game);
+}
+
+
 const struct InputTableRow input_transition_table[] = {
   {GAME_STATE_IN_GAME, KEY_LEFT, input_update_move_space_ship_left},
   {GAME_STATE_IN_GAME, KEY_RIGHT, input_update_move_space_ship_right},
+  {GAME_STATE_IN_GAME, ' ', input_update_spaceship_fire},
 };
 
 
