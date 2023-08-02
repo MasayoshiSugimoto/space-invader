@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include "entity_system.h"
+#include "sprite_component.h"
 
 
 void enemy_ai_basic_init();

@@ -45,8 +45,8 @@ void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_ti
   int min_x = 99999;
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!entity_system->active[i]) continue;
-    if (!sprite_component_is_active(entity_system, i)) continue;
-    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_system, i);
+    if (!sprite_component_is_active(i)) continue;
+    enum SpriteId sprite_id = sprite_component_get_sprite_id(i);
     if (sprite_id != SPRITE_ID_ALIEN) continue;
     const struct Sprite* sprite = sprite_get_sprite(sprite_id);
     struct Vector v = entity_system->coordinates[i];
@@ -66,8 +66,8 @@ void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_ti
 
   if (is_change_direction) {
     for (int i = 0; i < ENTITY_MAX; i++) {
-      if (!sprite_component_is_active(entity_system, i)) continue;
-      enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_system, i);
+      if (!sprite_component_is_active(i)) continue;
+      enum SpriteId sprite_id = sprite_component_get_sprite_id(i);
       if (sprite_id != SPRITE_ID_ALIEN) continue;
       struct Vector v = {0, 1};
       entity_system_add_coordinates(entity_system, i, v);
@@ -82,7 +82,7 @@ void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_ti
   }
 
   for (int i = 0; i < ENTITY_MAX; i++) {
-    if (sprite_component_get_sprite_id(entity_system, i) == SPRITE_ID_ALIEN) {
+    if (sprite_component_get_sprite_id(i) == SPRITE_ID_ALIEN) {
       entity_system_add_coordinates(entity_system, i, v);
     }
   }

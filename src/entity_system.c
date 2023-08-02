@@ -1,9 +1,5 @@
 #include "entity_system.h"
-
-
-#define assert_entity_id(entity_id) { \
-  if (entity_id >= ENTITY_MAX) log_fatal_f("Invalid entity id: %ld", entity_id); \
-}
+#include "sprite_component.h"
 
 
 EntityId next_id(EntityId id) {
@@ -25,9 +21,6 @@ void entity_system_init(struct EntitySystem* entity_system) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     entity_system->active[i] = false;
     entity_system->coordinates[i] = VZERO;
-
-    entity_system->sprite_component.sprite_id[i] = SPRITE_ID_NONE;
-    entity_system->sprite_component.active[i] = false;
   }
 }
 
@@ -39,7 +32,7 @@ EntityId entity_system_create_entity(struct EntitySystem* entity_system) {
       entity_system->next_entity = next_id(entity_id);
       entity_system->active[entity_id] = true;
       entity_system->coordinates[entity_id] = VZERO;
-      entity_system->sprite_component.sprite_id[entity_id] = SPRITE_ID_NONE;
+      sprite_component_setup(entity_id, SPRITE_ID_NONE);
       return entity_id;
     }
   }
@@ -86,32 +79,3 @@ void entity_system_add_coordinates(
 }
 
 
-void sprite_component_setup(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    enum SpriteId sprite_id
-) {
-  assert_entity_id(entity_id);
-  struct SpriteComponent* sprite_component = &entity_system->sprite_component;
-  sprite_component->sprite_id[entity_id] = sprite_id;
-  sprite_component->active[entity_id] = false;
-}
-
-
-enum SpriteId sprite_component_get_sprite_id(struct EntitySystem* entity_system, EntityId entity_id) {
-  assert_entity_id(entity_id);
-  return entity_system->sprite_component.sprite_id[entity_id];
-}
-
-
-bool sprite_component_is_active(struct EntitySystem* entity_system, EntityId entity_id) {
-  assert_entity_id(entity_id);
-  return entity_system->sprite_component.sprite_id[entity_id] < ENTITY_MAX
-    && entity_system->sprite_component.active[entity_id];
-}
-
-
-void sprite_component_set_active(struct EntitySystem* entity_system, EntityId entity_id, bool active) {
-  assert_entity_id(entity_id);
-  entity_system->sprite_component.active[entity_id] = active;
-}

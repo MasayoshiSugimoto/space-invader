@@ -52,16 +52,16 @@ const struct SpriteComponentData sprite_component_data[] = {
 
 void game_init_spaceship(struct Game* game) {
   EntityId entity_id = entity_system_create_entity(game->entity_system);
-  sprite_component_setup(game->entity_system, entity_id, SPRITE_ID_SPACESHIP);
+  sprite_component_setup(entity_id, SPRITE_ID_SPACESHIP);
   game->spaceship_id = entity_id;
-  enum SpriteId sprite_id = sprite_component_get_sprite_id(game->entity_system, entity_id);
+  enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
   const struct Sprite* sprite = sprite_get_sprite(sprite_id);
   struct Vector v = {
     SCREEN_WIDTH / 2 - sprite->width / 2,
     SCREEN_HEIGHT - sprite->height
   };
   entity_system_set_coordinates(game->entity_system, entity_id, v);
-  sprite_component_set_active(game->entity_system, entity_id, true);
+  sprite_component_set_active(entity_id, true);
 }
 
 
@@ -71,10 +71,12 @@ void game_init_entities(struct EntitySystem* entity_system) {
     entity_system_set_coordinates(entity_system, entity_id, entity_init_data[i].coordinates);
     for (int j = 0; j < array_size(sprite_component_data); j++) {
       if (sprite_component_data[j].entity_id != entity_init_data[i].entity_id) continue;
-      sprite_component_setup(entity_system, entity_id, sprite_component_data[j].sprite_id);
-      sprite_component_set_active(entity_system, entity_id, sprite_component_data[j].active);
+      struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
+      sprite_unit.sprite_id = sprite_component_data[j].sprite_id;
+      sprite_unit.active = sprite_component_data[j].active;
+      sprite_component_set(&sprite_unit);
     }
-    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_system, entity_id);
+    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
     log_info_f("Entity created: {id=%ld, sprite=%s}", entity_id, sprite_get_file_name(sprite_id));
   }
 }
@@ -89,6 +91,7 @@ void game_init(struct Game* game) {
   game->last_frame_time_millisecond = get_current_millisecond();
 
   entity_system_init(game->entity_system);
+  sprite_component_init();
   game_init_spaceship(game);
   game_init_entities(game->entity_system);
 

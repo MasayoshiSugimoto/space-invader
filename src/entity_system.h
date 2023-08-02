@@ -11,13 +11,12 @@
 #define ENTITY_MAX 100
 
 
+#define assert_entity_id(entity_id) { \
+  if (entity_id >= ENTITY_MAX) log_fatal_f("Invalid entity id: %ld", entity_id); \
+}
+
+
 typedef size_t EntityId;
-
-
-struct SpriteComponent {
-  bool active[ENTITY_MAX];
-  enum SpriteId sprite_id[ENTITY_MAX];
-};
 
 
 struct Entity {
@@ -30,7 +29,6 @@ struct EntitySystem {
   EntityId next_entity;
   bool active[ENTITY_MAX];
   struct Vector coordinates[ENTITY_MAX];
-  struct SpriteComponent sprite_component;
 };
 
 
@@ -55,16 +53,6 @@ void entity_system_add_coordinates(
     EntityId entity_id,
     struct Vector delta
 );
-
-
-void sprite_component_setup(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    enum SpriteId sprite_id
-);
-enum SpriteId sprite_component_get_sprite_id(struct EntitySystem* entity_system, EntityId entity_id);
-bool sprite_component_is_active(struct EntitySystem* entity_system, EntityId entity_id);
-void sprite_component_set_active(struct EntitySystem* entity_system, EntityId entity_id, bool active);
 
 
 #endif
