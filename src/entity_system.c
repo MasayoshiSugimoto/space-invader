@@ -51,7 +51,7 @@ void entity_system_delete_entity(
 
 
 struct Vector entity_system_get_coordinates(
-    struct EntitySystem* entity_system,
+    const struct EntitySystem* entity_system,
     EntityId entity_id
 ) {
   assert_entity_id(entity_id);

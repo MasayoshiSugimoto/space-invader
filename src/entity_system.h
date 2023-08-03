@@ -40,7 +40,7 @@ void entity_system_delete_entity(
     EntityId entity_id
 );
 struct Vector entity_system_get_coordinates(
-    struct EntitySystem* entity_system,
+    const struct EntitySystem* entity_system,
     EntityId entity_id
 );
 void entity_system_set_coordinates(
