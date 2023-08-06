@@ -54,8 +54,12 @@ void bullet_component_cleanup(struct EntitySystem* entity_system) {
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!bullet_component.active[entity_id]) continue;
     if (entity_system_get_coordinates(entity_system, entity_id).y >= 0) continue;
-    entity_system_disable(entity_system, entity_id);
-    bullet_component.active[entity_id] = false;
-    entity_system_disable(entity_system, entity_id);
+    component_manager_cleanup(entity_system, entity_id);
   }
+}
+
+
+void bullet_component_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+  assert_entity_id(entity_id);
+  bullet_component.active[entity_id] = false;
 }

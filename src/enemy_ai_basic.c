@@ -87,3 +87,9 @@ void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_ti
     }
   }
 }
+
+
+void enemy_ai_basic_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+  assert_entity_id(entity_id);
+  enemy_ai_basic_component.entity_ids[entity_id] = ENTITY_MAX;
+}

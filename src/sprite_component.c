@@ -57,3 +57,10 @@ void sprite_component_set(const struct SpriteComponentUnit* unit) {
   sprite_component.active[unit->entity_id] = unit->active;
   sprite_component.sprite_id[unit->entity_id] = unit->sprite_id;
 }
+
+
+void sprite_component_disable(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  sprite_component.active[entity_id] = false;
+  sprite_component.sprite_id[entity_id] = SPRITE_ID_NONE;
+}

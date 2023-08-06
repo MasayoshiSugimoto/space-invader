@@ -19,6 +19,7 @@ bool sprite_component_is_active(EntityId entity_id);
 void sprite_component_set_active(EntityId entity_id, bool active);
 struct SpriteComponentUnit sprite_component_get(EntityId);
 void sprite_component_set(const struct SpriteComponentUnit*);
+void sprite_component_disable(EntityId entity_id);
 
 
 #endif
