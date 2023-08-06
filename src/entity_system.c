@@ -79,3 +79,7 @@ void entity_system_add_coordinates(
 }
 
 
+void entity_system_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+  assert_entity_id(entity_id);
+  entity_system->active[entity_id] = false;
+}

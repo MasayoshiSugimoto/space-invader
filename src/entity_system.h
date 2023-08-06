@@ -53,6 +53,7 @@ void entity_system_add_coordinates(
     EntityId entity_id,
     struct Vector delta
 );
+void entity_system_disable(struct EntitySystem*, EntityId);
 
 
 #endif

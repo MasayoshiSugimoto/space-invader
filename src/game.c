@@ -90,12 +90,13 @@ void game_init(struct Game* game) {
   game->entity_system = entity_system_create();
   game->last_frame_time_millisecond = get_current_millisecond();
 
-  entity_system_init(game->entity_system);
   sprite_component_init();
+  entity_system_init(game->entity_system);
   game_init_spaceship(game);
   game_init_entities(game->entity_system);
 
   enemy_ai_basic_init();
+  bullet_component_init();
 }
 
 
@@ -116,4 +117,7 @@ void game_update(struct Game* game) {
   uint64_t delta_time_millisecond = now_millisecond - game->last_frame_time_millisecond;
   game->last_frame_time_millisecond = now_millisecond;
   enemy_ai_basic_update(game->entity_system, delta_time_millisecond);
+  bullet_component_update(game->entity_system, delta_time_millisecond);
+
+  bullet_component_cleanup(game->entity_system);
 }

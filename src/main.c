@@ -4,6 +4,7 @@
 #include "ui.h"
 #include "consts.h"
 #include "game.h"
+#include "screen.h"
 
 
 /********************************************************************************

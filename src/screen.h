@@ -29,6 +29,7 @@ struct Screen {
 };
 
 
+struct Vector screen_get_offset(const struct Screen* screen, const struct Terminal* terminal);
 void screen_init(struct Screen* screen);
 void screen_render(struct Screen* screen, struct Terminal* terminal, struct Game* game);
 

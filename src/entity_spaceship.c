@@ -13,6 +13,7 @@ void entity_spaceship_fire(struct Game* game) {
     spaceship_position.y
   };
 
-  entity_system_set_coordinates(entity_system, 8, bullet_position);
-  sprite_component_set_active(8, true);
+  bullet_component_fire(entity_system, bullet_position);
 }
+
+
