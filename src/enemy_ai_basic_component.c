@@ -5,7 +5,7 @@
  *******************************************************************************/
 
 
-#include "enemy_ai_basic.h"
+#include "enemy_ai_basic_component.h"
 
 
 #define MARGIN_FROM_BORDER 5

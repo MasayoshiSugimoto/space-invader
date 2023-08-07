@@ -6,7 +6,7 @@
 #include "entity_system.h"
 #include "consts.h"
 #include "sprite.h"
-#include "enemy_ai_basic.h"
+#include "enemy_ai_basic_component.h"
 #include "bullet_component.h"
 
 
