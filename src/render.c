@@ -163,20 +163,6 @@ void render_credits(struct Terminal* terminal) {
 }
 
 
-void render_game() {
-  int y = 0;
-  attron(COLOR_PAIR(COLOR_PAIR_ID_SPACE));
-  for (int i = 0; i < TERMINAL_MIN_HEIGHT; i++) {
-    move(y, 0);
-    for (int j = 0; j < TERMINAL_MIN_WIDTH; j++) {
-      addch(' ');
-    }
-    y++;
-  }
-  attroff(COLOR_PAIR(COLOR_PAIR_ID_SPACE));
-}
-
-
 void render_sprite(enum SpriteId sprite_id, int left, int top) {
   const char* buf = sprite_as_string(sprite_id);
   int x = left;

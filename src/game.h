@@ -8,6 +8,7 @@
 #include "sprite.h"
 #include "enemy_ai_basic_component.h"
 #include "bullet_component.h"
+#include "collision_manager.h"
 
 
 enum GameState {

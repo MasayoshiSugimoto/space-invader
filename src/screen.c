@@ -1,6 +1,21 @@
 #include "screen.h"
 
 
+void print_char(char c, EntityId entity_id) {
+#if DEBUG_COLLISION_VISUALISATION_MODE
+  if (c != ' ' && collision_manager_is_collision(entity_id)) {
+    attron(COLOR_PAIR(COLOR_PAIR_ID_COLLISION_ON));
+    addch(c);
+    attroff(COLOR_PAIR(COLOR_PAIR_ID_COLLISION_ON));
+  } else {
+    addch(c);
+  }
+#else
+  addch(c);
+#endif
+}
+
+
 void screen_init(struct Screen* screen) {
   int width = SCREEN_WIDTH;
   int height = SCREEN_HEIGHT;
@@ -58,15 +73,15 @@ struct Vector screen_get_offset(const struct Screen* screen, const struct Termin
 
 
 void screen_render_entities(const struct Screen* screen, const struct Vector screen_offset, const struct EntitySystem* entity_system) {
-  for (int i = 0; i < ENTITY_MAX; i++) {
-    struct SpriteComponentUnit sprite_unit = sprite_component_get(i);
+  for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+    struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
     if (sprite_unit.sprite_id == SPRITE_ID_NONE || !sprite_unit.active) continue;
-    struct Vector top_left = vector_add(entity_system->coordinates[i], screen_offset);
+    struct Vector top_left = vector_add(entity_system->coordinates[entity_id], screen_offset);
     const struct Sprite* sprite = sprite_get_sprite(sprite_unit.sprite_id);
     for (int y = 0; y < sprite->height; y++) {
       move(top_left.y + y, top_left.x);
       for (int x = 0; x < sprite->width; x++) {
-        addch(sprite->as_matrix[y][x]);
+        print_char(sprite->as_matrix[y][x], entity_id);
       }
     }
   }

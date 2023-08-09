@@ -4,6 +4,11 @@
 #define SPRITE_BUFFER_MAX 2048
 
 
+#define assert_sprite_id(sprite_id) { \
+  if (sprite_id >= SPRITE_ID_MAX) log_fatal_f("Invalid sprite_id: %d", sprite_id); \
+}
+
+
 struct SpriteConfig {
   enum SpriteId sprite_id;
   const char* sprite_id_as_string;
@@ -106,7 +111,25 @@ int get_width(const char* sprite_as_string) {
 }
 
 
+// Count all printable characters.
+int get_character_count(const char* sprite_as_string) {
+  int count = 0;
+  for (int i = 0; i < strlen(sprite_as_string); i++) {
+    switch (sprite_as_string[i]) {
+      case '\r':
+      case '\n':
+      case ' ':
+        break;
+      default:
+        count++;
+    }
+  }
+  return count;
+}
+
+
 const char* sprite_get_sprite_id_as_string(enum SpriteId sprite_id) {
+  assert_sprite_id(sprite_id);
   for (int i = 0; i < array_size(sprite_configs); i++) {
     const struct SpriteConfig* sprite_config = &sprite_configs[i];
     if (sprite_config->sprite_id == sprite_id) {
@@ -120,11 +143,12 @@ const char* sprite_get_sprite_id_as_string(enum SpriteId sprite_id) {
 void sprite_log(struct Sprite* sprite) {
   const char* sprite_id = sprite_get_sprite_id_as_string(sprite->sprite_id);
   log_info_f(
-      "{sprite_id=%s, file_name=%s, as_string=see below, width=%d, height=%d}",
+      "{sprite_id=%s, file_name=%s, as_string=see below, width=%d, height=%d, character_count=%d}",
       sprite_id,
       sprite->file_name,
       sprite->width,
-      sprite->height
+      sprite->height,
+      sprite->character_count
   );
   log_info_f("Rendering sprite %s:\n%s", sprite_id, sprite->as_string);
 }
@@ -146,6 +170,7 @@ void sprite_init() {
     sprite->as_matrix = string_to_matrix(sprite_as_string, width, height);
     sprite->width = width;
     sprite->height = height;
+    sprite->character_count = get_character_count(sprite_as_string);
 
     sprite_log(sprite);
   }
@@ -153,17 +178,19 @@ void sprite_init() {
 
 
 const char* sprite_get_file_name(enum SpriteId sprite_id) {
+  assert_sprite_id(sprite_id);
   return sprite_configs[sprite_id].file_name;
 }
 
 
 const char* sprite_as_string(enum SpriteId sprite_id) {
+  assert_sprite_id(sprite_id);
   return sprites[sprite_id].as_string;
 }
 
 
 const struct Sprite* sprite_get_sprite(enum SpriteId sprite_id) {
-  if (sprite_id >= SPRITE_ID_MAX) log_fatal_f("Invalid sprite_id: %d", sprite_id);
-
+  assert_sprite_id(sprite_id);
   return &sprites[sprite_id];
 }
+

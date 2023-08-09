@@ -5,6 +5,7 @@
 #include "consts.h"
 #include "game.h"
 #include "screen.h"
+#include "color.h"
 
 
 /********************************************************************************
@@ -15,8 +16,21 @@
 #if DEBUG_ENABLE_TEST
 
 void debug_init() {
-  log_info("DEBUG MODE ON");
-  log_info("=============\n");
+  erase();
+  int color_id = 8;
+  int y = 0;
+  for (int r = 0; r < 6; r++) {
+    for (int g = 0; g < 6; g++) {
+      move(y++, 0);
+      for (int b = 0; b < 6; b++) {
+        attron(COLOR_PAIR(color_id));
+        addch(' ');
+        attroff(COLOR_PAIR(color_id));
+        color_id++;
+      }
+    }
+  }
+  refresh();
 }
 
 #endif
@@ -65,13 +79,14 @@ int main() {
   game_init(&game);
 
 
-#if DEBUG_ENABLE_TEST
-  debug_init();
-#endif
-
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
+
+#if DEBUG_ENABLE_TEST
+    debug_init();
+    continue;
+#endif
 
     struct Terminal* terminal = &ui.terminal;
     terminal_init(terminal);

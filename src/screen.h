@@ -7,6 +7,8 @@
 #include "terminal.h"
 #include "game.h"
 #include "consts.h"
+#include "color.h"
+#include "collision_manager.h"
 
 
 #define SCREEN_WINDOW_MAX 100

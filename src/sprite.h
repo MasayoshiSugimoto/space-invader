@@ -24,6 +24,7 @@ struct Sprite {
   const char* const* as_matrix;
   int width;
   int height;
+  int character_count;
 };
 
 

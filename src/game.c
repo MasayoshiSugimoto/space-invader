@@ -113,6 +113,8 @@ void game_set_game_state(struct Game* game, enum GameState game_state) {
 
 
 void game_update(struct Game* game) {
+  collision_manager_update(game->entity_system);
+
   uint64_t now_millisecond = get_current_millisecond();
   uint64_t delta_time_millisecond = now_millisecond - game->last_frame_time_millisecond;
   game->last_frame_time_millisecond = now_millisecond;
