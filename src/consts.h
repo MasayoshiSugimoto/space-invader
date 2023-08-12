@@ -18,5 +18,8 @@
 #define SCREEN_HEIGHT 20
 
 
+#define LOG_FILE "/tmp/space-invaders.log"
+
+
 #endif
 

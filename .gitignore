@@ -5,7 +5,7 @@
 *.swp
 
 # Executable Binary
-minesweeper 
+space-invaders 
 
 # ctags file
 tags

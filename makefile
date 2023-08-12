@@ -6,7 +6,7 @@ BUILD_DIR = .build
 SOURCES = $(foreach d, $(SRC_DIR), $(wildcard $(addprefix $(d)/*, .c)))
 DEPS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.d))
 OBJS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.o))
-PROGRAM = minesweeper
+PROGRAM = space-invaders
 LIBS = -lcurses -lncurses
 
 # Delete the default suffixes
@@ -32,7 +32,8 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	rm -rf .build
-	rm $(PROGRAM)
+	rm -f $(PROGRAM)
+	rm -f tags
 
 build: $(PROGRAM)
 

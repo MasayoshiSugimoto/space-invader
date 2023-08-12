@@ -6,9 +6,9 @@
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include "consts.h"
 
 
-#define DEBUG_FILE "/tmp/minesweeper.log"
 struct _IO_FILE* g_debug_file;
 
 
