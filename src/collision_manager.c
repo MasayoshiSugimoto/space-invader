@@ -110,8 +110,6 @@ void collision_manager_update(struct EntitySystem* entity_system) {
       sprite_info->as_matrix = NULL;
       sprite_info->entity_id = entity_id;
     }
-
-    print_sprite_info(sprite_info);
   }
 
   for (int entity_id_1 = 0; entity_id_1 < ENTITY_MAX; entity_id_1++) {
@@ -144,20 +142,6 @@ void collision_manager_update(struct EntitySystem* entity_system) {
       print_sprite(sprite_info_1, min_x, min_y, buf_width);
       print_sprite(sprite_info_2, min_x, min_y, buf_width);
 
-      log_info_f("Dumping collision buffer {id1=%d, id2=%d}: ", entity_id_1, entity_id_2);
-      for (int y = 0; y < buf_height; y++) {
-        char buf[2048];
-        for (int i = 0; i < array_size(buf); i++) {
-          buf[i] = ' ';
-        }
-
-        for (int x = 0; x < buf_width; x++) {
-          buf[x] = collision_manager.buffer[(y*buf_width)+x];
-        }
-        buf[buf_width] = 0;
-        log_info_f("%s", buf);
-      }
-
       int character_count = 0;
       for (int i = 0; i < buf_size; i++) {
         if (collision_manager.buffer[i] != ' ') character_count++;
@@ -169,8 +153,6 @@ void collision_manager_update(struct EntitySystem* entity_system) {
       }
     }
   }
-
-  print_status();
 }
 
 
