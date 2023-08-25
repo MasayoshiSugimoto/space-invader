@@ -21,6 +21,9 @@ const struct SpriteConfig sprite_configs[] = {
   {SPRITE_ID_SPACESHIP, "SPRITE_ID_SPACESHIP", "spaceship.txt"},
   {SPRITE_ID_ALIEN, "SPRITE_ID_ALIEN", "alien.txt"},
   {SPRITE_ID_SPACESHIP_BULLET, "SPRITE_ID_SPACESHIP_BULLET", "spaceship_bullet.txt"},
+  {SPRITE_ID_EXPLOSION_1, "SPRITE_ID_EXPLOSION_1", "explosion_1.txt"},
+  {SPRITE_ID_EXPLOSION_2, "SPRITE_ID_EXPLOSION_2", "explosion_2.txt"},
+  {SPRITE_ID_EXPLOSION_3, "SPRITE_ID_EXPLOSION_3", "explosion_3.txt"},
 };
 
 
