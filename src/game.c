@@ -114,8 +114,18 @@ void game_set_game_state(struct Game* game, enum GameState game_state) {
 }
 
 
+void game_apply_collision_to_enemies() {
+  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+    if (collision_manager_is_collision(entity_id) && sprite_component_get_sprite_id(entity_id) == SPRITE_ID_ALIEN) {
+      animation_set(entity_id, ANIMATION_ID_EXPLOSION);
+    }
+  }
+}
+
+
 void game_update(struct Game* game) {
   collision_manager_update(game->entity_system);
+  game_apply_collision_to_enemies();
 
   uint64_t now_millisecond = get_current_millisecond();
   uint64_t delta_time_millisecond = now_millisecond - game->last_frame_time_millisecond;

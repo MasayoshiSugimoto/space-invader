@@ -1,6 +1,9 @@
 #include "animation.h"
 
 
+const AnimationId ANIMATION_ID_EXPLOSION = 0;
+
+
 struct AnimationPhase {
   enum SpriteId sprite_id;
   Duration duration;
