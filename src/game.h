@@ -10,6 +10,7 @@
 #include "bullet_component.h"
 #include "collision_manager.h"
 #include "animation.h"
+#include "faction_component.h"
 
 
 enum GameState {

@@ -27,6 +27,8 @@ void bullet_component_fire(struct EntitySystem* entity_system, struct Vector bul
   sprite_component_set(&sprite_unit);
 
   bullet_component.active[bullet_entity_id] = true;
+
+  faction_component_set(bullet_entity_id, FACTION_ID_PLAYER);
 }
 
 

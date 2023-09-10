@@ -16,6 +16,7 @@ const char* g_game_state_strings[] = {
 
 
 const struct Entity entity_init_data[] = {
+  {0, {0, 0}},
   {1, {10, 1}},
   {2, {17, 1}},
   {3, {24, 1}},
@@ -29,39 +30,43 @@ const struct Entity entity_init_data[] = {
 };
 
 
-struct SpriteComponentData {
+struct EntityData {
   EntityId entity_id;
   enum SpriteId sprite_id;
   bool active;
+  enum FactionId faction_id;
 };
 
 
-const struct SpriteComponentData sprite_component_data[] = {
-  {1, SPRITE_ID_ALIEN, true},
-  {2, SPRITE_ID_ALIEN, true},
-  {3, SPRITE_ID_ALIEN, true},
-  {4, SPRITE_ID_ALIEN, true},
-  {5, SPRITE_ID_ALIEN, true},
-  {6, SPRITE_ID_ALIEN, true},
-  {7, SPRITE_ID_ALIEN, true},
-  {8, SPRITE_ID_SPACESHIP_BULLET, false},
-  {9, SPRITE_ID_SPACESHIP_BULLET, false},
-  {10, SPRITE_ID_SPACESHIP_BULLET, false},
+const struct EntityData entity_data[] = {
+  {0, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER},
+  {1, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {2, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {3, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {4, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {5, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {6, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {7, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
 };
 
 
-void game_init_spaceship(struct Game* game) {
-  EntityId entity_id = entity_system_create_entity(game->entity_system);
-  sprite_component_setup(entity_id, SPRITE_ID_SPACESHIP);
-  game->spaceship_id = entity_id;
+bool is_spaceship(EntityId entity_id) {
   enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
-  const struct Sprite* sprite = sprite_get_sprite(sprite_id);
-  struct Vector v = {
-    SCREEN_WIDTH / 2 - sprite->width / 2,
-    SCREEN_HEIGHT - sprite->height
-  };
-  entity_system_set_coordinates(game->entity_system, entity_id, v);
-  sprite_component_set_active(entity_id, true);
+  return sprite_id == SPRITE_ID_SPACESHIP;
+}
+
+
+void game_init_spaceship_coordinates(struct EntitySystem* entity_system) {
+  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+    if (!is_spaceship(entity_id)) continue;
+    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
+    const struct Sprite* sprite = sprite_get_sprite(sprite_id);
+    struct Vector v = {
+      SCREEN_WIDTH / 2 - sprite->width / 2,
+      SCREEN_HEIGHT - sprite->height
+    };
+    entity_system_set_coordinates(entity_system, entity_id, v);
+  }
 }
 
 
@@ -69,12 +74,14 @@ void game_init_entities(struct EntitySystem* entity_system) {
   for (int i = 0; i < array_size(entity_init_data); i++) {
     EntityId entity_id = entity_system_create_entity(entity_system);
     entity_system_set_coordinates(entity_system, entity_id, entity_init_data[i].coordinates);
-    for (int j = 0; j < array_size(sprite_component_data); j++) {
-      if (sprite_component_data[j].entity_id != entity_init_data[i].entity_id) continue;
+    for (int j = 0; j < array_size(entity_data); j++) {
+      if (entity_data[j].entity_id != entity_init_data[i].entity_id) continue;
       struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
-      sprite_unit.sprite_id = sprite_component_data[j].sprite_id;
-      sprite_unit.active = sprite_component_data[j].active;
+      sprite_unit.sprite_id = entity_data[j].sprite_id;
+      sprite_unit.active = entity_data[j].active;
       sprite_component_set(&sprite_unit);
+
+      faction_component_set(entity_id, entity_data[j].faction_id);
     }
     enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
     log_info_f("Entity created: {id=%ld, sprite=%s}", entity_id, sprite_get_file_name(sprite_id));
@@ -92,8 +99,8 @@ void game_init(struct Game* game) {
 
   sprite_component_init();
   entity_system_init(game->entity_system);
-  game_init_spaceship(game);
   game_init_entities(game->entity_system);
+  game_init_spaceship_coordinates(game->entity_system);
 
   animation_init();
 
@@ -116,7 +123,10 @@ void game_set_game_state(struct Game* game, enum GameState game_state) {
 
 void game_apply_collision_to_enemies() {
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    if (collision_manager_is_collision(entity_id) && sprite_component_get_sprite_id(entity_id) == SPRITE_ID_ALIEN) {
+    if (
+        collision_manager_is_collision(entity_id)
+        && sprite_component_get_sprite_id(entity_id) == SPRITE_ID_ALIEN
+    ) {
       animation_set(entity_id, ANIMATION_ID_EXPLOSION);
     }
   }

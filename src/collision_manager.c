@@ -120,6 +120,8 @@ void collision_manager_update(struct EntitySystem* entity_system) {
       struct SpriteInfo* sprite_info_2 = &sprite_infos[entity_id_2];
       if (!sprite_info_2->active) continue;
 
+      if (!faction_component_is_enemy(entity_id_1, entity_id_2)) continue;
+
       int min_x = imin(sprite_info_1->x, sprite_info_2->x);
       int min_y = imin(sprite_info_1->y, sprite_info_2->y);
       int max_x = imax(

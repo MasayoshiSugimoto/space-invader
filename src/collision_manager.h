@@ -6,7 +6,7 @@
 #include "entity_system.h"
 #include "sprite_component.h"
 #include "util.h"
-
+#include "faction_component.h"
 
 void collision_manager_update(struct EntitySystem* entity_system);
 bool collision_manager_is_collision(EntityId entity_id);

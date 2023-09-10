@@ -7,6 +7,7 @@
 #include "entity_system.h"
 #include "sprite_component.h"
 #include "component_manager.h"
+#include "faction_component.h"
 
 
 void bullet_component_init();
