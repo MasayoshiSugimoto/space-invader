@@ -15,23 +15,9 @@ const char* g_game_state_strings[] = {
 };
 
 
-const struct Entity entity_init_data[] = {
-  {0, {0, 0}},
-  {1, {10, 1}},
-  {2, {17, 1}},
-  {3, {24, 1}},
-  {4, {31, 1}},
-  {5, {38, 1}},
-  {6, {45, 1}},
-  {7, {52, 1}},
-  {8, {0, 0}},
-  {9, {0, 0}},
-  {10, {0, 0}},
-};
-
-
 struct EntityData {
   EntityId entity_id;
+  struct Vector coordinates;
   enum SpriteId sprite_id;
   bool active;
   enum FactionId faction_id;
@@ -39,14 +25,14 @@ struct EntityData {
 
 
 const struct EntityData entity_data[] = {
-  {0, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER},
-  {1, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {2, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {3, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {4, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {5, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {6, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
-  {7, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {0, {0, 0}, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER},
+  {1, {10, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {2, {17, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {3, {24, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {4, {31, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {5, {38, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {6, {45, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
+  {7, {52, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN},
 };
 
 
@@ -71,18 +57,17 @@ void game_init_spaceship_coordinates(struct EntitySystem* entity_system) {
 
 
 void game_init_entities(struct EntitySystem* entity_system) {
-  for (int i = 0; i < array_size(entity_init_data); i++) {
+  for (int i = 0; i < array_size(entity_data); i++) {
     EntityId entity_id = entity_system_create_entity(entity_system);
-    entity_system_set_coordinates(entity_system, entity_id, entity_init_data[i].coordinates);
-    for (int j = 0; j < array_size(entity_data); j++) {
-      if (entity_data[j].entity_id != entity_init_data[i].entity_id) continue;
-      struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
-      sprite_unit.sprite_id = entity_data[j].sprite_id;
-      sprite_unit.active = entity_data[j].active;
-      sprite_component_set(&sprite_unit);
+    const struct EntityData* entity_data_ptr = &entity_data[i];
+    entity_system_set_coordinates(entity_system, entity_id, entity_data_ptr->coordinates);
 
-      faction_component_set(entity_id, entity_data[j].faction_id);
-    }
+    struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
+    sprite_unit.sprite_id = entity_data_ptr->sprite_id;
+    sprite_unit.active = entity_data_ptr->active;
+    sprite_component_set(&sprite_unit);
+
+    faction_component_set(entity_id, entity_data_ptr->faction_id);
     enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
     log_info_f("Entity created: {id=%ld, sprite=%s}", entity_id, sprite_get_file_name(sprite_id));
   }
