@@ -195,7 +195,7 @@ void render(struct UI* ui, struct Game* game) {
 
   switch (game_state) {
     case GAME_STATE_IN_GAME:
-      screen_render(&ui->screen, &ui->terminal, game);
+      screen_render(screen_get_screen(), &ui->terminal, game->entity_system);
       curs_set(CURSOR_VISIBILITY_INVISIBLE);
       break;
     default: 

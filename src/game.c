@@ -45,13 +45,7 @@ bool is_spaceship(EntityId entity_id) {
 void game_init_spaceship_coordinates(struct EntitySystem* entity_system) {
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!is_spaceship(entity_id)) continue;
-    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
-    const struct Sprite* sprite = sprite_get_sprite(sprite_id);
-    struct Vector v = {
-      SCREEN_WIDTH / 2 - sprite->width / 2,
-      SCREEN_HEIGHT - sprite->height
-    };
-    entity_system_set_coordinates(entity_system, entity_id, v);
+    screen_set_entity_alignment(screen_get_screen(), entity_system, entity_id, SCREEN_ALIGNMENT_BOTTOM_CENTER);
   }
 }
 

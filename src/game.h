@@ -11,6 +11,7 @@
 #include "collision_manager.h"
 #include "animation.h"
 #include "faction_component.h"
+#include "screen.h"
 
 
 enum GameState {

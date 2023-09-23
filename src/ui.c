@@ -51,5 +51,5 @@ void ui_init(struct UI* ui) {
   manual_init(&ui->manual);
   start_screen_init(&ui->start_screen);
   sprite_init();
-  screen_init(&ui->screen);
+  screen_init(screen_get_screen());
 }

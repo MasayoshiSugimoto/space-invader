@@ -10,7 +10,6 @@
 #include "color.h"
 #include "start_screen.h"
 #include "sprite.h"
-#include "screen.h"
 
 
 /**
@@ -23,7 +22,6 @@ struct UI {
   struct Terminal terminal;
   struct Manual manual;
   struct StartScreen start_screen;
-  struct Screen screen;
 };
 
 
