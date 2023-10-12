@@ -99,16 +99,43 @@ struct Vector screen_get_offset(const struct Screen* screen, const struct Termin
 }
 
 
+struct RenderingUnit {
+  const struct Sprite* sprite;
+  EntityId entity_id;
+  int x;
+  int y;
+};
+
+
+int screen_compare_rendering_order(const void* p1, const void* p2) {
+  return ((const struct RenderingUnit*)p2)->sprite->sprite_id - ((const struct RenderingUnit*)p1)->sprite->sprite_id;
+}
+
+
 void screen_render_entities(const struct Screen* screen, const struct Vector screen_offset, const struct EntitySystem* entity_system) {
-  for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+  // We need to render sprites in some particular order. Explosions should be in the back to stay playable.
+  struct RenderingUnit rendering_units[ENTITY_MAX];
+  int nb_rendering_unit = 0;
+  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
     if (sprite_unit.sprite_id == SPRITE_ID_NONE || !sprite_unit.active) continue;
     struct Vector top_left = vector_add(entity_system->coordinates[entity_id], screen_offset);
-    const struct Sprite* sprite = sprite_get_sprite(sprite_unit.sprite_id);
+    struct RenderingUnit* rendering_unit = &rendering_units[nb_rendering_unit++];
+    rendering_unit->sprite = sprite_get_sprite(sprite_unit.sprite_id);
+    rendering_unit->entity_id = entity_id;
+    rendering_unit->x = top_left.x;
+    rendering_unit->y = top_left.y;
+  }
+
+  qsort(rendering_units, nb_rendering_unit, sizeof(rendering_units[0]), &screen_compare_rendering_order);
+
+  for (int i = 0; i < nb_rendering_unit; i++) {
+    struct RenderingUnit* rendering_unit = &rendering_units[i];
+    const struct Sprite* sprite = rendering_unit->sprite;
     for (int y = 0; y < sprite->height; y++) {
-      move(top_left.y + y, top_left.x);
+      move(rendering_unit->y + y, rendering_unit->x);
       for (int x = 0; x < sprite->width; x++) {
-        print_char(sprite->as_matrix[y][x], entity_id);
+        print_char(sprite->as_matrix[y][x], rendering_unit->entity_id);
       }
     }
   }

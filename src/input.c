@@ -163,6 +163,8 @@ const struct InputTableRow input_transition_table[] = {
   {GAME_STATE_IN_GAME, KEY_LEFT, input_update_move_space_ship_left},
   {GAME_STATE_IN_GAME, KEY_RIGHT, input_update_move_space_ship_right},
   {GAME_STATE_IN_GAME, ' ', input_update_spaceship_fire},
+  {GAME_STATE_IN_GAME, 'a', input_update_move_space_ship_left},
+  {GAME_STATE_IN_GAME, 'd', input_update_move_space_ship_right},
 };
 
 

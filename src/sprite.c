@@ -197,3 +197,4 @@ const struct Sprite* sprite_get_sprite(enum SpriteId sprite_id) {
   return &sprites[sprite_id];
 }
 
+

@@ -10,6 +10,7 @@ void ui_init_ncurses() {
   noecho();
   cbreak();
   nodelay(stdscr, true);
+  notimeout(stdscr, true);
   keypad(stdscr, TRUE);
 }
 
