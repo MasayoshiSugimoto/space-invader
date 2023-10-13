@@ -3,7 +3,6 @@
 
 
 #include "util.h"
-#include "window_manager.h"
 #include "log.h"
 #include "game.h"
 #include "item_selection.h"

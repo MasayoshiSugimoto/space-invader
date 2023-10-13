@@ -2,7 +2,6 @@
 #define RENDER_H
 
 
-#include "window_manager.h"
 #include "menu.h"
 #include "vector.h"
 #include "game_menu.h"

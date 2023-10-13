@@ -5,7 +5,6 @@
 #include <curses.h>
 #include <ncurses.h>
 #include "log.h"
-#include "window_manager.h"
 #include "util.h"
 
 
