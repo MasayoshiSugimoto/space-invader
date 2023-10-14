@@ -6,6 +6,7 @@
 #include "game.h"
 #include "screen.h"
 #include "color.h"
+#include "window.h"
 
 
 /********************************************************************************
@@ -17,19 +18,19 @@
 
 void debug_init() {
   erase();
-  int color_id = 8;
-  int y = 0;
-  for (int r = 0; r < 6; r++) {
-    for (int g = 0; g < 6; g++) {
-      move(y++, 0);
-      for (int b = 0; b < 6; b++) {
-        attron(COLOR_PAIR(color_id));
-        addch(' ');
-        attroff(COLOR_PAIR(color_id));
-        color_id++;
-      }
-    }
-  }
+
+  struct Window window = {5, 10, 3, 2};
+
+  window_move(&window, 0, 1);
+  window_addch(&window, 'a');
+  window_addch(&window, 'b');
+  window_addch(&window, 'c');
+  window_addch(&window, 'd');
+  window_addch(&window, 'e');
+  window_addch(&window, 'f');
+  window_addch(&window, 'g');
+  window_render_border(&window);
+
   refresh();
 }
 
