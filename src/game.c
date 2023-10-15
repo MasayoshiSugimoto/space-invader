@@ -1,20 +1,6 @@
 #include "game.h"
 
 
-const char* g_game_state_strings[] = {
-  "GAME_STATE_START_MENU",
-  "GAME_STATE_IN_GAME",
-  "GAME_STATE_GAME_OVER",
-  "GAME_STATE_GAME_WON",
-  "GAME_STATE_MENU",
-  "GAME_STATE_MANUAL",
-  "GAME_STATE_START_SCREEN",
-  "GAME_STATE_CREDITS",
-  "GAME_STATE_QUIT",
-  "GAME_STATE_MAX"
-};
-
-
 struct EntityData {
   EntityId entity_id;
   struct Vector coordinates;
@@ -72,7 +58,7 @@ void game_init(struct Game* game) {
   log_info("game_init(game)");
   game->cursor.x = 0;
   game->cursor.y = 0;
-  game->game_state = GAME_STATE_IN_GAME;
+  game->game_state = GAME_INIT_GAME_STATE;
   game->entity_system = entity_system_create();
   game->last_frame_time_millisecond = get_current_millisecond();
 
@@ -88,13 +74,8 @@ void game_init(struct Game* game) {
 }
 
 
-void game_print_state(enum GameState game_state) {
-  log_info_f("Game state: %s", g_game_state_strings[game_state]);
-}
-
-
 void game_set_game_state(struct Game* game, enum GameState game_state) {
-  log_info_f("Game state set to: %s", g_game_state_strings[game_state]);
+  log_info_f("Game state set to: %s", game_state_as_string(game_state));
   if (game_state >= GAME_STATE_MAX) return;
   game->game_state = game_state;
 }

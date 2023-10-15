@@ -94,13 +94,14 @@ void render(struct UI* ui, struct Game* game) {
   enum GameState game_state = game->game_state;
 
   erase();
-  if (game_state != GAME_STATE_START_SCREEN) {
-  }
 
+  curs_set(CURSOR_VISIBILITY_INVISIBLE);
   switch (game_state) {
     case GAME_STATE_IN_GAME:
       screen_render(screen_get_screen(), &ui->terminal, game->entity_system);
-      curs_set(CURSOR_VISIBILITY_INVISIBLE);
+      break;
+    case GAME_STATE_MAIN_MENU:
+      main_menu_render_items(main_menu_get_definition());
       break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);

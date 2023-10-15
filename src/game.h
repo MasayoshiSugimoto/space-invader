@@ -12,20 +12,7 @@
 #include "animation.h"
 #include "faction_component.h"
 #include "screen.h"
-
-
-enum GameState {
-  GAME_STATE_START_MENU,
-  GAME_STATE_IN_GAME,
-  GAME_STATE_GAME_OVER,
-  GAME_STATE_GAME_WON,
-  GAME_STATE_MENU,
-  GAME_STATE_MANUAL,
-  GAME_STATE_START_SCREEN,
-  GAME_STATE_CREDITS,
-  GAME_STATE_QUIT,
-  GAME_STATE_MAX
-};
+#include "game_state.h"
 
 
 struct Game {

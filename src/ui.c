@@ -18,7 +18,6 @@ void ui_init_ncurses() {
 void ui_init(struct UI* ui) {
   ui_init_ncurses();
   color_init();
-  game_menu_init_new_game(&ui->game_menu);
   manual_init(&ui->manual);
   start_screen_init(&ui->start_screen);
   sprite_init();

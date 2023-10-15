@@ -7,6 +7,8 @@
 #include "screen.h"
 #include "color.h"
 #include "window.h"
+#include "render.h"
+#include "main_menu.h"
 
 
 /********************************************************************************
@@ -16,23 +18,40 @@
 
 #if DEBUG_ENABLE_TEST
 
-void debug_init() {
+void debug_init2() {
+
   erase();
 
-  struct Window window = {5, 10, 3, 2};
+  short i = 0;
+  for (short r = 0; r < 4; r++) {
+    for (short g = 0; g < 4; g++) {
+      for (short b = 0; b < 4; b++) {
+        init_color(i, r * 250, g * 250, b * 250);
+        init_pair(i, i, 0);
+        i++;
+      }
+    }
+  }
 
-  window_move(&window, 0, 1);
-  window_addch(&window, 'a');
-  window_addch(&window, 'b');
-  window_addch(&window, 'c');
-  window_addch(&window, 'd');
-  window_addch(&window, 'e');
-  window_addch(&window, 'f');
-  window_addch(&window, 'g');
-  window_render_border(&window);
+  for (int i = 0; i < 64; i++) {
+    attron(COLOR_PAIR(i));
+    addch('@');
+    attroff(COLOR_PAIR(i));
+  }
 
   refresh();
 }
+
+
+void debug_init() {
+  erase();
+
+  game_menu_render_items(game_menu_get_definition());
+  game_menu_previous_selection(game_menu_get_definition());
+
+  refresh();
+}
+
 
 #endif
 
@@ -63,7 +82,7 @@ void main_update_game(struct Game* game, struct UI* ui) {
         + ui->start_screen.made_by_time_millisecond;
       if (delta_time_millisecond >= total_time) {
         log_info("New game_state: GAME_STATE_START_MENU");
-        game->game_state = GAME_STATE_START_MENU;
+        game->game_state = GAME_STATE_MAIN_MENU;
       }
       break;
     default:
@@ -108,7 +127,7 @@ int main() {
     render(&ui, &game);
 
     input_update(&game, &ui);
-    game_print_state(game.game_state);
+    game_state_print(game.game_state);
     if (game.game_state == GAME_STATE_QUIT) {
       break;
     }

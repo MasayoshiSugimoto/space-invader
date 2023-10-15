@@ -3,7 +3,7 @@
 
 
 #define DEBUG_GAME_BOARD_SHOW_ALL false
-#define DEBUG_ENABLE_TEST true
+#define DEBUG_ENABLE_TEST false
 #define DEBUG_COLLISION_VISUALISATION_MODE true
 
 
@@ -19,6 +19,9 @@
 
 
 #define LOG_FILE "/tmp/space-invaders.log"
+
+
+#define GAME_INIT_GAME_STATE GAME_STATE_MAIN_MENU
 
 
 #endif

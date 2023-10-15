@@ -159,12 +159,48 @@ void input_update_spaceship_fire(struct Game* game, struct UI* ui, KeyboardKey k
 }
 
 
+// TODO: Change `game_menu` to `main_menu`
+void input_update_game_menu_next(struct Game* game, struct UI* ui, KeyboardKey key) {
+  main_menu_next_selection(main_menu_get_definition());
+}
+
+
+// TODO: Change `game_menu` to `main_menu`
+void input_update_game_menu_previous(struct Game* game, struct UI* ui, KeyboardKey key) {
+  main_menu_previous_selection(main_menu_get_definition());
+}
+
+
+void input_update_main_menu_validate_selection(struct Game* game, struct UI* ui, KeyboardKey key) {
+  log_info("Main menu selection update");
+  switch (main_menu_get_selection(main_menu_get_definition())) {
+    case MAIN_MENU_SELECTION_START:
+      log_info("Main menu selection: START");
+      game_set_game_state(game, GAME_STATE_IN_GAME);
+      break;
+    case MAIN_MENU_SELECTION_MANUAL:
+      log_info("Main menu selection: MANUAL");
+      // Do nothing
+      break;
+    case MAIN_MENU_SELECTION_QUIT:
+      log_info("Main menu selection: QUIT");
+      // Do nothing
+      break;
+  }
+}
+
+
 const struct InputTableRow input_transition_table[] = {
   {GAME_STATE_IN_GAME, KEY_LEFT, input_update_move_space_ship_left},
   {GAME_STATE_IN_GAME, KEY_RIGHT, input_update_move_space_ship_right},
   {GAME_STATE_IN_GAME, ' ', input_update_spaceship_fire},
   {GAME_STATE_IN_GAME, 'a', input_update_move_space_ship_left},
   {GAME_STATE_IN_GAME, 'd', input_update_move_space_ship_right},
+  {GAME_STATE_MAIN_MENU, KEY_UP, input_update_game_menu_previous},
+  {GAME_STATE_MAIN_MENU, KEY_DOWN, input_update_game_menu_next},
+  {GAME_STATE_MAIN_MENU, 'w', input_update_game_menu_previous},
+  {GAME_STATE_MAIN_MENU, 's', input_update_game_menu_next},
+  {GAME_STATE_MAIN_MENU, '\n', input_update_main_menu_validate_selection},
 };
 
 
@@ -173,7 +209,7 @@ void input_update(struct Game* game, struct UI* ui) {
   if (key == ERR) return;
 
   input_log_key_pressed(key);
-  game_print_state(game->game_state);
+  game_state_print(game->game_state);
 
   for (int i = 0; i < array_size(input_transition_table); i++) {
     const struct InputTableRow* transition = &input_transition_table[i];

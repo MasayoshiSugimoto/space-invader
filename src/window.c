@@ -25,6 +25,34 @@ void window_addch(struct Window* window, const chtype character) {
 }
 
 
+void window_render_center_string(struct Window* window, int y, const char* string) {
+  int length = strlen(string);
+  int left = window->width / 2 - length / 2;
+  window_move(window, y, left);
+  for (int i = 0; i < length; i++) {
+    addch(string[i]);
+  }
+}
+
+
+void window_render_center_string_selection(struct Window* window, int y, const char* string) {
+  int length = strlen(string);
+  int left = window->width / 2 - length / 2;
+  window_move(window, y, 0);
+  attron(COLOR_PAIR(COLOR_PAIR_ID_MENU_SELECTION));
+  for (int i = 0; i < left; i++) {
+    addch(' ');
+  }
+  for (int i = 0; i < length; i++) {
+    addch(string[i]);
+  }
+  for (int i = left + length; i < window->width; i++) {
+    addch(' ');
+  }
+  attroff(COLOR_PAIR(COLOR_PAIR_ID_MENU_SELECTION));
+}
+
+
 void window_render_border(struct Window* window) {
   int line = window->top;
   move(line, window->left);
