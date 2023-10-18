@@ -19,7 +19,6 @@ void ui_init(struct UI* ui) {
   ui_init_ncurses();
   color_init();
   manual_init(&ui->manual);
-  start_screen_init(&ui->start_screen);
   sprite_init();
   screen_init(screen_get_screen());
 }

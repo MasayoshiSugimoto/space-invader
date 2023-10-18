@@ -21,7 +21,7 @@
 #define LOG_FILE "/tmp/space-invaders.log"
 
 
-#define GAME_INIT_GAME_STATE GAME_STATE_MAIN_MENU
+#define GAME_INIT_GAME_STATE GAME_STATE_START_SCREEN
 
 
 #endif

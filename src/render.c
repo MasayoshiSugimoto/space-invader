@@ -103,6 +103,9 @@ void render(struct UI* ui, struct Game* game) {
     case GAME_STATE_MAIN_MENU:
       main_menu_render_items(main_menu_get_definition());
       break;
+    case GAME_STATE_START_SCREEN:
+      start_screen_render();
+      break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);
   }

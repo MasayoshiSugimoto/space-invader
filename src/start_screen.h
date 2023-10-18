@@ -3,16 +3,11 @@
 
 
 #include "util.h"
+#include "window.h"
+#include "terminal.h"
 
 
-struct StartScreen {
-  int start_millisecond;
-  int logo_display_time_millisecond;
-  int made_by_time_millisecond;
-};
-
-
-void start_screen_init(struct StartScreen* start_screen);
+void start_screen_render();
 
 
 #endif

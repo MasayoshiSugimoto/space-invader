@@ -17,7 +17,6 @@
 struct UI {
   struct Terminal terminal;
   struct Manual manual;
-  struct StartScreen start_screen;
 };
 
 
