@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "log.h"
+#include "util.h"
 
 
 typedef uint64_t Instant;
@@ -34,6 +35,7 @@ void timer_frame_init();
 Duration timer_get_frame_start();
 Duration timer_get_frame_duration();
 void timer_print(const struct Timer* timer);
+float timer_interpolate_linear(const struct Timer* timer, float start, float end);
 
 
 #endif

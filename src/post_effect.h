@@ -7,8 +7,10 @@
 #include "color.h"
 
 
-void fade_out_init();
-void fade_out_update(struct VirtualScreen* virtual_screen);
+void fade_out_start();
+void fade_out_render(struct VirtualScreen* virtual_screen);
+bool fade_out_is_done();
+void fade_out_stop();
 
 
 #endif

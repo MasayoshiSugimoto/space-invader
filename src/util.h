@@ -17,5 +17,8 @@
 uint64_t get_current_millisecond();
 
 
+float interpolate_linear(float current, float max, float start, float end);
+
+
 #endif
 

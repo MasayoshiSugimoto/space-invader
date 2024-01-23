@@ -8,6 +8,9 @@
 #include "util.h"
 
 
+#define COLOR_CUSTOM_COLOR_MAX 2
+
+
 enum ColorPairId {
   COLOR_PAIR_ID_DEFAULT,
   COLOR_PAIR_ID_COLLISION_ON,

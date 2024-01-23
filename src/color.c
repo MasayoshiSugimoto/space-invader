@@ -5,7 +5,6 @@
 #define COLOR_UNIT_MAX 1000
 #define COLOR_ANSI_COLOR_COUNT 8
 
-
 enum PaletteColor {
   PALETTE_COLOR_BLACK,
   PALETTE_COLOR_WHITE,
@@ -20,7 +19,7 @@ struct ColorPair {
 };
 
 
-struct Color g_colors[] = {
+struct Color g_colors[COLOR_CUSTOM_COLOR_MAX] = {
   {0, 0, 0},
   {1000, 1000, 1000},
 };

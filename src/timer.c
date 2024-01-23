@@ -62,3 +62,8 @@ Duration timer_get_frame_duration() {
 void timer_print(const struct Timer* timer) {
   log_info_f("current: %ld, max: %ld", timer->current, timer->max);
 }
+
+
+float timer_interpolate_linear(const struct Timer* timer, float start, float end) {
+  return interpolate_linear(timer->current, timer->max, start, end);
+}
