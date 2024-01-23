@@ -9,6 +9,8 @@
 #include "window.h"
 #include "render.h"
 #include "main_menu.h"
+#include "virtual_screen.h"
+#include "post_effect.h"
 
 
 /********************************************************************************
@@ -81,11 +83,15 @@ int main() {
   srand(time(NULL));
   ui_init(&ui);
   game_init(&game);
-
+  virtual_screen_init();
+  color_palette_init();
+  fade_out_init();
+  timer_frame_init();
 
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
+    timer_on_frame_start();
 
 #if DEBUG_ENABLE_TEST
     debug_init();

@@ -11,6 +11,9 @@
 #include "window.h"
 #include "game.h"
 #include "main_menu.h"
+#include "virtual_screen.h"
+#include "post_effect.h"
+#include "timer.h"
 
 
 void render(struct UI* ui, struct Game* game);

@@ -17,8 +17,24 @@ enum ColorPairId {
 };
 
 
+struct Color {
+  short red;
+  short green;
+  short blue;
+};
+
+
 void color_init();
 
+void color_palette_init();
+void color_set_red(struct Color* color, short red);
+void color_set_green(struct Color* color, short green);
+void color_set_blue(struct Color* color, short blue);
+const struct Color* color_palette_get(unsigned short id);
+size_t color_palette_length();
+void color_palette_set(const struct Color* palette);
+void color_print(const struct Color* color);
+short color_pair_id(short foreground, short background);
 
 #endif
 

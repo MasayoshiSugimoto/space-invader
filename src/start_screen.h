@@ -5,6 +5,7 @@
 #include "util.h"
 #include "window.h"
 #include "terminal.h"
+#include "virtual_screen.h"
 
 
 void start_screen_render();
