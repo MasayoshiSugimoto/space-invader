@@ -62,6 +62,20 @@ struct _IO_FILE* g_debug_file;
 }
 
 
+#define assert(condition, text) { \
+  if (!(condition)) { \
+    log_fatal(text); \
+  } \
+}
+
+
+#define assert_f(condition, pattern, ...) { \
+  if (!(condition)) { \
+    log_fatal_f(pattern, __VA_ARGS__); \
+  } \
+}
+
+
 void log_init();
 
 

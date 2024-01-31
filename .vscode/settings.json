@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "main_menu.h": "c",
+        "virtual_screen.h": "c"
+    }
+}

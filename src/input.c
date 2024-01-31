@@ -211,9 +211,7 @@ void input_update(struct Game* game, struct UI* ui) {
 
   for (int i = 0; i < array_size(input_transition_table); i++) {
     const struct InputTableRow* transition = &input_transition_table[i];
-    if (game->game_state == GAME_STATE_START_SCREEN) {
-      game->game_state = GAME_STATE_IN_GAME;
-    } else if (transition->game_state == game->game_state && transition->key == key) {
+    if (transition->game_state == game->game_state && transition->key == key) {
       transition->update_with_input(game, ui, key);
     }
   }
