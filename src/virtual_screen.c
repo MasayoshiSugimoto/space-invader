@@ -202,3 +202,13 @@ void virtual_screen_render() {
     }
   }
 }
+
+
+int virtual_screen_center_x() {
+  return g_virtual_screen.width / 2;
+}
+
+
+int virtual_screen_center_y() {
+  return g_virtual_screen.height / 2;
+}

@@ -87,6 +87,8 @@ int main() {
   color_palette_init();
   fade_out_start();
   timer_frame_init();
+  virtual_screen_setup();
+  start_screen_init();
 
   // Loop to track cursor position
   while (true) {

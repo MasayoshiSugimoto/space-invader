@@ -104,15 +104,9 @@ void render(struct UI* ui, struct Game* game) {
       main_menu_render_items(main_menu_get_definition());
       break;
     case GAME_STATE_START_SCREEN:
-      if (fade_out_is_done()) {
-        fade_out_stop();
+      if (start_screen_render() == TASK_STATUS_DONE) {
         game->game_state = GAME_STATE_IN_GAME;
       }
-      virtual_screen_reset();
-      start_screen_render();
-
-      fade_out_render(&g_virtual_screen);
-      
       break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);

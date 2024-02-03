@@ -41,6 +41,8 @@ void virtual_screen_reset();
 void virtual_screen_set_char(int x, int y, const chtype ch);
 void virtual_screen_set_string(int x, int y, const char* string);
 void virtual_screen_render();
+int virtual_screen_center_x();
+int virtual_screen_center_y();
 
 
 #endif
