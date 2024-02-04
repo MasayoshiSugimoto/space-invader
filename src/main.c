@@ -85,7 +85,6 @@ int main() {
   game_init(&game);
   virtual_screen_init();
   color_palette_init();
-  fade_out_start();
   timer_frame_init();
   virtual_screen_setup();
   start_screen_init();

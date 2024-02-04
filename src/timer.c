@@ -8,7 +8,7 @@ Duration g_frame_duration = 0;
 Instant timer_now() {
   struct timespec start;
   clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-  return start.tv_sec * 1000 + start.tv_nsec / 1000000;
+  return start.tv_sec * 1000000000 + start.tv_nsec;
 }
 
 
@@ -37,7 +37,7 @@ bool timer_is_done(struct Timer* timer) {
 
 
 void timer_on_frame_start() {
-  uint64_t now = timer_now();
+  Instant now = timer_now();
   g_frame_duration = now - g_frame_start;
   g_frame_start = timer_now();
 }

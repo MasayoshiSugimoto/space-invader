@@ -14,6 +14,10 @@
 #include "util.h"
 
 
+#define duration_as_milliseconds(d) d / 1000000
+#define milliseconds_as_duration(m) m * 1000000
+
+
 typedef uint64_t Instant;
 typedef uint64_t Duration;
 

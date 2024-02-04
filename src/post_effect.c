@@ -1,17 +1,14 @@
 #include "post_effect.h"
 
 
-#define FADE_OUT_TIME_MS 2000
-
-
 struct FadeOut {
   struct Timer timer;
   struct Color palette[COLOR_CUSTOM_COLOR_MAX];
 } g_fade_out;
 
 
-void fade_out_start() {
-  timer_init(&g_fade_out.timer, FADE_OUT_TIME_MS);
+void fade_out_start(Duration duration) {
+  timer_init(&g_fade_out.timer, duration);
 }
 
 
