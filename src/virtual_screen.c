@@ -74,7 +74,9 @@ void virtual_window_setup(struct VirtualWindow* window, int width, int height, i
   window->offset_x = offset_x;
   window->offset_y = offset_y;
   window->has_border = true;
-  memset(window->buffer, ' ', sizeof(chtype) * length);
+  for (int i = 0; i < buffer_length(window); i++) {
+    window->buffer[i] = ' ';
+  }
 }
 
 
