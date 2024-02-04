@@ -78,6 +78,19 @@ void virtual_window_setup(struct VirtualWindow* window, int width, int height, i
 }
 
 
+void virtual_window_setup_from_sprite(struct VirtualWindow* window, const struct Sprite* sprite) {
+  virtual_window_setup(window, sprite->width, sprite->height, 0, 0);
+  window->has_border = false;
+  for (int y = 0; y < sprite->height; y++) {
+    for (int x = 0; x < sprite->width; x++) {
+      if (sprite->as_matrix[y][x] != ' ') {
+        virtual_window_set_buffer(window, y * sprite->width + x, sprite->as_matrix[y][x]);
+      }
+    }
+  }
+}
+
+
 void virtual_window_delete(struct VirtualWindow* window) {
   free(window->buffer);
 }

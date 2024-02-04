@@ -7,6 +7,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "terminal.h"
+#include "sprite.h"
 
 
 struct VirtualScreen {
@@ -28,6 +29,7 @@ struct VirtualWindow {
 
 void virtual_window_init(struct VirtualWindow* window);
 void virtual_window_setup(struct VirtualWindow* window, int width, int height, int offset_x, int offset_y);
+void virtual_window_setup_from_sprite(struct VirtualWindow* window, const struct Sprite* sprite);
 void virtual_window_delete(struct VirtualWindow* window);
 void virtual_window_set_string(struct VirtualWindow* window, const char* string, int x, int y);
 void virtual_window_draw(const struct VirtualWindow* window);

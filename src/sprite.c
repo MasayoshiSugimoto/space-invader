@@ -1,7 +1,7 @@
 #include "sprite.h"
 
 
-#define SPRITE_BUFFER_MAX 2048
+#define SPRITE_BUFFER_MAX 16384
 
 
 #define assert_sprite_id(sprite_id) { \
@@ -24,6 +24,7 @@ const struct SpriteConfig sprite_configs[] = {
   {SPRITE_ID_EXPLOSION_1, "SPRITE_ID_EXPLOSION_1", "explosion_1.txt"},
   {SPRITE_ID_EXPLOSION_2, "SPRITE_ID_EXPLOSION_2", "explosion_2.txt"},
   {SPRITE_ID_EXPLOSION_3, "SPRITE_ID_EXPLOSION_3", "explosion_3.txt"},
+  {SPRITE_ID_TITLE, "SPRITE_ID_TITLE", "title.txt"},
 };
 
 
@@ -90,7 +91,7 @@ int get_height(const char* sprite_as_string) {
       count++;
     }
   }
-  return count;
+  return count + 1;
 }
 
 
@@ -196,5 +197,3 @@ const struct Sprite* sprite_get_sprite(enum SpriteId sprite_id) {
   assert_sprite_id(sprite_id);
   return &sprites[sprite_id];
 }
-
-
