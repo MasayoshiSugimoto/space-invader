@@ -213,7 +213,9 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 void virtual_screen_render() {
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
+      attron(COLOR_PAIR(color_pair_id(1, 0)));
       mvaddch(y, x, private_get(x, y));
+      attroff(COLOR_PAIR(color_pair_id(1, 0)));
     }
   }
 }

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "terminal.h"
 #include "sprite.h"
+#include "color.h"
 
 
 struct VirtualScreen {
