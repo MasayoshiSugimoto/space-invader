@@ -7,7 +7,7 @@ SOURCES = $(foreach d, $(SRC_DIR), $(wildcard $(addprefix $(d)/*, .c)))
 DEPS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.d))
 OBJS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.o))
 PROGRAM = space-invaders
-LIBS = -lcurses -lncurses
+LIBS = -lcurses -lncurses -lm
 
 ignore := $(shell [ ! -d .build ] && mkdir -p .build)
 

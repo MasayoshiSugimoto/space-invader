@@ -60,7 +60,22 @@ float frame_timer_interpolate_linear_f(struct FrameTimer* frame_timer, float sta
         start,
         end
     );
-    // return start + ((float)elapsed_time / (float)total_duration * (end - start));
+}
+
+
+float frame_timer_interpolate_cos_f(struct FrameTimer* frame_timer, float start, float end) {
+    if (frame_timer->duration == 0.0f) return 0.0f;
+    // We convert to millisecond to stay accurate in float range.
+    uint64_t elapsed_time = imin(_frame_start - frame_timer->start, frame_timer->duration);
+    elapsed_time = duration_as_milliseconds(elapsed_time);
+    // uint64_t total_duration = duration_as_milliseconds(frame_timer->duration);
+    return interpolation_cos_f(
+        (float)duration_as_milliseconds(_frame_start),
+        (float)duration_as_milliseconds(frame_timer->start),
+        (float)duration_as_milliseconds(frame_timer->start + frame_timer->duration),
+        start,
+        end
+    );
 }
 
 

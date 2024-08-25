@@ -21,7 +21,9 @@ bool frame_timer_is_done(struct FrameTimer* frame_timer);
 void frame_timer_start(struct FrameTimer* frame_timer, Duration duration);
 void frame_timer_stop(struct FrameTimer* frame_timer);
 float frame_timer_interpolate_linear_f(struct FrameTimer* frame_timer, float start, float end);
+float frame_timer_interpolate_cos_f(struct FrameTimer* frame_timer, float start, float end);
 Duration frame_timer_remaining_time(struct FrameTimer* frame_timer);
+
 
 
 #endif

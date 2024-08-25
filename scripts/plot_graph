@@ -1,0 +1,7 @@
+set terminal png
+set output "/mnt/c/Temp/graph.png"
+set title "Space Invader"
+set xlabel "X-axis label"
+set ylabel "Y-axis label"
+set grid
+plot "/tmp/space_invader.debug_data" using 1:2 with linespoints

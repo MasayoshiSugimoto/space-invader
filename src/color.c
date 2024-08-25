@@ -103,7 +103,7 @@ void _fade_update() {
     return;
   }
   struct FrameTimer* timer = &_fade.timer;
-  float alpha = frame_timer_interpolate_linear_f(timer, _fade.alpha_start, _fade.alpha_end);
+  float alpha = frame_timer_interpolate_cos_f(timer, _fade.alpha_start, _fade.alpha_end);
   struct Color* active_color_palette_id = _color_palette[_palette_active_id];
   struct Color* post_rendering_palette_id = _color_palette[COLOR_PALETTE_ID_POST_RENDERING];
   for (ColorId color_id = COLOR_FIRST_COLOR_ID; color_id < COLOR_COLOR_MAX; color_id++) {

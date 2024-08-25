@@ -41,6 +41,7 @@ Duration timer_get_frame_start();
 Duration timer_get_frame_duration();
 void timer_print(const struct Timer* timer);
 float timer_interpolate_linear(const struct Timer* timer, float start, float end);
+float timer_interpolate_cos_f(const struct Timer* timer, float start, float end);
 void timer_done(struct Timer* timer);
 
 

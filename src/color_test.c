@@ -19,6 +19,8 @@ static void _print(const char* text) {
 void _test_color_palettes() {
     log_info("Testing color palettes...");
 
+    color_init();
+
     color_color_palette_activate(0);
     ColorId black_id = color_color_palette_add(BLACK);
     ColorId white_id = color_color_palette_add(WHITE);
@@ -88,6 +90,7 @@ void _test_color_palettes() {
 void _test_fade_in() {
     log_info("Testing fade in...");
 
+    color_init();
     frame_timer_init();
 
     color_color_palette_activate(0);
@@ -145,15 +148,15 @@ void _test_fade_in() {
 
 
 static void _test_interpolation_cubic_f() {
-  float iteration_count = 1000;
+  float iteration_count = 10;
   log_info("BEGIN CUBIC INTERPOLATION");
-  for (int i = 0; i < iteration_count; i++) {
+  for (int i = 0; i <= iteration_count; i++) {
     float input_start = 10.0f;
     float input_end = 20.0f;
-    float input_current = (input_end - input_start) * (float)i / iteration_count;
-    float output_start = 0.0f;
-    float output_end = 1.0f;
-    float output = interpolation_cubic_f(input_current, input_start, input_end, output_start, output_end);
+    float input_current = input_start + (input_end - input_start) * ((float)i / (float)iteration_count);
+    float output_start = 15.0f;
+    float output_end = 5.0f;
+    float output = interpolation_cos_f(input_current, input_start, input_end, output_start, output_end);
     log_info_f("%f, %f", input_current, output);
   }
   log_info("END CUBIC INTERPOLATION");
@@ -162,8 +165,7 @@ static void _test_interpolation_cubic_f() {
 
 void color_test() {
   _test_interpolation_cubic_f();
-  // color_init();
-  // _test_fade_in();
+  _test_fade_in();
   // _test_color_palettes();
 }
 
