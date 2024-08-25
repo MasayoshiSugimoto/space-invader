@@ -93,6 +93,11 @@ void render_sprite(enum SpriteId sprite_id, int left, int top) {
 void render(struct UI* ui, struct Game* game) {
   enum GameState game_state = game->game_state;
 
+  if (game_state == GAME_STATE_SPRITE_EDITOR) {
+    sprite_editor_render();
+    return;
+  }
+
   erase();
 
   curs_set(CURSOR_VISIBILITY_INVISIBLE);

@@ -38,6 +38,21 @@ void print_char(char c, EntityId entity_id) {
 }
 
 
+void print_chtype(chtype c, EntityId entity_id) {
+#if DEBUG_COLLISION_VISUALISATION_MODE
+  if (c != ' ' && collision_manager_is_collision(entity_id)) {
+    attron(COLOR_PAIR(COLOR_PAIR_ID_COLLISION_ON));
+    addch(c);
+    attroff(COLOR_PAIR(COLOR_PAIR_ID_COLLISION_ON));
+  } else {
+    addch(c);
+  }
+#else
+  addch(c);
+#endif
+}
+
+
 struct Screen* screen_get_screen() {
   return &l_screen;
 }
@@ -132,11 +147,11 @@ void screen_render_entities(const struct Screen* screen, const struct Vector scr
   for (int i = 0; i < nb_rendering_unit; i++) {
     struct RenderingUnit* rendering_unit = &rendering_units[i];
     const struct Sprite* sprite = rendering_unit->sprite;
-    for (int y = 0; y < sprite->height; y++) {
-      move(rendering_unit->y + y, rendering_unit->x);
-      for (int x = 0; x < sprite->width; x++) {
-        print_char(sprite->as_matrix[y][x], rendering_unit->entity_id);
-      }
+    for (int j = 0; j < sprite->buffer_length; j++) {
+      int y = sprite_buffer_y(sprite, j);
+      int x = sprite_buffer_x(sprite, j);
+      move(rendering_unit->y + y, rendering_unit->x + x);
+      print_chtype(sprite->buffer[j], rendering_unit->entity_id);
     }
   }
 }

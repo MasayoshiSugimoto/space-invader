@@ -3,7 +3,7 @@
 
 
 #define DEBUG_GAME_BOARD_SHOW_ALL false
-#define DEBUG_ENABLE_TEST false
+#define DEBUG_ENABLE_TEST true
 #define DEBUG_COLLISION_VISUALISATION_MODE true
 
 

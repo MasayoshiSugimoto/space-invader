@@ -14,8 +14,9 @@
 #include "util.h"
 
 
-#define duration_as_milliseconds(d) d / 1000000
-#define milliseconds_as_duration(m) m * 1000000
+#define duration_as_milliseconds(d) ((d) / 1000000ul)
+#define duration_as_second(d) (duration_as_milliseconds(d) / 1000ul)
+#define milliseconds_as_duration(m) ((m) * 1000000ul)
 
 
 typedef uint64_t Instant;
@@ -40,6 +41,7 @@ Duration timer_get_frame_start();
 Duration timer_get_frame_duration();
 void timer_print(const struct Timer* timer);
 float timer_interpolate_linear(const struct Timer* timer, float start, float end);
+void timer_done(struct Timer* timer);
 
 
 #endif

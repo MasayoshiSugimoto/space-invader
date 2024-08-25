@@ -1,7 +1,7 @@
 #include "game_state.h"
 
 
-const char* g_game_state_strings[] = {
+const char* g_game_state_strings[GAME_STATE_MAX + 1] = {
   "GAME_STATE_MAIN_MENU",
   "GAME_STATE_IN_GAME",
   "GAME_STATE_GAME_OVER",
@@ -10,6 +10,7 @@ const char* g_game_state_strings[] = {
   "GAME_STATE_MANUAL",
   "GAME_STATE_START_SCREEN",
   "GAME_STATE_CREDITS",
+  "GAME_STATE_SPRITE_EDITOR",
   "GAME_STATE_QUIT",
   "GAME_STATE_MAX"
 };

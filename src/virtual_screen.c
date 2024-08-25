@@ -38,7 +38,7 @@ bool virtual_window_is_inside(const struct VirtualWindow* window, int x, int y) 
 
 void virtual_window_set_buffer(struct VirtualWindow* window, int i, chtype ch) {
   if (i < buffer_length(window)) {
-    window->buffer[i] = ch;
+    window->pixels[i].character = ch;
   }
 }
 
@@ -54,7 +54,7 @@ void virtual_window_draw_char(const struct VirtualWindow* window, int x, int y, 
 
 
 void virtual_window_init(struct VirtualWindow* window) {
-  window->buffer = NULL;
+  window->pixels = NULL;
   window->width = 0;
   window->height = 0;
   window->offset_x = 0;
@@ -64,18 +64,18 @@ void virtual_window_init(struct VirtualWindow* window) {
 
 
 void virtual_window_setup(struct VirtualWindow* window, int width, int height, int offset_x, int offset_y) {
-  if (window->buffer != NULL) {
-    free(window->buffer);
+  if (window->pixels != NULL) {
+    free(window->pixels);
   }
   int length = width * height;
-  window->buffer = malloc(sizeof(chtype) * length);
+  window->pixels = malloc(sizeof(*(window->pixels)) * length);
   window->width = width;
   window->height = height;
   window->offset_x = offset_x;
   window->offset_y = offset_y;
   window->has_border = true;
   for (int i = 0; i < buffer_length(window); i++) {
-    window->buffer[i] = ' ';
+    window->pixels[i].character = ' ';
   }
 }
 
@@ -94,7 +94,7 @@ void virtual_window_setup_from_sprite(struct VirtualWindow* window, const struct
 
 
 void virtual_window_delete(struct VirtualWindow* window) {
-  free(window->buffer);
+  free(window->pixels);
 }
 
 
@@ -126,10 +126,10 @@ void virtual_window_draw(const struct VirtualWindow* window) {
       } else if (y == 0 || y == height - 1) {
         virtual_window_draw_char(window, x, y, ACS_HLINE);  // '─'
       } else {
-        virtual_window_draw_char(window, x, y, window->buffer[i]);
+        virtual_window_draw_char(window, x, y, window->pixels[i].character);
       }
     } else {
-      virtual_window_draw_char(window, x, y, window->buffer[i]);
+      virtual_window_draw_char(window, x, y, window->pixels[i].character);
     }
   }
 }
@@ -148,6 +148,18 @@ int virtual_window_center_y(const struct VirtualWindow* window) {
 void virtual_window_center(struct VirtualWindow* window) {
   window->offset_x = (g_virtual_screen.width - window->width) / 2;
   window->offset_y = (g_virtual_screen.height - window->height) / 2;
+}
+
+
+void virtual_window_clear(struct VirtualWindow* window, chtype clear_character) {
+  for (int i = 0; i < buffer_length(window); i++) {
+    window->pixels[i].character = clear_character;
+  }
+}
+
+
+void virtual_window_set(struct VirtualWindow* window, int x, int y, chtype character) {
+  window->pixels[buffer_index(window, x, y)].character = character;
 }
 
 
@@ -213,9 +225,10 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 void virtual_screen_render() {
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
-      attron(COLOR_PAIR(color_pair_id(1, 0)));
+      int color_pair = COLOR_PAIR(3);
+      attron(color_pair);
       mvaddch(y, x, private_get(x, y));
-      attroff(COLOR_PAIR(color_pair_id(1, 0)));
+      attroff(color_pair);
     }
   }
 }

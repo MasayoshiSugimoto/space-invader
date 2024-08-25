@@ -1,0 +1,27 @@
+#ifndef FRAME_TIMER_H
+#define FRAME_TIMER_H
+
+
+#include "timer.h"
+#include <curses.h>
+#include <ncurses.h>
+#include "interpolation.h"
+
+
+struct FrameTimer {
+    Instant start;
+    Duration duration;
+};
+
+
+void frame_timer_init();
+void frame_timer_timer_init(struct FrameTimer* frame_timer);
+void frame_timer_on_frame_start();  // Register time at frame start.
+bool frame_timer_is_done(struct FrameTimer* frame_timer);
+void frame_timer_start(struct FrameTimer* frame_timer, Duration duration);
+void frame_timer_stop(struct FrameTimer* frame_timer);
+float frame_timer_interpolate_linear_f(struct FrameTimer* frame_timer, float start, float end);
+Duration frame_timer_remaining_time(struct FrameTimer* frame_timer);
+
+
+#endif

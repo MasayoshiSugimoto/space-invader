@@ -67,3 +67,9 @@ void timer_print(const struct Timer* timer) {
 float timer_interpolate_linear(const struct Timer* timer, float start, float end) {
   return interpolate_linear(timer->current, timer->max, start, end);
 }
+
+
+void timer_done(struct Timer* timer) {
+  timer->max = 0;
+  timer->current = 0;
+}

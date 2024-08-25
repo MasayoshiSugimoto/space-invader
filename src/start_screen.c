@@ -98,6 +98,7 @@ void start_screen_credits_init_fade_out() {
 
 
 enum TaskStatus start_screen_render() {
+  erase();
   virtual_screen_reset();
   virtual_window_center(&g_window);
   virtual_window_draw(&g_window);

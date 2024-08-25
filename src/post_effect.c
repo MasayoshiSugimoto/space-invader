@@ -21,19 +21,21 @@ void fade_out_render(struct VirtualScreen* virtual_screen) {
     alpha = timer_interpolate_linear(timer, 1.0f, 0.0f);
   }
   struct Color* palette = g_fade_out.palette;
-  for (unsigned int id = 0; id < color_palette_length(); id++) {
-    const struct Color* color = color_palette_get(id);
-    color_set_red(&palette[id], alpha * color->red);
-    color_set_green(&palette[id], alpha * color->green);
-    color_set_blue(&palette[id], alpha * color->blue);
+  for (unsigned int id = 0; id < color_palette_length_deprecated(); id++) {
+    const struct Color* color = color_palette_get_deprecated(id);
+    struct Color* color2 = &palette[id];
+    color2->red = alpha * color->red;
+    color2->green = alpha * color->green;
+    color2->blue = alpha * color->blue;
   }
-  color_palette_set(palette);
+  color_palette_set_deprecated(palette);
 
   for (int x = 0; x < virtual_screen->width; x++) {
     for (int y = 0; y < virtual_screen->height; y++) {
-      attron(COLOR_PAIR(color_pair_id(1, 0)));
+      short color_pair = COLOR_PAIR(2);
+      attron(color_pair);
       mvaddch(y, x, virtual_screen->screen[y * virtual_screen->width + x]);
-      attroff(COLOR_PAIR(color_pair_id(1, 0)));
+      attroff(color_pair);
     }
   }
 }
@@ -48,19 +50,21 @@ void fade_in_render(struct VirtualScreen* virtual_screen) {
     alpha = timer_interpolate_linear(timer, 0.0f, 1.0f);
   }
   struct Color* palette = g_fade_out.palette;
-  for (unsigned int id = 0; id < color_palette_length(); id++) {
-    const struct Color* color = color_palette_get(id);
-    color_set_red(&palette[id], alpha * color->red);
-    color_set_green(&palette[id], alpha * color->green);
-    color_set_blue(&palette[id], alpha * color->blue);
+  for (unsigned int id = 0; id < color_palette_length_deprecated(); id++) {
+    const struct Color* color = color_palette_get_deprecated(id);
+    struct Color* color2 = &palette[id];
+    color2->red = alpha * color->red;
+    color2->green = alpha * color->green;
+    color2->blue = alpha * color->blue;
   }
-  color_palette_set(palette);
+  color_palette_set_deprecated(palette);
 
   for (int x = 0; x < virtual_screen->width; x++) {
     for (int y = 0; y < virtual_screen->height; y++) {
-      attron(COLOR_PAIR(color_pair_id(1, 0)));
+      short color_pair = COLOR_PAIR(1);
+      attron(color_pair);
       mvaddch(y, x, virtual_screen->screen[y * virtual_screen->width + x]);
-      attroff(COLOR_PAIR(color_pair_id(1, 0)));
+      attroff(color_pair);
     }
   }
 }

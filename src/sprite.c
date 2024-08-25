@@ -60,6 +60,28 @@ const char* load_sprite(const char* file_name) {
 }
 
 
+const chtype* string_as_buffer(const char* sprite_as_string, int width, int height) {
+  int length = width * height;
+  chtype* buffer = malloc(sizeof(chtype) * length);
+  for (int i = 0; i < length; i++) {
+    buffer[i] = ' ';
+  }
+  int y = 0;
+  int x = 0;
+  for (int i = 0; sprite_as_string[i] != 0; i++) {
+    if (sprite_as_string[i] == '\r') continue;
+    if (sprite_as_string[i] == '\n') {
+      y++;
+      x = 0;
+      continue;
+    }
+    buffer[y * width + x] = sprite_as_string[i];
+    x++;
+  }
+  return buffer;
+}
+
+
 const char* const* string_to_matrix(const char* sprite_as_string, int width, int height) {
   char** matrix = malloc(sizeof(char*) * height);
   for (int y = 0; y < height; y++) {
@@ -159,6 +181,16 @@ void sprite_log(struct Sprite* sprite) {
 }
 
 
+int sprite_buffer_x(const struct Sprite* sprite, int index) {
+  return index % sprite->width;
+}
+
+
+int sprite_buffer_y(const struct Sprite* sprite, int index) {
+  return index / sprite->width;
+}
+
+
 void sprite_init() {
   // TODO: Add a bunch of assert to avoid apocalypse.
   for (int i = 0; i < array_size(sprite_configs); i++) {
@@ -173,12 +205,41 @@ void sprite_init() {
     sprite->file_name = config->file_name;
     sprite->as_string = sprite_as_string;
     sprite->as_matrix = string_to_matrix(sprite_as_string, width, height);
+    sprite->buffer_length = width * height;
+    sprite->buffer = string_as_buffer(sprite_as_string, width, height);
     sprite->width = width;
     sprite->height = height;
     sprite->character_count = get_character_count(sprite_as_string);
 
     sprite_log(sprite);
   }
+}
+
+
+void sprite_init_sprite(struct Sprite* sprite, int width, int height) {
+  char** matrix = malloc(sizeof(char*) * height);
+  for (int y = 0; y < height; y++) {
+    matrix[y] = malloc(sizeof(char) * width);
+    for (int x = 0; x < width; x++) {
+      matrix[y][x] = ' ';
+    }
+  }
+
+  sprite->sprite_id = SPRITE_ID_MAX;
+  sprite->file_name = NULL;
+  sprite->as_string = NULL;
+  sprite->as_matrix = (const char* const*)matrix;
+  sprite->width = width;
+  sprite->height = height;
+  sprite->character_count = 0;
+}
+
+
+void sprite_free(struct Sprite* sprite) {
+  for (int y = 0; y < sprite->height; y++) {
+    free((void*)sprite->as_matrix[y]);
+  }
+  // free((void*)sprite->buffer);
 }
 
 

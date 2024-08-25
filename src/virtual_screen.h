@@ -11,6 +11,11 @@
 #include "color.h"
 
 
+struct VirtualPixel {
+  chtype character;
+};
+
+
 struct VirtualScreen {
   chtype* screen;
   int width;
@@ -19,7 +24,7 @@ struct VirtualScreen {
 
 
 struct VirtualWindow {
-  chtype* buffer;
+  struct VirtualPixel* pixels;
   int width;
   int height;
   int offset_x;
@@ -37,6 +42,8 @@ void virtual_window_draw(const struct VirtualWindow* window);
 int virtual_window_center_x(const struct VirtualWindow* window, const char* string);
 int virtual_window_center_y(const struct VirtualWindow* window);
 void virtual_window_center(struct VirtualWindow* window);
+void virtual_window_clear(struct VirtualWindow* window, chtype clear_character);
+void virtual_window_set(struct VirtualWindow* window, int x, int y, chtype character);
 
 void virtual_screen_init();
 void virtual_screen_setup();

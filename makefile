@@ -9,26 +9,21 @@ OBJS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.o))
 PROGRAM = space-invaders
 LIBS = -lcurses -lncurses
 
-# Delete the default suffixes
-.SUFFIXES:
+ignore := $(shell [ ! -d .build ] && mkdir -p .build)
 
 $(PROGRAM): $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
-.build:
-	mkdir -p .build
-
 # Generate dependence files
-$(BUILD_DIR)/%.d: $(SRC_DIR)/%.c .build
+$(BUILD_DIR)/%.d: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(DEP_OPT) $< | sed -E 's;^(.*)\.o:;$(BUILD_DIR)/\1.o:;' > $@
 
 # Generate objects files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
--include $(DEPS)
-
 .PHONY: clean build try run tags
+
 
 clean:
 	rm -rf .build
@@ -39,7 +34,6 @@ build: $(PROGRAM)
 
 run: build
 	./$(PROGRAM)
-
 
 debug: build
 	gdb $(PROGRAM)
@@ -52,3 +46,4 @@ try:
 tags:
 	ctags -R .
 
+-include $(DEPS)

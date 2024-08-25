@@ -1,6 +1,19 @@
 {
     "files.associations": {
         "main_menu.h": "c",
-        "virtual_screen.h": "c"
+        "virtual_screen.h": "c",
+        "type_traits": "c",
+        "util.h": "c",
+        "log.h": "c",
+        "entity_system.h": "c",
+        "stdbool.h": "c",
+        "terminal.h": "c",
+        "color.h": "c",
+        "unistd.h": "c",
+        "curses.h": "c",
+        "color_test.h": "c",
+        "frame_timer_test.h": "c",
+        "frame_timer.h": "c",
+        "interpolation.h": "c"
     }
 }

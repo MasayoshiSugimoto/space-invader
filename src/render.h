@@ -14,6 +14,7 @@
 #include "virtual_screen.h"
 #include "post_effect.h"
 #include "timer.h"
+#include "sprite_editor.h"
 
 
 void render(struct UI* ui, struct Game* game);

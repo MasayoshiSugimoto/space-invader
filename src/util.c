@@ -9,5 +9,8 @@ uint64_t get_current_millisecond() {
 
 
 float interpolate_linear(float current, float max, float start, float end) {
+  if (max == 0.0f) {
+    return end;
+  }
   return start + (current / max) * (end - start);
 }

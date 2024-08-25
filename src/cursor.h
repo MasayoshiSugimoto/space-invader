@@ -18,6 +18,7 @@ struct Cursor {
 };
 
 
+void cursor_init(struct Cursor* cursor);
 void cursor_dump(struct Cursor* cursor);
 
 

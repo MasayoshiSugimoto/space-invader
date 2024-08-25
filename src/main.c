@@ -11,6 +11,9 @@
 #include "main_menu.h"
 #include "virtual_screen.h"
 #include "post_effect.h"
+#include "sprite_editor.h"
+#include "color_test.h"
+#include "frame_timer_test.h"
 
 
 /********************************************************************************
@@ -20,38 +23,17 @@
 
 #if DEBUG_ENABLE_TEST
 
-void debug_init2() {
 
-  erase();
+void debug() {
+  color_test();
+  // frame_timer_test();
+  // sprite_editor_init();
 
-  short i = 0;
-  for (short r = 0; r < 4; r++) {
-    for (short g = 0; g < 4; g++) {
-      for (short b = 0; b < 4; b++) {
-        init_color(i, r * 250, g * 250, b * 250);
-        init_pair(i, i, 0);
-        i++;
-      }
-    }
-  }
-
-  for (int i = 0; i < 64; i++) {
-    attron(COLOR_PAIR(i));
-    addch('@');
-    attroff(COLOR_PAIR(i));
-  }
-
-  refresh();
-}
-
-
-void debug_init() {
-  erase();
-
-  game_menu_render_items(game_menu_get_definition());
-  game_menu_previous_selection(game_menu_get_definition());
-
-  refresh();
+  // while (true) {
+  //   KeyboardKey key = getch();
+  //   sprite_editor_input_update(key);
+  //   sprite_editor_render();
+  // }
 }
 
 
@@ -89,15 +71,14 @@ int main() {
   virtual_screen_setup();
   start_screen_init();
 
+  #if DEBUG_ENABLE_TEST
+    debug();
+  #endif
+
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
     timer_on_frame_start();
-
-#if DEBUG_ENABLE_TEST
-    debug_init();
-    continue;
-#endif
 
     struct Terminal* terminal = &ui.terminal;
     terminal_init(terminal);
