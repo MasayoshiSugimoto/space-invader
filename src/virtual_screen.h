@@ -32,6 +32,7 @@ struct VirtualWindow {
   int offset_x;
   int offset_y;
   bool has_border;
+  bool is_transparent;
 };
 
 
@@ -46,6 +47,8 @@ int virtual_window_center_y(const struct VirtualWindow* window);
 void virtual_window_center(struct VirtualWindow* window);
 void virtual_window_clear(struct VirtualWindow* window, chtype clear_character);
 void virtual_window_set(struct VirtualWindow* window, int x, int y, chtype character);
+void virtual_window_set_transparency(struct VirtualWindow* window, bool is_transparent);
+bool virtual_window_get_transparency(struct VirtualWindow* window);
 
 void virtual_screen_init();
 void virtual_screen_setup();

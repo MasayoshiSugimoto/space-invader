@@ -3,6 +3,7 @@
 
 
 #include "window_manager.h"
+#include "cursor.h"
 
 
 void window_manager_test();

@@ -82,3 +82,8 @@ float frame_timer_interpolate_cos_f(struct FrameTimer* frame_timer, float start,
 Duration frame_timer_remaining_time(struct FrameTimer* frame_timer) {
     return imax(frame_timer->start + frame_timer->duration - _frame_start, 0);
 }
+
+
+Duration frame_timer_get_elapsed_time(struct FrameTimer* frame_timer) {
+    return _frame_start - frame_timer->start;
+}

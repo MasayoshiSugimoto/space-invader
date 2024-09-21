@@ -43,6 +43,16 @@ void virtual_window_set_buffer(struct VirtualWindow* window, int i, chtype ch) {
 }
 
 
+void virtual_window_set_transparency(struct VirtualWindow* window, bool is_transparent) {
+  window->is_transparent = is_transparent;
+}
+
+
+bool virtual_window_get_transparency(struct VirtualWindow* window) {
+  return window->is_transparent;
+}
+
+
 void virtual_window_draw_char(const struct VirtualWindow* window, int x, int y, const chtype ch) {
   int abs_x = window->offset_x + x;
   int abs_y = window->offset_y + y;
@@ -60,6 +70,7 @@ void virtual_window_init(struct VirtualWindow* window) {
   window->offset_x = 0;
   window->offset_y = 0;
   window->has_border = true;
+  window->is_transparent = false;
 }
 
 
@@ -74,6 +85,7 @@ void virtual_window_setup(struct VirtualWindow* window, int width, int height, i
   window->offset_x = offset_x;
   window->offset_y = offset_y;
   window->has_border = true;
+  window->is_transparent = false;
   for (int i = 0; i < buffer_length(window); i++) {
     window->pixels[i].character = ' ';
   }

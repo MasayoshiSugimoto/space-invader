@@ -23,7 +23,7 @@ void frame_timer_stop(struct FrameTimer* frame_timer);
 float frame_timer_interpolate_linear_f(struct FrameTimer* frame_timer, float start, float end);
 float frame_timer_interpolate_cos_f(struct FrameTimer* frame_timer, float start, float end);
 Duration frame_timer_remaining_time(struct FrameTimer* frame_timer);
-
+Duration frame_timer_get_elapsed_time(struct FrameTimer* frame_timer);
 
 
 #endif

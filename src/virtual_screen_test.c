@@ -13,7 +13,6 @@ void virtual_screen_test() {
     log_info("TEST: virtual_screen_test");
     struct Terminal terminal;
     terminal_init(&terminal);
-
     color_init();
 
     color_color_palette_activate(0);

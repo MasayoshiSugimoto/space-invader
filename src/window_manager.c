@@ -74,6 +74,7 @@ struct VirtualWindow* window_manager_window_new(int width, int height) {
   window->offset_y = 0;
   window->has_border = false;
   window->pixels = malloc(sizeof(*window->pixels) * width * height);
+  window_manager_window_clear(window);
   return window;
 }
 
@@ -94,7 +95,9 @@ void window_manager_window_draw(struct VirtualWindow* window) {
     int x = _pixels_get_x(window, i) + window->offset_x;
     int y = _pixels_get_y(window, i) + window->offset_y;
     struct VirtualPixel* pixel = &window->pixels[i];
-    virtual_screen_set_char_and_color(x, y, pixel->character, pixel->color_pair_id);
+    if (!window->is_transparent || pixel->character != ' ') {
+      virtual_screen_set_char_and_color(x, y, pixel->character, pixel->color_pair_id);
+    }
   }
 
   if (window->has_border) {
