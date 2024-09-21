@@ -3,8 +3,11 @@
 
 
 #define DEBUG_GAME_BOARD_SHOW_ALL false
-#define DEBUG_ENABLE_TEST true
 #define DEBUG_COLLISION_VISUALISATION_MODE true
+#define DEBUG_ENABLE_TEST false
+
+
+#define TEST_MODE_ENABLE true
 
 
 #define TERMINAL_MIN_WIDTH 100

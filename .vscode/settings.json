@@ -14,6 +14,8 @@
         "color_test.h": "c",
         "frame_timer_test.h": "c",
         "frame_timer.h": "c",
-        "interpolation.h": "c"
+        "interpolation.h": "c",
+        "sprite.h": "c",
+        "virtual_screen_test.h": "c"
     }
 }

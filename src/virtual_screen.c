@@ -68,7 +68,7 @@ void virtual_window_setup(struct VirtualWindow* window, int width, int height, i
     free(window->pixels);
   }
   int length = width * height;
-  window->pixels = malloc(sizeof(*(window->pixels)) * length);
+  window->pixels = malloc(sizeof(*window->pixels) * length);
   window->width = width;
   window->height = height;
   window->offset_x = offset_x;
@@ -164,6 +164,7 @@ void virtual_window_set(struct VirtualWindow* window, int x, int y, chtype chara
 
 
 chtype screen_index(int x, int y) {
+  assert_f(virtual_screen_is_inside(x, y), "Invalid screen coordinates: {x: %d, y: %d}", x, y);
   return (y * g_virtual_screen.width) + x;
 }
 
@@ -174,13 +175,14 @@ size_t screen_buffer_length() {
 
 
 int private_get(int x, int y) {
-  return g_virtual_screen.screen[screen_index(x, y)];
+  return g_virtual_screen.screen[screen_index(x, y)].character;
 }
 
 
 void private_screen_clear() {
   for (int i = 0; i < screen_buffer_length(); i++) {
-    g_virtual_screen.screen[i] = ' ';
+    g_virtual_screen.screen[i].character = ' ';
+    g_virtual_screen.screen[i].color_pair_id = 0;
   }
 }
 
@@ -197,7 +199,7 @@ void virtual_screen_setup() {
   terminal_init(&terminal);
   g_virtual_screen.width = terminal.width;
   g_virtual_screen.height = terminal.height;
-  g_virtual_screen.screen = malloc(sizeof(chtype) * terminal.width * terminal.height);
+  g_virtual_screen.screen = malloc(sizeof(*g_virtual_screen.screen) * terminal.width * terminal.height);
   private_screen_clear();
 }
 
@@ -211,7 +213,18 @@ void virtual_screen_reset() {
 
 
 void virtual_screen_set_char(int x, int y, const chtype ch) {
-  g_virtual_screen.screen[screen_index(x, y)] = ch;
+  if (virtual_screen_is_inside(x, y)) {
+    g_virtual_screen.screen[screen_index(x, y)].character = ch;
+  }
+}
+
+
+void virtual_screen_set_char_and_color(int x, int y, const chtype ch, ColorPairId color_pair_id) {
+  if (virtual_screen_is_inside(x, y)) {
+    struct VirtualPixel* pixel = &g_virtual_screen.screen[screen_index(x, y)];
+    pixel->character = ch;
+    pixel->color_pair_id = color_pair_id;
+  }
 }
 
 
@@ -223,14 +236,18 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 
 
 void virtual_screen_render() {
+  erase();
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
-      int color_pair = COLOR_PAIR(3);
-      attron(color_pair);
-      mvaddch(y, x, private_get(x, y));
-      attroff(color_pair);
+      struct VirtualPixel* pixel = &g_virtual_screen.screen[screen_index(x, y)];
+      // int color_pair = COLOR_PAIR(pixel->color_pair_id);
+      // attron(color_pair);
+      mvaddch(y, x, pixel->character);
+      // attroff(color_pair);
     }
   }
+  refresh();
+  private_screen_clear();
 }
 
 
@@ -241,4 +258,14 @@ int virtual_screen_center_x() {
 
 int virtual_screen_center_y() {
   return g_virtual_screen.height / 2;
+}
+
+
+int virtual_screen_get_width() {
+  return g_virtual_screen.width;
+}
+
+
+int virtual_screen_get_height() {
+  return g_virtual_screen.height;
 }

@@ -12,32 +12,13 @@
 #include "virtual_screen.h"
 #include "post_effect.h"
 #include "sprite_editor.h"
-#include "color_test.h"
 #include "frame_timer_test.h"
+#include "test_suite.h"
 
 
 /********************************************************************************
 * Main
 ********************************************************************************/
-
-
-#if DEBUG_ENABLE_TEST
-
-
-void debug() {
-  color_test();
-  // frame_timer_test();
-  // sprite_editor_init();
-
-  // while (true) {
-  //   KeyboardKey key = getch();
-  //   sprite_editor_input_update(key);
-  //   sprite_editor_render();
-  // }
-}
-
-
-#endif
 
 
 struct UI ui;
@@ -70,9 +51,10 @@ int main() {
   timer_frame_init();
   virtual_screen_setup();
   start_screen_init();
+  srand(time(NULL));
 
-  #if DEBUG_ENABLE_TEST
-    debug();
+  #if TEST_MODE_ENABLE
+    test_suite_run();
   #endif
 
   // Loop to track cursor position

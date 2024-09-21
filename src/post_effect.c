@@ -34,7 +34,8 @@ void fade_out_render(struct VirtualScreen* virtual_screen) {
     for (int y = 0; y < virtual_screen->height; y++) {
       short color_pair = COLOR_PAIR(2);
       attron(color_pair);
-      mvaddch(y, x, virtual_screen->screen[y * virtual_screen->width + x]);
+      struct VirtualPixel* pixel = &virtual_screen->screen[y * virtual_screen->width + x];
+      mvaddch(y, x, pixel->character);
       attroff(color_pair);
     }
   }
@@ -63,7 +64,8 @@ void fade_in_render(struct VirtualScreen* virtual_screen) {
     for (int y = 0; y < virtual_screen->height; y++) {
       short color_pair = COLOR_PAIR(1);
       attron(color_pair);
-      mvaddch(y, x, virtual_screen->screen[y * virtual_screen->width + x]);
+      struct VirtualPixel* pixel = &virtual_screen->screen[y * virtual_screen->width + x];
+      mvaddch(y, x, pixel->character);
       attroff(color_pair);
     }
   }

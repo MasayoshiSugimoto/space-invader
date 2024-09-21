@@ -119,7 +119,7 @@ void _test_fade_in() {
     int mode = mode_fade_in;
 
     char buf[512];
-    while (true) {
+    for (int fade_count = 0; fade_count < 2;) {
         frame_timer_on_frame_start();
         color_update();
         if (color_fade_is_done() && mode == mode_fade_in) {
@@ -128,10 +128,11 @@ void _test_fade_in() {
         } else if (color_fade_is_done() && mode == mode_fade_out) {
           color_fade_start_fade_in(milliseconds_as_duration(1000));
           mode = mode_fade_in;
+          fade_count++;
         }
 
         erase();
-        _print("TESTING FADE IN/OUT");
+        _print("TESTING FADE IN/OUT\n");
         _print("===================\n");
         _print("\n");
         _print("Fade in and fade out should loop\n");
@@ -147,9 +148,8 @@ void _test_fade_in() {
 }
 
 
-static void _test_interpolation_cubic_f() {
+static void _test_interpolation_cos_f() {
   float iteration_count = 10;
-  log_info("BEGIN CUBIC INTERPOLATION");
   for (int i = 0; i <= iteration_count; i++) {
     float input_start = 10.0f;
     float input_end = 20.0f;
@@ -157,16 +157,15 @@ static void _test_interpolation_cubic_f() {
     float output_start = 15.0f;
     float output_end = 5.0f;
     float output = interpolation_cos_f(input_current, input_start, input_end, output_start, output_end);
-    log_info_f("%f, %f", input_current, output);
+    log_info_f("COLOR_TEST_INTERPOLATION_COS_F:%f, %f", input_current, output);
   }
-  log_info("END CUBIC INTERPOLATION");
 }
 
 
 void color_test() {
-  _test_interpolation_cubic_f();
+  _test_interpolation_cos_f();
   _test_fade_in();
-  // _test_color_palettes();
+  _test_color_palettes();
 }
 
 

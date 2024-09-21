@@ -65,7 +65,7 @@ void sprite_editor_sprite_init(int width, int height) {
   size_t length = width * height;
   g_sprite.width = width;
   g_sprite.height = height;
-  g_sprite.pixels = malloc(sizeof(&g_sprite.pixels)*length);
+  g_sprite.pixels = malloc(sizeof(*g_sprite.pixels)*length);
   sprite_editor_sprite_clear(' ');
 }
 
