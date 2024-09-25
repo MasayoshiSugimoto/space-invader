@@ -2,7 +2,8 @@
 
 
 void _single_test() {
-  window_manager_test();
+  virtual_screen_test();
+  endwin();  // End ncurses.
   exit(0);
 }
 
@@ -12,5 +13,7 @@ void test_suite_run() {
   color_test();
   virtual_screen_test();
   window_manager_test();
+  virtual_cursor_test();
+  endwin();  // End ncurses.
   exit(0);
 }

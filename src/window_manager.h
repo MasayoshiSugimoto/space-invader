@@ -9,9 +9,10 @@
 #include "virtual_screen.h"
 
 
-void window_manager_init();
+void window_manager_init(void);
 struct VirtualWindow* window_manager_window_new(int width, int height);
 void window_manager_window_release(struct VirtualWindow* window);
+void window_manager_window_release_all(void);
 void window_manager_window_draw(struct VirtualWindow* window);
 void window_manager_window_clear(struct VirtualWindow* window);
 void window_manager_window_fill_character(struct VirtualWindow* window, chtype character);
@@ -31,7 +32,8 @@ int window_manager_window_get_outer_left(const struct VirtualWindow* window);
 int window_manager_window_get_outer_right(const struct VirtualWindow* window);
 int window_manager_window_get_outer_top(const struct VirtualWindow* window);
 int window_manager_window_get_outer_bottom(const struct VirtualWindow* window);
-int window_manager_window_is_inside_screen(const struct VirtualWindow* window);
+bool window_manager_window_is_inside_screen(const struct VirtualWindow* window);
+bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, int y);
 
 
 #endif

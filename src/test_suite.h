@@ -5,6 +5,7 @@
 #include "color_test.h"
 #include "virtual_screen_test.h"
 #include "window_manager_test.h"
+#include "virtual_cursor_test.h"
 
 
 void test_suite_run();

@@ -57,7 +57,7 @@ void _pixel_clear(struct VirtualPixel* pixel) {
 }
 
 
-void window_manager_init() {
+void window_manager_init(void) {
   memset(&_windows, 0, sizeof(_windows));
 }
 
@@ -87,6 +87,18 @@ void window_manager_window_release(struct VirtualWindow* window) {
   free(window->pixels);
   window->pixels = NULL;
   _window_is_active[window_index] = false;
+}
+
+
+void window_manager_window_release_all(void) {
+  for (int i = 0; i < WINDOW_MANAGER_WINDOW_MAX; i++) {
+    if (_window_is_active[i]) {
+      assert(_windows[i].pixels != NULL, "Active window without pixel buffer.");
+      window_manager_window_release(&_windows[i]);
+    } else {
+      assert(_windows[i].pixels == NULL, "Inactive window with non null buffer.");
+    }
+  }
 }
 
 
@@ -224,7 +236,7 @@ int window_manager_window_get_outer_bottom(const struct VirtualWindow* window) {
 }
 
 
-int window_manager_window_is_inside_screen(const struct VirtualWindow* window) {
+bool window_manager_window_is_inside_screen(const struct VirtualWindow* window) {
   if (window_manager_window_get_outer_left(window) >= virtual_screen_get_width()) {
     return false;
   } else if (window_manager_window_get_outer_right(window) < 0) {
@@ -238,3 +250,7 @@ int window_manager_window_is_inside_screen(const struct VirtualWindow* window) {
 }
 
 
+bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, int y) {
+  return window->offset_x <= x && x < window->offset_x + window->width
+    && window->offset_y <= y && y < window->offset_y + window->height;
+}

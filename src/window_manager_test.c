@@ -57,6 +57,8 @@ struct VirtualWindow* _new_window() {
 void window_manager_test() {
     log_info("TEST: window_manager_test");
 
+    window_manager_init();
+
     curs_set(CURSOR_VISIBILITY_INVISIBLE);
 
     int window_max = 16 - 1;
@@ -105,4 +107,6 @@ void window_manager_test() {
         window_manager_window_draw(forefront_window);
         virtual_screen_render();
     }
+
+    window_manager_window_release_all();
 }

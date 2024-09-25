@@ -252,10 +252,10 @@ void virtual_screen_render() {
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
       struct VirtualPixel* pixel = &g_virtual_screen.screen[screen_index(x, y)];
-      // int color_pair = COLOR_PAIR(pixel->color_pair_id);
-      // attron(color_pair);
+      int color_pair = COLOR_PAIR(pixel->color_pair_id);
+      attron(color_pair);
       mvaddch(y, x, pixel->character);
-      // attroff(color_pair);
+      attroff(color_pair);
     }
   }
   refresh();
