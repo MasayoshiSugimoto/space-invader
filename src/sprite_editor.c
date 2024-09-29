@@ -76,19 +76,19 @@ int sprite_editor_sprite_buffer_index(int x, int y) {
 
 
 void sprite_editor_init() {
-  struct Terminal terminal;
-  terminal_init(&terminal);
+  // struct Terminal terminal;
+  // terminal_init(&terminal);
 
-  virtual_window_init(&g_sprite_widget);
-  virtual_window_setup(&g_sprite_widget, terminal.width, terminal.height - MENU_HEIGHT, 0, 0);
-  virtual_window_init(&g_menu_widget);
-  virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
-  const int border_size = 2;
-  sprite_editor_sprite_init(g_sprite_widget.width - border_size, g_sprite_widget.height - border_size);
-  sprite_editor_sprite_clear(' ');
-  cursor_init(&g_cursor);
+  // virtual_window_init(&g_sprite_widget);
+  // virtual_window_setup(&g_sprite_widget, terminal.width, terminal.height - MENU_HEIGHT, 0, 0);
+  // virtual_window_init(&g_menu_widget);
+  // virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
+  // const int border_size = 2;
+  // sprite_editor_sprite_init(g_sprite_widget.width - border_size, g_sprite_widget.height - border_size);
+  // sprite_editor_sprite_clear(' ');
+  // cursor_init(&g_cursor);
 
-  sprite_editor_cursor_setup(&g_cursor);
+  // sprite_editor_cursor_setup(&g_cursor);
 }
 
 
@@ -101,10 +101,10 @@ void sprite_editor_render() {
   // virtual_window_clear(&g_sprite_widget, '#');
 //  virtual_window_setup_from_sprite(&g_sprite_widget, &sprite);
 
-  virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
+  // virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
 
-  virtual_window_draw(&g_sprite_widget);
-  virtual_window_draw(&g_menu_widget);
+  // virtual_window_draw(&g_sprite_widget);
+  // virtual_window_draw(&g_menu_widget);
 
   erase();
   virtual_screen_render();
@@ -137,7 +137,7 @@ void sprite_editor_input_update(KeyboardKey key) {
     sprite_editor_cursor_move(&g_cursor, -1, 0);
     break;
   default:
-    virtual_window_set(&g_sprite_widget, g_cursor.x + 1, g_cursor.y + 1, key);
+    // virtual_window_set(&g_sprite_widget, g_cursor.x + 1, g_cursor.y + 1, key);
     break;
   }
 }

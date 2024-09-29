@@ -10,7 +10,7 @@
 #include "sprite.h"
 #include "color.h"
 #include "log.h"
-#include "virtual_window.h"
+#include "window_manager.h"
 
 
 struct VirtualScreen {
@@ -19,9 +19,6 @@ struct VirtualScreen {
   int height;
 } g_virtual_screen;
 
-
-void virtual_window_draw(const struct VirtualWindow* window);
-void virtual_window_center(struct VirtualWindow* window);
 
 void virtual_screen_init();
 void virtual_screen_setup();

@@ -2,7 +2,7 @@
 
 
 void _single_test() {
-  virtual_screen_test();
+  window_manager_test();
   endwin();  // End ncurses.
   exit(0);
 }

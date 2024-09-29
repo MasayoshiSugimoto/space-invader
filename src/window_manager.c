@@ -2,9 +2,14 @@
 
 
 #define WINDOW_MANAGER_WINDOW_MAX 16
+#define WINDOW_MANAGER_WIDTH_MAX 800
+#define WINDOW_MANAGER_HEIGHT_MAX 600
+#define WINDOW_MANAGER_WINDOW_PIXEL_MAX (WINDOW_MANAGER_WIDTH_MAX * WINDOW_MANAGER_HEIGHT_MAX)
+#define WINDOW_MANAGER_PIXEL_MAX (WINDOW_MANAGER_WINDOW_PIXEL_MAX * WINDOW_MANAGER_WINDOW_MAX)
 
 
 static struct VirtualWindow _windows[WINDOW_MANAGER_WINDOW_MAX];
+static struct VirtualPixel _pixels[WINDOW_MANAGER_PIXEL_MAX];
 static bool _window_is_active[WINDOW_MANAGER_WINDOW_MAX];
 
 
@@ -57,8 +62,15 @@ void _pixel_clear(struct VirtualPixel* pixel) {
 }
 
 
+int _window_pixels_get_offset(struct VirtualWindow* window) {
+  return _get_window_index(window) * WINDOW_MANAGER_WINDOW_PIXEL_MAX;
+}
+
+
 void window_manager_init(void) {
   memset(&_windows, 0, sizeof(_windows));
+  memset(&_pixels, 0, sizeof(_pixels));
+  memset(&_window_is_active, 0, sizeof(_window_is_active));
 }
 
 
@@ -67,48 +79,37 @@ struct VirtualWindow* window_manager_window_new(int width, int height) {
   assert(window_index >= 0, "No more available window.");
   _window_is_active[window_index] = true;
   struct VirtualWindow* window = &_windows[window_index];
-  assert(window->pixels == NULL, "Window is already allocated.");
   window->width = width;
   window->height = height;
   window->offset_x = 0;
   window->offset_y = 0;
   window->has_border = false;
-  window->pixels = malloc(sizeof(*window->pixels) * width * height);
   window_manager_window_clear(window);
   return window;
 }
 
 
 void window_manager_window_release(struct VirtualWindow* window) {
-  assert(window->pixels != NULL, "`window->pixels` already deleted.");
   int window_index = _get_window_index(window);
   assert(window_index >= 0, "Unknown window.");
   assert(_window_is_active[window_index], "Inconsistent active flag.");
-  free(window->pixels);
-  window->pixels = NULL;
   _window_is_active[window_index] = false;
 }
 
 
 void window_manager_window_release_all(void) {
-  for (int i = 0; i < WINDOW_MANAGER_WINDOW_MAX; i++) {
-    if (_window_is_active[i]) {
-      assert(_windows[i].pixels != NULL, "Active window without pixel buffer.");
-      window_manager_window_release(&_windows[i]);
-    } else {
-      assert(_windows[i].pixels == NULL, "Inactive window with non null buffer.");
-    }
-  }
+  window_manager_init();
 }
 
 
 void window_manager_window_draw(struct VirtualWindow* window) {
+  int pixel_offset = _window_pixels_get_offset(window);
   for (int i = 0; i < _pixels_get_length(window); i++) {
     int x = _pixels_get_x(window, i) + window->offset_x;
     int y = _pixels_get_y(window, i) + window->offset_y;
-    struct VirtualPixel* pixel = &window->pixels[i];
-    if (!window->is_transparent || pixel->character != ' ') {
-      virtual_screen_set_char_and_color(x, y, pixel->character, pixel->color_pair_id);
+    struct VirtualPixel pixel = _pixels[pixel_offset + i];
+    if (!window->is_transparent || pixel.character != ' ') {
+      virtual_screen_set_char_and_color(x, y, pixel.character, pixel.color_pair_id);
     }
   }
 
@@ -134,18 +135,17 @@ void window_manager_window_draw(struct VirtualWindow* window) {
 
 
 void window_manager_window_clear(struct VirtualWindow* window) {
-  assert(window->pixels != NULL, "`window->pixels` already deleted.");
+  int pixel_offset = _window_pixels_get_offset(window);
   for (int i = 0; i < _pixels_get_length(window); i++) {
-    _pixel_clear(&window->pixels[i]);
+    _pixel_clear(&_pixels[pixel_offset + i]);
   }
 }
 
 
 void window_manager_window_fill_character(struct VirtualWindow* window, chtype character) {
-  assert(window->pixels != NULL, "`window->pixels` already deleted.");
+  int pixel_offset = _window_pixels_get_offset(window);
   for (int i = 0; i < _pixels_get_length(window); i++) {
-    struct VirtualPixel* pixel = &window->pixels[i];
-    pixel->character = character;
+    _pixels[pixel_offset + i].character = character;
   }
 }
 
@@ -166,8 +166,9 @@ void window_manager_window_set_border(struct VirtualWindow* window, bool has_bor
 
 
 void window_manager_window_set_pixel(struct VirtualWindow* window, int x, int y, struct VirtualPixel pixel) {
+  int pixel_offset = _window_pixels_get_offset(window);
   if (_pixel_is_inside(window, x, y)) {
-    window->pixels[_pixels_get_index(window, x, y)] = pixel;
+    _pixels[pixel_offset + _pixels_get_index(window, x, y)] = pixel;
   }
 }
 
@@ -253,4 +254,17 @@ bool window_manager_window_is_inside_screen(const struct VirtualWindow* window) 
 bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, int y) {
   return window->offset_x <= x && x < window->offset_x + window->width
     && window->offset_y <= y && y < window->offset_y + window->height;
+}
+
+
+struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprite* sprite) {
+  struct VirtualWindow* window = window_manager_window_new(sprite->width, sprite->height);
+  window->has_border = false;
+  for (int y = 0; y < sprite->height; y++) {
+    for (int x = 0; x < sprite->width; x++) {
+      struct VirtualPixel pixel = {sprite->as_matrix[y][x], 0};
+      window_manager_window_set_pixel(window, x, y, pixel);
+    }
+  }
+  return window;
 }

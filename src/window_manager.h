@@ -9,6 +9,23 @@
 #include "virtual_screen.h"
 
 
+struct VirtualPixel {
+  chtype character;
+  ColorPairId color_pair_id;
+};
+
+
+struct VirtualWindow {
+  // struct VirtualPixel* pixels;
+  int width;
+  int height;
+  int offset_x;
+  int offset_y;
+  bool has_border;
+  bool is_transparent;
+};
+
+
 void window_manager_init(void);
 struct VirtualWindow* window_manager_window_new(int width, int height);
 void window_manager_window_release(struct VirtualWindow* window);
@@ -34,6 +51,7 @@ int window_manager_window_get_outer_top(const struct VirtualWindow* window);
 int window_manager_window_get_outer_bottom(const struct VirtualWindow* window);
 bool window_manager_window_is_inside_screen(const struct VirtualWindow* window);
 bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, int y);
+struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprite* sprite);
 
 
 #endif

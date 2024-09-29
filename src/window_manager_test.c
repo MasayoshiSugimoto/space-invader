@@ -72,7 +72,7 @@ void window_manager_test() {
     }
 
     struct VirtualWindow* forefront_window = window_manager_window_new(virtual_screen_get_width(), virtual_screen_get_height());
-    virtual_window_set_transparency(forefront_window, true);
+    forefront_window->is_transparent = true;
     _print(forefront_window, "TESTING WINDOW MANAGER");
     _new_line(forefront_window);
     _print(forefront_window, "======================");

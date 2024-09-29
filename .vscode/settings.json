@@ -19,6 +19,7 @@
         "virtual_screen_test.h": "c",
         "test_suite.h": "c",
         "virtual_cursor_test.h": "c",
-        "virtual_window.h": "c"
+        "virtual_window.h": "c",
+        "window_manager.h": "c"
     }
 }
