@@ -150,46 +150,11 @@ void window_manager_window_fill_character(struct VirtualWindow* window, chtype c
 }
 
 
-void window_manager_window_set_offset_x(struct VirtualWindow* window, int offset_x) {
-  window->offset_x = offset_x;
-}
-
-
-void window_manager_window_set_offset_y(struct VirtualWindow* window, int offset_y) {
-  window->offset_y = offset_y;
-}
-
-
-void window_manager_window_set_border(struct VirtualWindow* window, bool has_border) {
-  window->has_border = has_border;
-}
-
-
 void window_manager_window_set_pixel(struct VirtualWindow* window, int x, int y, struct VirtualPixel pixel) {
   int pixel_offset = _window_pixels_get_offset(window);
   if (_pixel_is_inside(window, x, y)) {
     _pixels[pixel_offset + _pixels_get_index(window, x, y)] = pixel;
   }
-}
-
-
-int window_manager_window_get_width(const struct VirtualWindow* window) {
-  return window->width;
-}
-
-
-int window_manager_window_get_height(const struct VirtualWindow* window) {
-  return window->height;
-}
-
-
-int window_manager_window_get_offset_x(const struct VirtualWindow* window) {
-  return window->offset_x;
-}
-
-
-int window_manager_window_get_offset_y(const struct VirtualWindow* window) {
-  return window->offset_y;
 }
 
 
@@ -267,4 +232,34 @@ struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprit
     }
   }
   return window;
+}
+
+
+void window_manager_window_center_screen_x(struct VirtualWindow* window) {
+  window->offset_x = virtual_screen_center_x() - window->width / 2;
+}
+
+
+void window_manager_window_center_screen_y(struct VirtualWindow* window) {
+  window->offset_y = virtual_screen_center_y() - window->height / 2;
+}
+
+
+void window_manager_window_align_top_screen(struct VirtualWindow* window) {
+  window->offset_y = window->has_border ? 1 : 0;
+}
+
+
+void window_manager_window_align_right_screen(struct VirtualWindow* window) {
+  window->offset_x = virtual_screen_get_width() - window->width - (window->has_border ? 1 : 0);
+}
+
+
+void window_manager_window_align_bottom_screen(struct VirtualWindow* window) {
+  window->offset_y = virtual_screen_get_height() - window->height - (window->has_border ? 1 : 0);
+}
+
+
+void window_manager_window_align_left_screen(struct VirtualWindow* window) {
+  window->offset_x = window->has_border ? 1 : 0;
 }
