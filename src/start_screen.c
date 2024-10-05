@@ -25,8 +25,6 @@ enum WindowId {
 
 
 static struct VirtualWindow* _windows[WINDOW_ID_MAX];
-static const struct Color BLACK = {0, 0, 0};
-static const struct Color WHITE = {255, 255, 255};
 static struct FrameTimer _timer;
 
 
@@ -90,25 +88,18 @@ void _state_update(void) {
 }
 
 
-void start_screen_init() {
+void start_screen_init(void) {
   window_manager_init();
   _windows[WINDOW_ID_CREDITS] = window_manager_window_setup_from_sprite(sprite_get_sprite(SPRITE_ID_CREDITS));
   _windows[WINDOW_ID_TITLE] = window_manager_window_setup_from_sprite(sprite_get_sprite(SPRITE_ID_TITLE));
-  color_reset();
-  enum ColorPaletteId color_palette_id = 0;
-  color_color_palette_activate(color_palette_id);
-  ColorId black_id = color_color_palette_add(BLACK);
-  ColorId white_id = color_color_palette_add(WHITE);
-  color_color_pair_add(black_id, white_id);  // 1
-  color_color_palette_push(color_palette_id);
-  color_color_pair_push();
+  color_color_set_default();
 
   _fade_in_title_start();
   frame_timer_start(&_timer, 0);
 }
 
 
-enum TaskStatus start_screen_render() {
+enum TaskStatus start_screen_render(void) {
   curs_set(CURSOR_VISIBILITY_INVISIBLE);
 
   _state_update();

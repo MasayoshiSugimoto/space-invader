@@ -22,6 +22,13 @@
         "virtual_window.h": "c",
         "window_manager.h": "c",
         "start_screen.h": "c",
-        "event.h": "c"
+        "event.h": "c",
+        "render.h": "c",
+        "screen.h": "c",
+        "window.h": "c",
+        "task_status.h": "c",
+        "ui.h": "c",
+        "menu.h": "c",
+        "sprite_component.h": "c"
     }
 }

@@ -8,6 +8,8 @@
 
 
 const ColorId COLOR_FIRST_COLOR_ID = 8;
+static const struct Color BLACK = {0, 0, 0};
+static const struct Color WHITE = {255, 255, 255};
 
 
 enum PaletteColor {
@@ -113,6 +115,18 @@ void _fade_update() {
     post_rendering_palette_id[color_id].blue = alpha * active_color_palette_id[color_id].blue;
   }
   color_color_palette_push(COLOR_PALETTE_ID_POST_RENDERING);
+}
+
+
+void color_color_set_default(void) {
+  color_reset();
+  enum ColorPaletteId color_palette_id = 0;
+  color_color_palette_activate(color_palette_id);
+  ColorId black_id = color_color_palette_add(BLACK);
+  ColorId white_id = color_color_palette_add(WHITE);
+  color_color_pair_add(black_id, white_id);  // 1
+  color_color_palette_push(color_palette_id);
+  color_color_pair_push();
 }
 
 

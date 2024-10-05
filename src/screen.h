@@ -8,6 +8,7 @@
 #include "consts.h"
 #include "color.h"
 #include "collision_manager.h"
+#include "window_manager.h"
 
 
 #define SCREEN_WINDOW_MAX 100
@@ -65,6 +66,9 @@ void screen_render(struct Screen* screen, struct Terminal* terminal, struct Enti
 void screen_set_entity_alignment(const struct Screen* screen, struct EntitySystem* entity_system, EntityId entity_id, const struct ScreenAlignment screen_alignment);
 int screen_get_width();
 int screen_get_height();
+void screen_entities_to_window(const struct EntitySystem* entity_system);
+void screen_render_in_game(const struct EntitySystem* entity_system);
+void screen_setup(void);
 
 
 #endif

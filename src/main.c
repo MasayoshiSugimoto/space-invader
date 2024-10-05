@@ -10,7 +10,6 @@
 #include "render.h"
 #include "main_menu.h"
 #include "virtual_screen.h"
-#include "post_effect.h"
 #include "sprite_editor.h"
 #include "test_suite.h"
 #include "event.h"
@@ -28,6 +27,7 @@ struct Game game;
 void main_update_game(struct Game* game, struct UI* ui) {
   switch (game->game_state) {
     case GAME_STATE_IN_GAME:
+    case GAME_STATE_IN_GAME_2:
       game_update(game);
       break;
     case GAME_STATE_START_SCREEN:
@@ -49,7 +49,6 @@ int main() {
   event_on_start();
   ui_init(&ui);
   game_init(&game);
-  start_screen_init();
 
   // Loop to track cursor position
   while (true) {

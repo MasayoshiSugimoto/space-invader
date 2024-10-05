@@ -54,6 +54,7 @@ const struct Color S_COLOR_BLACK;
 const ColorId COLOR_FIRST_COLOR_ID;
 
 
+void color_color_set_default(void);
 void color_color_palette_push(enum ColorPaletteId color_palette_id);
 enum ColorPaletteId color_color_palette_get_last_pushed();
 void color_color_palette_activate(enum ColorPaletteId color_palette_id);

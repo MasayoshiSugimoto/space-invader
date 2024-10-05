@@ -105,6 +105,12 @@ void render(struct UI* ui, struct Game* game) {
     case GAME_STATE_IN_GAME:
       screen_render(screen_get_screen(), &ui->terminal, game->entity_system);
       break;
+    case GAME_STATE_IN_GAME_2_INIT:
+      screen_entities_to_window(game->entity_system);
+      game_set_game_state(game, GAME_STATE_IN_GAME_2);
+    case GAME_STATE_IN_GAME_2:
+      screen_render_in_game(game->entity_system);
+      break;
     case GAME_STATE_MAIN_MENU:
       main_menu_render_items(main_menu_get_definition());
       break;

@@ -117,6 +117,7 @@ struct Vector screen_get_offset(const struct Screen* screen, const struct Termin
 struct RenderingUnit {
   const struct Sprite* sprite;
   EntityId entity_id;
+  struct VirtualWindow* window;
   int x;
   int y;
 };
@@ -210,4 +211,53 @@ int screen_get_width() {
 
 int screen_get_height() {
   return l_screen.height;
+}
+
+
+#define SCREEN_RENDERING_UNIT_MAX 256
+
+
+struct VirtualWindow* _game_screen;
+struct RenderingUnit _rendering_units[SCREEN_RENDERING_UNIT_MAX];
+int _rendering_unit_count;
+
+
+void screen_setup(void) {
+  memset(&_rendering_units, 0, sizeof(_rendering_units));
+  _rendering_unit_count = 0;
+
+  window_manager_init();
+  _game_screen = window_manager_window_new(SCREEN_WIDTH, SCREEN_HEIGHT);
+  _game_screen->has_border = true;
+}
+
+
+void screen_entities_to_window(const struct EntitySystem* entity_system) {
+  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+    struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
+    if (sprite_unit.sprite_id == SPRITE_ID_NONE || !sprite_unit.active) continue;
+    struct VirtualWindow* window = window_manager_window_setup_from_sprite(sprite_get_sprite(sprite_unit.sprite_id));
+    struct RenderingUnit* rendering_unit = &_rendering_units[_rendering_unit_count++];
+    rendering_unit->window = window;
+    rendering_unit->entity_id = entity_id;
+  }
+}
+
+
+void screen_render_in_game(const struct EntitySystem* entity_system) {
+  window_manager_window_center_screen_x(_game_screen);
+  window_manager_window_center_screen_y(_game_screen);
+  window_manager_window_draw(_game_screen);
+
+  struct Vector top_left = {_game_screen->offset_x, _game_screen->offset_y};
+  for (int i = 0; i < _rendering_unit_count; i++) {
+    struct RenderingUnit* rendering_unit = &_rendering_units[i];
+    struct VirtualWindow* window = rendering_unit->window;
+    struct Vector v = vector_add(entity_system->coordinates[rendering_unit->entity_id], top_left);
+    window->offset_x = v.x;
+    window->offset_y = v.y;
+    window_manager_window_draw(rendering_unit->window);
+  }
+  
+  virtual_screen_render();
 }

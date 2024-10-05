@@ -117,22 +117,22 @@ void window_manager_window_draw(struct VirtualWindow* window) {
   }
 
   if (window->has_border) {
-      int top = window_manager_window_get_outer_top(window);
-      int right = window_manager_window_get_outer_right(window);
-      int bottom = window_manager_window_get_outer_bottom(window);
-      int left = window_manager_window_get_outer_left(window);
-      virtual_screen_set_char(left, top, ACS_ULCORNER /*┌*/);
-      virtual_screen_set_char(right, top, ACS_URCORNER /*┐*/);
-      virtual_screen_set_char(right, bottom, ACS_LRCORNER /*┘*/);
-      virtual_screen_set_char(left, bottom, ACS_LLCORNER /*└*/);
-      for (int x = window->offset_x; x < window->offset_x + window->width; x++) {
-        virtual_screen_set_char(x, top, ACS_HLINE /*─*/);
-        virtual_screen_set_char(x, bottom, ACS_HLINE /*─*/);
-      }
-      for (int y = window->offset_y; y < window->offset_y + window->height; y++) {
-        virtual_screen_set_char(left, y, ACS_VLINE /*│*/);
-        virtual_screen_set_char(right, y, ACS_VLINE /*│*/);
-      }
+    int top = window_manager_window_get_outer_top(window);
+    int right = window_manager_window_get_outer_right(window);
+    int bottom = window_manager_window_get_outer_bottom(window);
+    int left = window_manager_window_get_outer_left(window);
+    virtual_screen_set_char(left, top, ACS_ULCORNER /*┌*/);
+    virtual_screen_set_char(right, top, ACS_URCORNER /*┐*/);
+    virtual_screen_set_char(right, bottom, ACS_LRCORNER /*┘*/);
+    virtual_screen_set_char(left, bottom, ACS_LLCORNER /*└*/);
+    for (int x = window->offset_x; x < window->offset_x + window->width; x++) {
+      virtual_screen_set_char(x, top, ACS_HLINE /*─*/);
+      virtual_screen_set_char(x, bottom, ACS_HLINE /*─*/);
+    }
+    for (int y = window->offset_y; y < window->offset_y + window->height; y++) {
+      virtual_screen_set_char(left, y, ACS_VLINE /*│*/);
+      virtual_screen_set_char(right, y, ACS_VLINE /*│*/);
+    }
   }
 }
 
