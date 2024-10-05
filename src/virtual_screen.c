@@ -25,7 +25,7 @@ int private_get(int x, int y) {
 void private_screen_clear() {
   for (int i = 0; i < screen_buffer_length(); i++) {
     g_virtual_screen.screen[i].character = ' ';
-    g_virtual_screen.screen[i].color_pair_id = 0;
+    g_virtual_screen.screen[i].color_pair_id = COLOR_COLOR_PAIR_ID_DEFAULT;
   }
 }
 

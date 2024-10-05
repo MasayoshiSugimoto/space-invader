@@ -98,7 +98,7 @@ void render(struct UI* ui, struct Game* game) {
     return;
   }
 
-  erase();
+  event_on_render_start();
 
   curs_set(CURSOR_VISIBILITY_INVISIBLE);
   switch (game_state) {

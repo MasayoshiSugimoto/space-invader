@@ -58,7 +58,7 @@ bool _pixel_is_inside(struct VirtualWindow* window, int x, int y) {
 
 void _pixel_clear(struct VirtualPixel* pixel) {
   pixel->character = ' ';
-  pixel->color_pair_id = 0;
+  pixel->color_pair_id = COLOR_COLOR_PAIR_ID_DEFAULT;
 }
 
 
@@ -70,6 +70,9 @@ int _window_pixels_get_offset(struct VirtualWindow* window) {
 void window_manager_init(void) {
   memset(&_windows, 0, sizeof(_windows));
   memset(&_pixels, 0, sizeof(_pixels));
+  for (int i = 0; i < WINDOW_MANAGER_PIXEL_MAX; i++) {
+    _pixels[i].color_pair_id = COLOR_COLOR_PAIR_ID_DEFAULT;
+  }
   memset(&_window_is_active, 0, sizeof(_window_is_active));
 }
 
@@ -227,7 +230,7 @@ struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprit
   window->has_border = false;
   for (int y = 0; y < sprite->height; y++) {
     for (int x = 0; x < sprite->width; x++) {
-      struct VirtualPixel pixel = {sprite->as_matrix[y][x], 0};
+      struct VirtualPixel pixel = {sprite->as_matrix[y][x], COLOR_COLOR_PAIR_ID_DEFAULT};
       window_manager_window_set_pixel(window, x, y, pixel);
     }
   }

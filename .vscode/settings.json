@@ -20,6 +20,8 @@
         "test_suite.h": "c",
         "virtual_cursor_test.h": "c",
         "virtual_window.h": "c",
-        "window_manager.h": "c"
+        "window_manager.h": "c",
+        "start_screen.h": "c",
+        "event.h": "c"
     }
 }

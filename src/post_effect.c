@@ -1,6 +1,8 @@
 #include "post_effect.h"
 
 
+// TODO: Delete as this is deprecated.
+
 struct FadeOut {
   struct Timer timer;
   struct Color palette[COLOR_CUSTOM_COLOR_MAX];

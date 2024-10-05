@@ -19,7 +19,7 @@ static void _print(const char* text) {
 void _test_color_palettes() {
     log_info("Testing color palettes...");
 
-    color_init();
+    color_reset();
 
     color_color_palette_activate(0);
     ColorId black_id = color_color_palette_add(BLACK);
@@ -90,8 +90,7 @@ void _test_color_palettes() {
 void _test_fade_in() {
     log_info("Testing fade in...");
 
-    color_init();
-    frame_timer_init();
+    color_reset();
 
     color_color_palette_activate(0);
     ColorId black_id = color_color_palette_add(BLACK);

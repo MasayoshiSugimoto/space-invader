@@ -12,6 +12,7 @@
 #define COLOR_CUSTOM_COLOR_MAX 5
 #define COLOR_COLOR_MAX 256
 #define COLOR_COLOR_PAIR_MAX 256
+#define COLOR_COLOR_PAIR_ID_DEFAULT 8
 
 
 typedef short ColorId;
@@ -72,7 +73,8 @@ void color_update();
 
 
 void color_init();
-void color_palette_init();
+void color_reset();
+void color_palette_init();  // TODO: Deprecated, remove
 const struct Color* color_palette_get_deprecated(unsigned short id);
 size_t color_palette_length_deprecated();
 void color_palette_set_deprecated(const struct Color* palette);

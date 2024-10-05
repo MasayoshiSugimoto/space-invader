@@ -20,7 +20,7 @@ void virtual_cursor_text_align_right(struct VirtualCursor* cursor, const char* t
 void virtual_cursor_text_print(struct VirtualCursor* cursor, const char* text) {
     struct VirtualWindow* window = cursor->window;
     for (int i = 0; i < strlen(text); i++) {
-        struct VirtualPixel pixel = {text[i], 0};
+        struct VirtualPixel pixel = {text[i], COLOR_COLOR_PAIR_ID_DEFAULT};
         window_manager_window_set_pixel(window, cursor->x, cursor->y, pixel);
         virtual_cursor_next(cursor);
     }

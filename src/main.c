@@ -12,8 +12,8 @@
 #include "virtual_screen.h"
 #include "post_effect.h"
 #include "sprite_editor.h"
-#include "frame_timer_test.h"
 #include "test_suite.h"
+#include "event.h"
 
 
 /********************************************************************************
@@ -42,25 +42,19 @@ void main_update_game(struct Game* game, struct UI* ui) {
 
 
 int main() {
-  log_init();
-  srand(time(NULL));
-  ui_init(&ui);
-  game_init(&game);
-  virtual_screen_init();
-  color_palette_init();
-  timer_frame_init();
-  virtual_screen_setup();
-  start_screen_init();
-  srand(time(NULL));
-
   #if TEST_MODE_ENABLE
     test_suite_run();
   #endif
 
+  event_on_start();
+  ui_init(&ui);
+  game_init(&game);
+  start_screen_init();
+
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
-    timer_on_frame_start();
+    event_on_frame_start();
 
     struct Terminal* terminal = &ui.terminal;
     terminal_init(terminal);

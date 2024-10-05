@@ -4,7 +4,7 @@
 #define COLOR_START 8
 #define COLOR_UNIT_MAX 1000
 #define COLOR_ANSI_COLOR_COUNT 8
-#define COLOR_PAIR_FIRST_ID 8
+#define COLOR_PAIR_FIRST_ID COLOR_COLOR_PAIR_ID_DEFAULT
 
 
 const ColorId COLOR_FIRST_COLOR_ID = 8;
@@ -31,6 +31,7 @@ struct Fade {
 } _fade;
 
 
+// TODO: Deprecated, remove.
 const struct Color S_COLOR_BLACK = {0, 0, 0};
 struct Color g_colors[COLOR_CUSTOM_COLOR_MAX] = {
   {0, 0, 0},
@@ -39,7 +40,7 @@ struct Color g_colors[COLOR_CUSTOM_COLOR_MAX] = {
   {0, 1000, 0},
   {0, 0, 1000},
 };
-const struct Color* g_custom_colors = NULL;
+const struct Color* g_custom_colors = NULL;   // TODO: Deprecated, remove.
 
 
 struct Color _color_palette[COLOR_PALETTE_ID_MAX][COLOR_COLOR_MAX];
@@ -91,7 +92,7 @@ bool _color_palette_id_is_valid(enum ColorPaletteId color_palette_id) {
 
 
 void _fade_init() {
-  frame_timer_init(&_fade.timer, 0);
+  frame_timer_init();
   frame_timer_stop(&_fade.timer);  // Start timer in disabled state.
   _fade.alpha_start = 0.0f;
   _fade.alpha_end = 0.0f;
@@ -247,6 +248,11 @@ void color_init() {
   color_dump_colors_deprecated();
   color_dump_color_pairs_deprecated();
 
+  color_reset();
+}
+
+
+void color_reset() {
   memset(&_color_palette, 0, sizeof(_color_palette));
   memset(&_color_palette_sizes, 0, sizeof(_color_palette_sizes));
   for (size_t i = 0; i < COLOR_PALETTE_ID_MAX; i++) {

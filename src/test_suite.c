@@ -9,7 +9,8 @@ void _single_test() {
 
 
 void test_suite_run() {
-  _single_test();  // Comment out for full test.
+  event_on_start();
+  // _single_test();  // Comment out for full test.
   color_test();
   virtual_screen_test();
   window_manager_test();

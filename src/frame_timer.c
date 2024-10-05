@@ -12,7 +12,7 @@ Instant _now() {
 }
 
 
-void frame_timer_init() {
+void frame_timer_init(void) {
     _last_frame_start = _now();
     _frame_start = _last_frame_start;
 ;
@@ -25,7 +25,7 @@ void frame_timer_timer_init(struct FrameTimer* frame_timer) {
 
 
 // Register time at frame start.
-void frame_timer_on_frame_start() {
+void frame_timer_on_frame_start(void) {
     _last_frame_start = _frame_start;
     _frame_start = _now();
 }
