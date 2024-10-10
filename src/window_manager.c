@@ -1,9 +1,7 @@
 #include "window_manager.h"
 
 
-#define WINDOW_MANAGER_WINDOW_MAX 16
-#define WINDOW_MANAGER_WIDTH_MAX 800
-#define WINDOW_MANAGER_HEIGHT_MAX 600
+#define WINDOW_MANAGER_WINDOW_MAX 32
 #define WINDOW_MANAGER_WINDOW_PIXEL_MAX (WINDOW_MANAGER_WIDTH_MAX * WINDOW_MANAGER_HEIGHT_MAX)
 #define WINDOW_MANAGER_PIXEL_MAX (WINDOW_MANAGER_WINDOW_PIXEL_MAX * WINDOW_MANAGER_WINDOW_MAX)
 
@@ -29,7 +27,7 @@ unsigned int _pixels_get_y(struct VirtualWindow* window, int i) {
 
 
 int _pixels_get_index(struct VirtualWindow* window, int x, int y) {
-  return window->width * y + x;
+  return window->width * y + x; 
 }
 
 
@@ -228,6 +226,20 @@ bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, 
 struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprite* sprite) {
   struct VirtualWindow* window = window_manager_window_new(sprite->width, sprite->height);
   window->has_border = false;
+  for (int y = 0; y < sprite->height; y++) {
+    for (int x = 0; x < sprite->width; x++) {
+      struct VirtualPixel pixel = {sprite->as_matrix[y][x], COLOR_COLOR_PAIR_ID_DEFAULT};
+      window_manager_window_set_pixel(window, x, y, pixel);
+    }
+  }
+  return window;
+}
+
+
+struct VirtualWindow* window_manager_window_set_sprite(struct VirtualWindow* window, const struct Sprite* sprite) {
+  window->has_border = true;
+  window->width = sprite->width;
+  window->height = sprite->height;
   for (int y = 0; y < sprite->height; y++) {
     for (int x = 0; x < sprite->width; x++) {
       struct VirtualPixel pixel = {sprite->as_matrix[y][x], COLOR_COLOR_PAIR_ID_DEFAULT};

@@ -2,7 +2,6 @@
 #define INPUT_H
 
 
-#include "ui.h"
 #include "entity_spaceship.h"
 #include "main_menu.h"
 #include "keyboard.h"
@@ -10,7 +9,14 @@
 #include "sprite_editor.h"
 
 
-void input_update(struct Game* game, struct UI* ui);
+struct InputMapping {
+  KeyboardKey key;
+  void (*action)(KeyboardKey key);
+};
+
+
+void input_update(struct Game* game);
+void input_process(const struct InputMapping* input_mapping, int length);
 
 
 #endif

@@ -30,6 +30,7 @@ struct VirtualWindow g_sprite_widget;
 struct VirtualWindow g_menu_widget;
 struct MutableSprite g_sprite;
 struct Cursor g_cursor;
+static struct VirtualWindow* _window_edit;
 
 
 size_t get_pixel_count() {
@@ -76,40 +77,17 @@ int sprite_editor_sprite_buffer_index(int x, int y) {
 
 
 void sprite_editor_init() {
-  // struct Terminal terminal;
-  // terminal_init(&terminal);
-
-  // virtual_window_init(&g_sprite_widget);
-  // virtual_window_setup(&g_sprite_widget, terminal.width, terminal.height - MENU_HEIGHT, 0, 0);
-  // virtual_window_init(&g_menu_widget);
-  // virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
-  // const int border_size = 2;
-  // sprite_editor_sprite_init(g_sprite_widget.width - border_size, g_sprite_widget.height - border_size);
-  // sprite_editor_sprite_clear(' ');
-  // cursor_init(&g_cursor);
-
-  // sprite_editor_cursor_setup(&g_cursor);
+  window_manager_init();
+  _window_edit = window_manager_window_new(virtual_screen_get_width() - 2, virtual_screen_get_height() - 2);
+  _window_edit->has_border = true;
+  _window_edit->offset_x = 1;
+  _window_edit->offset_y = 1;
 }
 
 
 void sprite_editor_render() {
-  struct Terminal terminal;
-  terminal_init(&terminal);
-
-  // virtual_window_setup(&g_sprite_widget, terminal.width, terminal.height - MENU_HEIGHT, 0, 0);
-
-  // virtual_window_clear(&g_sprite_widget, '#');
-//  virtual_window_setup_from_sprite(&g_sprite_widget, &sprite);
-
-  // virtual_window_setup(&g_menu_widget, terminal.width, MENU_HEIGHT, 0, terminal.height - MENU_HEIGHT);
-
-  // virtual_window_draw(&g_sprite_widget);
-  // virtual_window_draw(&g_menu_widget);
-
-  erase();
+  window_manager_window_draw(_window_edit);
   virtual_screen_render();
-  sprite_editor_cursor_draw(&g_cursor);
-  refresh();
 }
 
 
@@ -143,7 +121,7 @@ void sprite_editor_input_update(KeyboardKey key) {
 }
 
 
-void sprite_editor_enable(struct Game* game, struct UI* ui, KeyboardKey key) {
+void sprite_editor_enable(struct Game* game, KeyboardKey key) {
   log_info("Enabling sprite editor...");
   sprite_editor_init();
   game->game_state = GAME_STATE_SPRITE_EDITOR;

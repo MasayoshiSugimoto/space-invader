@@ -6,6 +6,15 @@
 #define ONE_SECOND milliseconds_as_duration(1000)
 
 
+struct MainSystemMode g_start_screen_main_system_mode = {
+    "MAIN_SYSTEM_MODE_START_SCREEN",
+    &start_screen_init,
+    &main_system_no_op,
+    &start_screen_update,
+    &start_screen_render
+};
+
+
 enum State {
   STATE_CREDITS_FADE_IN,
   STATE_CREDITS_DISPLAY,
@@ -99,13 +108,16 @@ void start_screen_init(void) {
 }
 
 
-enum TaskStatus start_screen_render(void) {
+enum MainSystemModeStatus start_screen_update(void) {
+  return _state == STATE_DONE ? TASK_STATUS_DONE : TASK_STATUS_RUNNING;
+}
+
+
+void start_screen_render(void) {
   curs_set(CURSOR_VISIBILITY_INVISIBLE);
 
   _state_update();
 
   virtual_screen_render();
-
-  return _state == STATE_DONE ? TASK_STATUS_DONE : TASK_STATUS_RUNNING;
 }
 

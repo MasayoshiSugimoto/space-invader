@@ -6,6 +6,23 @@ void terminal_init(struct Terminal* terminal) {
 }
 
 
+void terminal_check_minimum_size(void) {
+  struct Terminal terminal;
+  terminal_init(&terminal);
+  while (terminal.height < TERMINAL_MIN_HEIGHT || terminal.width < TERMINAL_MIN_WIDTH) {
+    log_info_f("terminal={width:%d, height:%d}", terminal.width, terminal.height);
+    log_info("Terminal is too small. Please resize the terminal.");
+    erase();
+    addstr(
+        "Terminal is too small.\n"
+        "Please resize the terminal.\n"
+    );
+    refresh();
+    getch();  // Wait for resize.
+  }
+}
+
+
 struct Vector terminal_center(const struct Terminal* terminal) {
   struct Vector v;
   v.x = terminal->width / 2;

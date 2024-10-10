@@ -21,12 +21,12 @@ void event_on_start(void) {
     sprite_init();
     screen_init(screen_get_screen());
 
-    // start_screen_init();
-    screen_setup();
+    main_system_mode_set(&g_game_main_system_mode);
 }
 
 
 void event_on_frame_start(void) {
+    terminal_check_minimum_size();
     frame_timer_on_frame_start();
 }
 
@@ -34,19 +34,4 @@ void event_on_frame_start(void) {
 void event_on_render_start(void) {
     color_update();
     virtual_screen_reset();
-}
-
-
-void event_on_game_state_change(enum GameState game_state) {
-    switch (game_state) {
-        case GAME_STATE_IN_GAME_2:
-            screen_setup();
-            break;
-        case GAME_STATE_START_SCREEN:
-            start_screen_init();
-            break;
-        default:
-            // Do nothing
-            break;
-    }
 }

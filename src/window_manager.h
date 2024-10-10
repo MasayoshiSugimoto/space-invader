@@ -9,6 +9,10 @@
 #include "virtual_screen.h"
 
 
+#define WINDOW_MANAGER_WIDTH_MAX 800
+#define WINDOW_MANAGER_HEIGHT_MAX 600
+
+
 struct VirtualPixel {
   chtype character;
   ColorPairId color_pair_id;
@@ -45,6 +49,7 @@ int window_manager_window_get_outer_bottom(const struct VirtualWindow* window);
 bool window_manager_window_is_inside_screen(const struct VirtualWindow* window);
 bool window_manager_window_is_inside(const struct VirtualWindow* window, int x, int y);
 struct VirtualWindow* window_manager_window_setup_from_sprite(const struct Sprite* sprite);
+struct VirtualWindow* window_manager_window_set_sprite(struct VirtualWindow* window, const struct Sprite* sprite);
 void window_manager_window_center_screen_x(struct VirtualWindow* window);
 void window_manager_window_center_screen_y(struct VirtualWindow* window);
 void window_manager_window_align_top_screen(struct VirtualWindow* window);

@@ -9,10 +9,15 @@
 #include "task_status.h"
 #include "cursor.h"
 #include "event.h"
+#include "main_system_mode.h"
+
+
+struct MainSystemMode g_start_screen_main_system_mode;
 
 
 void start_screen_init(void);
-enum TaskStatus start_screen_render(void);
+enum MainSystemModeStatus start_screen_update(void);
+void start_screen_render(void);
 
 
 #endif

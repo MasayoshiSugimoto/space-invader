@@ -5,7 +5,7 @@
 struct InputTableRow {
   enum GameState game_state;
   KeyboardKey key;
-  void (*update_with_input)(struct Game* game, struct UI* ui, KeyboardKey key);
+  void (*update_with_input)(struct Game* game, KeyboardKey key);
 };
 
 
@@ -20,7 +20,7 @@ void input_log_key_pressed(KeyboardKey key) {
 }
 
 
-void input_update_move_space_ship_left(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_move_space_ship_left(struct Game* game, KeyboardKey key) {
   struct Vector v = {-1, 0};
   entity_system_add_coordinates(
       game->entity_system,
@@ -30,7 +30,7 @@ void input_update_move_space_ship_left(struct Game* game, struct UI* ui, Keyboar
 }
 
 
-void input_update_move_space_ship_right(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_move_space_ship_right(struct Game* game, KeyboardKey key) {
   struct Vector v = {1, 0};
   entity_system_add_coordinates(
       game->entity_system,
@@ -40,22 +40,22 @@ void input_update_move_space_ship_right(struct Game* game, struct UI* ui, Keyboa
 }
 
 
-void input_update_spaceship_fire(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_spaceship_fire(struct Game* game, KeyboardKey key) {
   entity_spaceship_fire(game);
 }
 
 
-void input_update_main_menu_next(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_main_menu_next(struct Game* game, KeyboardKey key) {
   main_menu_next_selection(main_menu_get_definition());
 }
 
 
-void input_update_main_menu_previous(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_main_menu_previous(struct Game* game, KeyboardKey key) {
   main_menu_previous_selection(main_menu_get_definition());
 }
 
 
-void input_update_main_menu_validate_selection(struct Game* game, struct UI* ui, KeyboardKey key) {
+void input_update_main_menu_validate_selection(struct Game* game, KeyboardKey key) {
   log_info("Main menu selection update");
   switch (main_menu_get_selection(main_menu_get_definition())) {
     case MAIN_MENU_SELECTION_START:
@@ -89,7 +89,7 @@ const struct InputTableRow input_transition_table[] = {
 };
 
 
-void input_update(struct Game* game, struct UI* ui) {
+void input_update(struct Game* game) {
   KeyboardKey key = getch();
   if (key == ERR) return;
 
@@ -99,11 +99,22 @@ void input_update(struct Game* game, struct UI* ui) {
   for (int i = 0; i < array_size(input_transition_table); i++) {
     const struct InputTableRow* transition = &input_transition_table[i];
     if (transition->game_state == GAME_STATE_ANY && transition->key == key) {
-      transition->update_with_input(game, ui, key);
+      transition->update_with_input(game, key);
     } else if (transition->game_state == game->game_state && transition->key == key) {
-      transition->update_with_input(game, ui, key);
+      transition->update_with_input(game, key);
     }
   }
 }
 
 
+void input_process(const struct InputMapping* input_mappings, int length) {
+  KeyboardKey key = getch();
+  if (key == ERR) return;
+  input_log_key_pressed(key);
+  for (int i = 0; i < length; i++) {
+    const struct InputMapping* input_mapping = &input_mappings[i];
+    if (input_mapping->key == key) {
+      input_mapping->action(key);
+    }
+  }
+}

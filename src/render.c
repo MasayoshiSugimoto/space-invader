@@ -90,34 +90,27 @@ void render_sprite(enum SpriteId sprite_id, int left, int top) {
 }
 
 
-void render(struct UI* ui, struct Game* game) {
+void render(struct Game* game) {
   enum GameState game_state = game->game_state;
-
-  if (game_state == GAME_STATE_SPRITE_EDITOR) {
-    sprite_editor_render();
-    return;
-  }
 
   event_on_render_start();
 
   curs_set(CURSOR_VISIBILITY_INVISIBLE);
   switch (game_state) {
     case GAME_STATE_IN_GAME:
-      screen_render(screen_get_screen(), &ui->terminal, game->entity_system);
-      break;
-    case GAME_STATE_IN_GAME_2_INIT:
-      screen_entities_to_window(game->entity_system);
-      game_set_game_state(game, GAME_STATE_IN_GAME_2);
-    case GAME_STATE_IN_GAME_2:
-      screen_render_in_game(game->entity_system);
+      screen_render(screen_get_screen(), game->entity_system);
       break;
     case GAME_STATE_MAIN_MENU:
       main_menu_render_items(main_menu_get_definition());
       break;
+    case GAME_STATE_START_SCREEN_INIT:
+      start_screen_init();
+      game_set_game_state(game, GAME_STATE_START_SCREEN);
     case GAME_STATE_START_SCREEN:
-      if (start_screen_render() == TASK_STATUS_DONE) {
-        game->game_state = GAME_STATE_IN_GAME;
-      }
+      start_screen_render();
+      break;
+    case GAME_STATE_SPRITE_EDITOR:
+      sprite_editor_render();
       break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);

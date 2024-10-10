@@ -59,10 +59,10 @@ const struct ScreenAlignment SCREEN_ALIGNMENT_TOP_LEFT;
 const struct ScreenAlignment SCREEN_ALIGNMENT_CENTER_CENTER;
 
 
-struct Vector screen_get_offset(const struct Screen* screen, const struct Terminal* terminal);
+struct Vector screen_get_offset(const struct Screen* screen);
 struct Screen* screen_get_screen();
 void screen_init(struct Screen* screen);
-void screen_render(struct Screen* screen, struct Terminal* terminal, struct EntitySystem* entity_system);
+void screen_render(struct Screen* screen, struct EntitySystem* entity_system);
 void screen_set_entity_alignment(const struct Screen* screen, struct EntitySystem* entity_system, EntityId entity_id, const struct ScreenAlignment screen_alignment);
 int screen_get_width();
 int screen_get_height();

@@ -7,12 +7,13 @@
 #include "screen.h"
 #include "start_screen.h"
 #include "game_state.h"
+#include "main_system_mode.h"
+#include "main_system_game.h"
 
 
 void event_on_start(void);
 void event_on_frame_start(void);
 void event_on_render_start(void);
-void event_on_game_state_change(enum GameState game_state);
 
 
 #endif

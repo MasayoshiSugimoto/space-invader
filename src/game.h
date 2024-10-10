@@ -13,6 +13,7 @@
 #include "faction_component.h"
 #include "screen.h"
 #include "game_state.h"
+#include "main_system_mode.h"
 
 
 struct Game {
@@ -22,6 +23,9 @@ struct Game {
   EntityId spaceship_id;
   uint64_t last_frame_time_millisecond;
 };
+
+
+struct MainSystemMode g_game_main_system_mode;
 
 
 void game_init(struct Game* game);

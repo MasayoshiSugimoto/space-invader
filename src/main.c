@@ -1,7 +1,6 @@
 #include <time.h>
 #include "input.h"
 #include "render.h"
-#include "ui.h"
 #include "consts.h"
 #include "game.h"
 #include "screen.h"
@@ -13,32 +12,12 @@
 #include "sprite_editor.h"
 #include "test_suite.h"
 #include "event.h"
+#include "main_system_mode.h"
 
 
 /********************************************************************************
 * Main
 ********************************************************************************/
-
-
-struct UI ui;
-struct Game game;
-
-
-void main_update_game(struct Game* game, struct UI* ui) {
-  switch (game->game_state) {
-    case GAME_STATE_IN_GAME:
-    case GAME_STATE_IN_GAME_2:
-      game_update(game);
-      break;
-    case GAME_STATE_START_SCREEN:
-      break;
-    case GAME_STATE_CREDITS:
-      break;
-    default:
-      // Do nothing.
-      break;
-  }
-}
 
 
 int main() {
@@ -47,39 +26,22 @@ int main() {
   #endif
 
   event_on_start();
-  ui_init(&ui);
-  game_init(&game);
+  const struct MainSystemMode* main_system_mode = NULL;
 
   // Loop to track cursor position
   while (true) {
     log_info("LOOP BEGIN");
     event_on_frame_start();
-
-    struct Terminal* terminal = &ui.terminal;
-    terminal_init(terminal);
-    log_info_f("terminal={width:%d, height:%d}", terminal->width, terminal->height);
-
-    if (terminal->height < TERMINAL_MIN_HEIGHT || terminal->width < TERMINAL_MIN_WIDTH) {
-      log_info("Terminal is too small. Please resize the terminal.");
-      erase();
-      addstr(
-          "Terminal is too small.\n"
-          "Please resize the terminal.\n"
-      );
-      refresh();
-      getch();  // Wait for resize.
-      continue;
+    if (main_system_mode != main_system_mode_get()) {
+      main_system_mode = main_system_mode_get();
+      main_system_mode->init();
     }
-
-    render(&ui, &game);
-
-    input_update(&game, &ui);
-    game_state_print(game.game_state);
-    if (game.game_state == GAME_STATE_QUIT) {
+    event_on_render_start();
+    main_system_mode->render();
+    main_system_mode->input_update();
+    if (main_system_mode->system_update() == MAIN_SYSTEM_MODE_DONE) {
       break;
     }
-
-    main_update_game(&game, &ui);
   }
 
   endwin();  // End ncurses.

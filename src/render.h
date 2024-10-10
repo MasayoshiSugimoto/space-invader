@@ -4,7 +4,6 @@
 
 #include "menu.h"
 #include "vector.h"
-#include "ui.h"
 #include "color.h"
 #include "consts.h"
 #include "sprite.h"
@@ -14,9 +13,10 @@
 #include "virtual_screen.h"
 #include "timer.h"
 #include "sprite_editor.h"
+#include "event.h"
 
 
-void render(struct UI* ui, struct Game* game);
+void render(struct Game* game);
 
 
 #endif

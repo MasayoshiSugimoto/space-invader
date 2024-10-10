@@ -29,6 +29,13 @@
         "task_status.h": "c",
         "ui.h": "c",
         "menu.h": "c",
-        "sprite_component.h": "c"
+        "sprite_component.h": "c",
+        "cursor.h": "c",
+        "keyboard.h": "c",
+        "main_system_mode.h": "c",
+        "game.h": "c",
+        "main_system_game.h": "c",
+        "input.h": "c",
+        "sprite_editor.h": "c"
     }
 }

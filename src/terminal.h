@@ -21,6 +21,7 @@ struct Terminal {
 
 
 void terminal_init(struct Terminal* terminal);
+void terminal_check_minimum_size(void);
 struct Vector terminal_center(const struct Terminal* terminal);
 struct Vector term_get_size(void);
 
