@@ -8,7 +8,7 @@
 
 
 #define TEST_MODE_ENABLE true
-#define TEST_MODE_IS_SINGLE_TEST true
+#define TEST_MODE_IS_SINGLE_TEST false
 
 
 #define TERMINAL_MIN_WIDTH 100
