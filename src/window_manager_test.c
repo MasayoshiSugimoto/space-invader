@@ -91,6 +91,7 @@ void window_manager_test_random() {
     
     int t = 0;
     while (!frame_timer_is_done(&timer)) {
+        event_on_render_start();
         frame_timer_on_frame_start();
         int dt = duration_as_milliseconds(frame_timer_get_elapsed_time(&timer)) / 50;
         for (int i = 0; i < window_max; i++) {
@@ -111,6 +112,7 @@ void window_manager_test_random() {
         
         window_manager_window_draw(forefront_window);
         virtual_screen_render();
+        event_on_render_end();
     }
 
     window_manager_window_release_all();
@@ -180,6 +182,7 @@ void window_manager_test_alignment() {
     window_manager_window_align_right_screen(window_bottom_right);
     window_manager_window_align_bottom_screen(window_bottom_right);
 
+    event_on_render_start();
     window_manager_window_draw(window_top_left);
     window_manager_window_draw(window_top_center);
     window_manager_window_draw(window_top_right);
@@ -191,7 +194,7 @@ void window_manager_test_alignment() {
     window_manager_window_draw(window_bottom_right);
     window_manager_window_draw(forefront_window);
     virtual_screen_render();
-
+    event_on_render_end();
     sleep(5);
 
     window_manager_window_release_all();

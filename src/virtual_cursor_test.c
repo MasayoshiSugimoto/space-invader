@@ -94,7 +94,7 @@ void virtual_cursor_test() {
     window_manager_window_draw(window2);
     window_manager_window_draw(window3);
     virtual_screen_render();
-    virtual_cursor_show(&cursor1);
+    virtual_cursor_show(&cursor3);
     refresh();
     sleep(5);
 

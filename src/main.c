@@ -30,7 +30,6 @@ int main() {
 
   // Loop to track cursor position
   while (true) {
-    log_info("LOOP BEGIN");
     event_on_frame_start();
     if (main_system_mode != main_system_mode_get()) {
       main_system_mode = main_system_mode_get();
@@ -38,6 +37,7 @@ int main() {
     }
     event_on_render_start();
     main_system_mode->render();
+    event_on_render_end();
     main_system_mode->input_update();
     if (main_system_mode->system_update() == MAIN_SYSTEM_MODE_DONE) {
       break;

@@ -16,7 +16,8 @@ struct InputMapping {
 
 
 void input_update(struct Game* game);
-void input_process(const struct InputMapping* input_mapping, int length);
+KeyboardKey input_get(void);
+KeyboardKey input_process(const struct InputMapping* input_mappings, int length, KeyboardKey key);
 
 
 #endif

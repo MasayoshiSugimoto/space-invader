@@ -18,12 +18,17 @@ void virtual_cursor_text_align_right(struct VirtualCursor* cursor, const char* t
 
 
 void virtual_cursor_text_print(struct VirtualCursor* cursor, const char* text) {
-    struct VirtualWindow* window = cursor->window;
     for (int i = 0; i < strlen(text); i++) {
         struct VirtualPixel pixel = {text[i], COLOR_COLOR_PAIR_ID_DEFAULT};
-        window_manager_window_set_pixel(window, cursor->x, cursor->y, pixel);
+        window_manager_window_set_pixel(cursor->window, cursor->x, cursor->y, pixel);
         virtual_cursor_next(cursor);
     }
+}
+
+
+void virtual_cursor_character_set(struct VirtualCursor* cursor, char c, ColorPairId color_pair_id) {
+    struct VirtualPixel pixel = {c, color_pair_id};
+    window_manager_window_set_pixel(cursor->window, cursor->x, cursor->y, pixel);
 }
 
 
@@ -52,11 +57,52 @@ void virtual_cursor_next(struct VirtualCursor* cursor) {
 }
 
 
+void virtual_cursor_move_up(struct VirtualCursor* cursor) {
+    cursor->y = imax(cursor->y - 1, 0);
+}
+
+
+void virtual_cursor_move_right(struct VirtualCursor* cursor) {
+    cursor->x = imin(cursor->x + 1, cursor->window->width - 1);
+}
+
+
+void virtual_cursor_move_down(struct VirtualCursor* cursor) {
+    cursor->y = imin(cursor->y + 1, cursor->window->height - 1);
+}
+
+
+void virtual_cursor_move_left(struct VirtualCursor* cursor) {
+    cursor->x = imax(cursor->x - 1, 0);
+}
+
+
 void virtual_cursor_show(struct VirtualCursor* cursor) {
-    if (window_manager_window_is_inside(cursor->window, cursor->x, cursor->y)) {
-        move(cursor->window->offset_y + cursor->y, cursor->window->offset_x + cursor->x);  // Set virtual cursor position
+    struct VirtualWindow* window = cursor->window;
+    int x = window->offset_x + cursor->x;
+    int y = window->offset_y + cursor->y;
+    if (window_manager_window_is_inside(window, x, y)) {
+        move(y, x);  // Set virtual cursor position
         curs_set(CURSOR_VISIBILITY_HIGH_VISIBILITY);
     } else {
         curs_set(CURSOR_VISIBILITY_INVISIBLE);
     }
+}
+
+
+void virtual_cursor_show_2(struct VirtualCursor* cursor) {
+    struct VirtualWindow* window = cursor->window;
+    int x = window->offset_x + cursor->x;
+    int y = window->offset_y + cursor->y;
+    if (window_manager_window_is_inside(window, x, y)) {
+        move(y, x);  // Set virtual cursor position
+        curs_set(CURSOR_VISIBILITY_NORMAL);
+    } else {
+        curs_set(CURSOR_VISIBILITY_INVISIBLE);
+    }
+}
+
+
+void virtual_cursor_hide(struct VirtualCursor* cursor) {
+    curs_set(CURSOR_VISIBILITY_INVISIBLE);
 }

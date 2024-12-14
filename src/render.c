@@ -109,9 +109,6 @@ void render(struct Game* game) {
     case GAME_STATE_START_SCREEN:
       start_screen_render();
       break;
-    case GAME_STATE_SPRITE_EDITOR:
-      sprite_editor_render();
-      break;
     default: 
       log_fatal_f("Invalid game_state: %d", game_state);
   }

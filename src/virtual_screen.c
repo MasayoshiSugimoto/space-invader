@@ -50,6 +50,7 @@ void virtual_screen_setup() {
 void virtual_screen_reset() {
   if (g_virtual_screen.screen != NULL) {
     free(g_virtual_screen.screen);
+    g_virtual_screen.screen = NULL;
   }
   virtual_screen_setup();
 }
@@ -79,7 +80,6 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 
 
 void virtual_screen_render() {
-  erase();
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
       struct VirtualPixel* pixel = &g_virtual_screen.screen[screen_index(x, y)];
@@ -89,7 +89,6 @@ void virtual_screen_render() {
       attroff(color_pair);
     }
   }
-  refresh();
   private_screen_clear();
 }
 

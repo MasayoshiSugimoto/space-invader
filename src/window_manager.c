@@ -26,7 +26,7 @@ unsigned int _pixels_get_y(struct VirtualWindow* window, int i) {
 }
 
 
-int _pixels_get_index(struct VirtualWindow* window, int x, int y) {
+int _pixels_get_index(const struct VirtualWindow* window, int x, int y) {
   return window->width * y + x; 
 }
 
@@ -41,7 +41,7 @@ int _get_next_free_window_index() {
 }
 
 
-int _get_window_index(struct VirtualWindow* window) {
+int _get_window_index(const struct VirtualWindow* window) {
   for (int i = 0; i < WINDOW_MANAGER_WINDOW_MAX; i++) {
     if (window == &_windows[i]) return i;
   }
@@ -49,7 +49,7 @@ int _get_window_index(struct VirtualWindow* window) {
 }
 
 
-bool _pixel_is_inside(struct VirtualWindow* window, int x, int y) {
+bool _pixel_is_inside(const struct VirtualWindow* window, int x, int y) {
   return 0 <= x && x < window->width && 0 <= y && y < window->height;
 }
 
@@ -60,7 +60,7 @@ void _pixel_clear(struct VirtualPixel* pixel) {
 }
 
 
-int _window_pixels_get_offset(struct VirtualWindow* window) {
+int _window_pixels_get_offset(const struct VirtualWindow* window) {
   return _get_window_index(window) * WINDOW_MANAGER_WINDOW_PIXEL_MAX;
 }
 
@@ -109,7 +109,7 @@ void window_manager_window_draw(struct VirtualWindow* window) {
     int x = _pixels_get_x(window, i) + window->offset_x;
     int y = _pixels_get_y(window, i) + window->offset_y;
     struct VirtualPixel pixel = _pixels[pixel_offset + i];
-    if (!window->is_transparent || pixel.character != ' ') {
+    if (!window->is_transparent || pixel.character != 0) {
       virtual_screen_set_char_and_color(x, y, pixel.character, pixel.color_pair_id);
     }
   }
@@ -156,6 +156,16 @@ void window_manager_window_set_pixel(struct VirtualWindow* window, int x, int y,
   if (_pixel_is_inside(window, x, y)) {
     _pixels[pixel_offset + _pixels_get_index(window, x, y)] = pixel;
   }
+}
+
+
+struct VirtualPixel window_manager_window_get_pixel(const struct VirtualWindow* window, int x, int y) {
+  int pixel_offset = _window_pixels_get_offset(window);
+  if (_pixel_is_inside(window, x, y)) {
+    return _pixels[pixel_offset + _pixels_get_index(window, x, y)];
+  }
+  struct VirtualPixel pixel = {0, 0};
+  return pixel;
 }
 
 
@@ -277,4 +287,22 @@ void window_manager_window_align_bottom_screen(struct VirtualWindow* window) {
 
 void window_manager_window_align_left_screen(struct VirtualWindow* window) {
   window->offset_x = window->has_border ? 1 : 0;
+}
+
+
+void window_manager_window_scroll_down(struct VirtualWindow* window) {
+  int pixel_offset = _window_pixels_get_offset(window);
+  for (int x = 0; x < window->width; x++) {
+    for (int y = 0; y < window->height - 1; y++) {
+      if (_pixel_is_inside(window, x, y)) {
+        _pixels[pixel_offset + _pixels_get_index(window, x, y)] = _pixels[pixel_offset + _pixels_get_index(window, x, y + 1)];
+      }
+    }
+  }
+  struct VirtualPixel pixel = {' ', COLOR_PAIR_ID_DEFAULT};
+  for (int x = 0; x < window->width; x++) {
+    if (_pixel_is_inside(window, x, window->height - 1)) {
+      _pixels[pixel_offset + _pixels_get_index(window, x, window->height - 1)] = pixel;
+    }
+  }
 }

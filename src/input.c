@@ -85,7 +85,6 @@ const struct InputTableRow input_transition_table[] = {
   {GAME_STATE_MAIN_MENU, 'w', input_update_main_menu_previous},
   {GAME_STATE_MAIN_MENU, 's', input_update_main_menu_next},
   {GAME_STATE_MAIN_MENU, '\n', input_update_main_menu_validate_selection},
-  {GAME_STATE_ANY, KEY_F(2), sprite_editor_enable}
 };
 
 
@@ -107,14 +106,20 @@ void input_update(struct Game* game) {
 }
 
 
-void input_process(const struct InputMapping* input_mappings, int length) {
-  KeyboardKey key = getch();
-  if (key == ERR) return;
+KeyboardKey input_get(void) {
+  return  getch();
+}
+
+
+KeyboardKey input_process(const struct InputMapping* input_mappings, int length, KeyboardKey key) {
+  if (key == ERR) return key;
   input_log_key_pressed(key);
   for (int i = 0; i < length; i++) {
     const struct InputMapping* input_mapping = &input_mappings[i];
-    if (input_mapping->key == key) {
+    if (input_mapping->key == key || input_mapping->key == KEY_MAX) {
       input_mapping->action(key);
+      return key;
     }
   }
+  return KEY_MAX;
 }

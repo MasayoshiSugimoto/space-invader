@@ -25,19 +25,6 @@ static void _init_local(void) {
 }
 
 
-static void _entities_to_window(const struct EntitySystem* entity_system) {
-  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
-    if (sprite_unit.sprite_id == SPRITE_ID_NONE || !sprite_unit.active) continue;
-    struct VirtualWindow* window = window_manager_window_setup_from_sprite(sprite_get_sprite(sprite_unit.sprite_id));
-    struct RenderingUnit* rendering_unit = &_rendering_units[_rendering_unit_count++];
-    rendering_unit->window = window;
-    rendering_unit->entity_id = entity_id;
-    rendering_unit->sprite = sprite_get_sprite(sprite_unit.sprite_id);
-  }
-}
-
-
 static void _init(void) {
     _init_local();
     game_init(&_game);
@@ -80,7 +67,8 @@ static struct InputMapping _input_mapping[] = {
 
 
 static void _input_update(void) {
-    input_process(_input_mapping, array_size(_input_mapping));
+    KeyboardKey key = input_get();
+    input_process(_input_mapping, array_size(_input_mapping), key);
 }
 
 

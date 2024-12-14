@@ -9,12 +9,12 @@
 #include "keyboard.h"
 #include "cursor.h"
 #include "color.h"
+#include "main_system_mode.h"
+#include "virtual_cursor.h"
+#include "input.h"
 
 
-void sprite_editor_init();
-void sprite_editor_render();
-void sprite_editor_enable(struct Game* game, KeyboardKey key);
-void sprite_editor_input_update(KeyboardKey key);
+struct MainSystemMode g_main_system_mode_sprite_editor;
 
 
 #endif

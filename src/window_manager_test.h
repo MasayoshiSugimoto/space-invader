@@ -4,6 +4,7 @@
 
 #include "window_manager.h"
 #include "cursor.h"
+#include "event.h"
 
 
 void window_manager_test();

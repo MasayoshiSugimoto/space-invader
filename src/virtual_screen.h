@@ -20,6 +20,7 @@ struct VirtualScreen {
 } g_virtual_screen;
 
 
+bool virtual_screen_is_inside(int x, int y);
 void virtual_screen_init();
 void virtual_screen_setup();
 void virtual_screen_reset();
