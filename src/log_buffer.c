@@ -1,56 +1,6 @@
 #include "log_buffer.h"
 
 
-static struct IntRingBuffer {
-    int* buffer;
-    int* buffer_end;
-    int* pointer_begin;
-    int* pointer_end;
-};
-
-
-void _ring_buffer_allocate(struct IntRingBuffer* ring_buffer, int length) {
-    ring_buffer->buffer = malloc(sizeof(*ring_buffer->buffer) * length);
-    ring_buffer->buffer_end = ring_buffer->buffer + length;
-    ring_buffer->pointer_begin = ring_buffer->buffer;
-    ring_buffer->pointer_end = ring_buffer->buffer;
-    memset(ring_buffer->buffer, 'X', sizeof(*ring_buffer->buffer) * length);
-}
-
-
-void _ring_buffer_pointer_increment(struct IntRingBuffer* ring_buffer, int** pp) {
-    int* p = *pp;
-    p++;
-    if (p >= ring_buffer->buffer_end) {
-        p = ring_buffer->buffer;
-    }
-    *pp = p;
-}
-
-
-bool _ring_buffer_next(struct IntRingBuffer* ring_buffer, int** pp) {
-    if (*pp == ring_buffer->pointer_end) return false;
-    _ring_buffer_pointer_increment(ring_buffer, pp);
-    return true;
-}
-
-
-void _ring_buffer_add(struct IntRingBuffer* ring_buffer, int x) {
-    *ring_buffer->pointer_end = x;
-    _ring_buffer_pointer_increment(ring_buffer, &ring_buffer->pointer_end);
-    if (ring_buffer->pointer_begin == ring_buffer->pointer_end) {
-        _ring_buffer_pointer_increment(ring_buffer, &ring_buffer->pointer_begin);
-    }
-}
-
-
-void _ring_buffer_free(struct IntRingBuffer* ring_buffer) {
-    if (ring_buffer->buffer == NULL) return;
-    free(ring_buffer->buffer);
-    ring_buffer->buffer = NULL;
-}
-
-
 void _pointer_next(const struct LogBuffer* buffer, char** pointer) {
     char* p = *pointer;
     p++;
