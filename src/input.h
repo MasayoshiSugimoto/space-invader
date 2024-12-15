@@ -6,7 +6,6 @@
 #include "main_menu.h"
 #include "keyboard.h"
 #include "input.h"
-#include "sprite_editor.h"
 
 
 struct InputMapping {

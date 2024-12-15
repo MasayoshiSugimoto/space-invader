@@ -9,7 +9,6 @@
 #include "render.h"
 #include "main_menu.h"
 #include "virtual_screen.h"
-#include "sprite_editor.h"
 #include "test_suite.h"
 #include "event.h"
 #include "main_system_mode.h"

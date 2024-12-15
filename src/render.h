@@ -12,7 +12,6 @@
 #include "main_menu.h"
 #include "virtual_screen.h"
 #include "timer.h"
-#include "sprite_editor.h"
 #include "event.h"
 
 
