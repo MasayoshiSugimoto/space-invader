@@ -36,7 +36,7 @@ void log_buffer_test(void) {
     while (!frame_timer_is_done(&timer)) {
         event_on_frame_start();
         event_on_render_start();
-        int dt = duration_as_milliseconds(frame_timer_get_elapsed_time(&timer)) / 10;
+        int dt = duration_as_milliseconds(frame_timer_get_elapsed_time(&timer)) / 25;
 
         if (t != dt) {
             _add_random_line(&sprite_buffer, count++);

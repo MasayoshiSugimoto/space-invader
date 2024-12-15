@@ -12,6 +12,7 @@
 #include "main_system_mode.h"
 #include "virtual_cursor.h"
 #include "input.h"
+#include "sprite_buffer.h"
 
 
 struct MainSystemMode g_main_system_mode_sprite_editor;

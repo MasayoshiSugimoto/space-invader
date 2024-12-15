@@ -5,6 +5,9 @@
 #define SPRITE_EDITOR_WINDOW_LOG_HEIGHT 5
 
 
+static const int LOG_BUFFER_SIZE = 1024 * 50;
+
+
 enum Mode {
   MODE_EDIT,
   MODE_SELECTION,
@@ -26,6 +29,7 @@ static struct Selection {
 static struct Widget _widget_edit;
 static struct Widget _widget_log;
 static struct Widget _widget_palette;
+static struct LogBuffer _log_buffer;
 // static const struct Color BLACK = {0, 0, 0};
 // static const struct Color WHITE = {255, 255, 255};
 // static ColorPairId _selection_color_pair_id;
@@ -33,7 +37,7 @@ static struct Widget _widget_palette;
 
 static void _log(const char* text) {
   log_info_f("%s", text);
-  
+  log_buffer_add_string(&_log_buffer, text);
 }
 
 
@@ -160,6 +164,8 @@ static void _init(void) {
   _widget_palette.window.offset_y = 1;
 
   _widget_init(&_widget_log, virtual_screen_get_width() - 2 * border, SPRITE_EDITOR_WINDOW_LOG_HEIGHT);
+  log_buffer_init(&_log_buffer);
+  log_buffer_allocate(&_log_buffer, LOG_BUFFER_SIZE);
   _widget_log.window.has_border = true;
   _widget_log.window.offset_x = border;
   _widget_log.window.offset_y = virtual_screen_get_height() - border - SPRITE_EDITOR_WINDOW_LOG_HEIGHT;
@@ -189,6 +195,7 @@ static enum MainSystemModeStatus _system_update(void) {
 
 
 static void _render(void) {
+  log_buffer_draw_to_sprite_buffer(&_log_buffer, &_widget_log.sprite_buffer);
   window_manager_window_draw_2(&_widget_edit.window);
   window_manager_window_draw_2(&_widget_log.window);
   window_manager_window_draw_2(&_widget_palette.window);

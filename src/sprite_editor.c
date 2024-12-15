@@ -20,6 +20,7 @@ static struct VirtualCursor _cursor;
 static struct VirtualWindow* _window_selection;
 static struct VirtualCursor _cursor_selection;
 static struct VirtualWindow* _window_log;
+static struct SpriteBuffer _sprite_buffer_log;
 static struct VirtualCursor _cursor_log;
 static const struct Color BLACK = {0, 0, 0};
 static const struct Color WHITE = {255, 255, 255};
@@ -136,6 +137,11 @@ static struct InputMapping _input_mappings_edit[] = {
 };
 
 
+static void _init_2(void) {
+
+}
+
+
 static void _init(void) {
    window_manager_init();
 
@@ -201,6 +207,11 @@ static enum MainSystemModeStatus _system_update(void) {
 }
 
 
+static void _render_2(void) {
+
+}
+
+
 static void _render(void) {
   window_manager_window_draw(_window_edit);
   window_manager_window_draw(_window_log);
@@ -239,8 +250,8 @@ static void _render(void) {
 
 struct MainSystemMode g_main_system_mode_sprite_editor = {
   "MAIN_SYSTEM_MODE_SPRITE_EDITOR",
-  _init,
+  _init_2,
   _input_update,
   _system_update,
-  _render
+  _render_2
 };

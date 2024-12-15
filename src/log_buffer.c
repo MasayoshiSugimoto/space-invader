@@ -42,6 +42,14 @@ void log_buffer_add_char(struct LogBuffer* log_buffer, char c) {
 }
 
 
+void log_buffer_add_string(struct LogBuffer* log_buffer, const char* text) {
+    for (const char* c = text; *c != 0; c++) {
+        log_buffer_add_char(log_buffer, *c);
+    }
+    log_buffer_add_char(log_buffer, '\n');
+}
+
+
 void log_buffer_draw_to_sprite_buffer(struct LogBuffer* log_buffer, struct SpriteBuffer* sprite_buffer) {
     // Search last line.
     int width = sprite_buffer->width;
@@ -67,6 +75,12 @@ void log_buffer_draw_to_sprite_buffer(struct LogBuffer* log_buffer, struct Sprit
     }
     int x = 0;
     int line_start = i;
+    for (int j = 0; j < height; j++) {
+        if (lines[j] == 0) {
+            line_start = 0;
+            break;
+        }
+    }
     for (int y = 0; y < height; y++) {
         i = (line_start + y) % height;
         if (lines[i] == 0) continue;
