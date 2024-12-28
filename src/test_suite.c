@@ -2,7 +2,7 @@
 
 
 static void _single_test() {
-  sprite_loader_test();
+  window_manager_2_test();
 }
 
 

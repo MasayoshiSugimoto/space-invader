@@ -88,6 +88,7 @@ static void window_manager_test_random() {
     }
 
     struct FrameTimer timer;
+    frame_timer_init();
     frame_timer_timer_init(&timer);
     frame_timer_start(&timer, milliseconds_as_duration(5000));
 

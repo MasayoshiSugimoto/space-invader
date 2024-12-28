@@ -22,7 +22,7 @@ void event_on_start(void) {
     screen_init(screen_get_screen());
 
     main_system_mode_set(&g_game_main_system_mode);
-    // main_system_mode_set(&g_main_system_mode_sprite_editor_2);
+    // main_system_mode_set(&g_start_screen_main_system_mode);
 }
 
 
