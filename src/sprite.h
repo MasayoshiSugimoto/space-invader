@@ -26,7 +26,6 @@ enum SpriteId {
 struct Sprite {
   enum SpriteId sprite_id;
   const char* file_name;
-  const char* as_string;
   const char* const* as_matrix;
   const chtype* buffer;
   int buffer_length;

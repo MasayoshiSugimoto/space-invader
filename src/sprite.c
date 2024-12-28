@@ -177,7 +177,6 @@ void sprite_log(struct Sprite* sprite) {
       sprite->height,
       sprite->character_count
   );
-  log_info_f("Rendering sprite %s:\n%s", sprite_id, sprite->as_string);
 }
 
 
@@ -203,7 +202,6 @@ void sprite_init() {
     struct Sprite* sprite = &sprites[config->sprite_id];
     sprite->sprite_id = config->sprite_id;
     sprite->file_name = config->file_name;
-    sprite->as_string = sprite_as_string;
     sprite->as_matrix = string_to_matrix(sprite_as_string, width, height);
     sprite->buffer_length = width * height;
     sprite->buffer = string_as_buffer(sprite_as_string, width, height);
@@ -227,7 +225,6 @@ void sprite_init_sprite(struct Sprite* sprite, int width, int height) {
 
   sprite->sprite_id = SPRITE_ID_MAX;
   sprite->file_name = NULL;
-  sprite->as_string = NULL;
   sprite->as_matrix = (const char* const*)matrix;
   sprite->width = width;
   sprite->height = height;
