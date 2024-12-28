@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include "main_system_mode.h"
 #include "game.h"
+#include "keyboard.h"
+#include "entity_spaceship.h"
 #include "input.h"
 
 

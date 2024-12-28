@@ -1,11 +1,9 @@
 #include <time.h>
-#include "input.h"
 #include "consts.h"
 #include "game.h"
 #include "screen.h"
 #include "color.h"
 #include "window.h"
-#include "main_menu.h"
 #include "virtual_screen.h"
 #include "test_suite.h"
 #include "event.h"

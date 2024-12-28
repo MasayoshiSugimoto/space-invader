@@ -3,7 +3,6 @@
 
 
 #include "entity_spaceship.h"
-#include "main_menu.h"
 #include "keyboard.h"
 #include "input.h"
 
@@ -14,7 +13,6 @@ struct InputMapping {
 };
 
 
-void input_update(struct Game* game);
 KeyboardKey input_get(void);
 KeyboardKey input_process(const struct InputMapping* input_mappings, int length, KeyboardKey key);
 

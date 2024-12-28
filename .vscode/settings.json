@@ -50,6 +50,7 @@
         "log_buffer_test.h": "c",
         "stdlib.h": "c",
         "sprite_loader.h": "c",
-        "sprite_loader_test.h": "c"
+        "sprite_loader_test.h": "c",
+        "entity_spaceship.h": "c"
     }
 }

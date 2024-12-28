@@ -5,26 +5,6 @@ void window_move(struct Window* window, int y, int x) {
 }
 
 
-void window_addch(struct Window* window, const chtype character) {
-  int x;
-  int y;
-  getyx(stdscr, y, x);
-
-  if (window->left >= x) x = window->left + 1;
-  if (x > window->left + window->width) {
-    x = window->left + 1;
-    y++;
-  }
-
-  if (window->top >= y) y = window->top + 1;
-  if (y > window->top + window->width) {
-    return;
-  }
-
-  mvaddch(y, x, character);
-}
-
-
 void window_render_center_string(struct Window* window, int y, const char* string) {
   int length = strlen(string);
   int left = window->width / 2 - length / 2;
