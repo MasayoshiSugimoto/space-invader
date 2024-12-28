@@ -5,7 +5,6 @@
 #include "color.h"
 #include "virtual_screen.h"
 #include "cursor.h"
-#include "window_manager.h"
 #include "util.h"
 #include "sprite_buffer.h"
 

@@ -8,7 +8,6 @@
 #include "consts.h"
 #include "color.h"
 #include "collision_manager.h"
-#include "window_manager.h"
 
 
 #define SCREEN_WINDOW_MAX 100
