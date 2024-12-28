@@ -71,25 +71,6 @@ void render_credits(struct Terminal* terminal) {
 }
 
 
-void render_sprite(enum SpriteId sprite_id, int left, int top) {
-  const char* buf = sprite_as_string(sprite_id);
-  int x = left;
-  int y = top;
-  for (int i = 0; i < strlen(buf); i++) {
-    int c = buf[i];
-    if (c == '\n') {
-      x = left;
-      y++;
-    } else if (c == ' ') {
-      x++;
-    } else {
-      mvaddch(y, x, c);
-      x++;
-    }
-  }
-}
-
-
 void render(struct Game* game) {
   enum GameState game_state = game->game_state;
 

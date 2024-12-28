@@ -73,7 +73,7 @@ void init_status(struct AnimationStatus* status, AnimationId animation_id) {
 void animation_dump() {
   log_info("Dumping animation status...");
   for (const struct AnimationPhase* it = animation_phases; it < animation_phase_end; it++) {
-    log_info_f("{sprite_id=%s, duration=%ld}", sprite_as_string(it->sprite_id), it->duration);
+    log_info_f("{sprite_id=%d, duration=%ld}", it->sprite_id, it->duration);
   }
   for (const struct Animation* it = animations; it < animation_end; it++) {
     log_info_f("{animation_phase_begin=%p}", it->animation_phase_begin);

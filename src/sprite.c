@@ -249,12 +249,6 @@ const char* sprite_get_file_name(enum SpriteId sprite_id) {
 }
 
 
-const char* sprite_as_string(enum SpriteId sprite_id) {
-  assert_sprite_id(sprite_id);
-  return sprites[sprite_id].as_string;
-}
-
-
 const struct Sprite* sprite_get_sprite(enum SpriteId sprite_id) {
   assert_sprite_id(sprite_id);
   return &sprites[sprite_id];

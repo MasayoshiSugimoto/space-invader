@@ -42,7 +42,6 @@ void sprite_init();
 void sprite_init_sprite(struct Sprite* sprite, int width, int height);
 void sprite_free(struct Sprite* sprite);
 const char* sprite_get_file_name(enum SpriteId);
-const char* sprite_as_string(enum SpriteId);
 const struct Sprite* sprite_get_sprite(enum SpriteId);
 
 
