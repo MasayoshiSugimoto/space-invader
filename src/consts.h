@@ -7,7 +7,7 @@
 #define DEBUG_ENABLE_TEST false
 
 
-#define TEST_MODE_ENABLE true
+#define TEST_MODE_ENABLE false
 #define TEST_MODE_IS_SINGLE_TEST false
 
 

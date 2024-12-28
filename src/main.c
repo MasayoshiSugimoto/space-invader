@@ -3,7 +3,6 @@
 #include "game.h"
 #include "screen.h"
 #include "color.h"
-#include "window.h"
 #include "virtual_screen.h"
 #include "test_suite.h"
 #include "event.h"

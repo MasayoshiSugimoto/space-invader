@@ -3,7 +3,6 @@
 
 
 #include "util.h"
-#include "window.h"
 #include "terminal.h"
 #include "virtual_screen.h"
 #include "task_status.h"
