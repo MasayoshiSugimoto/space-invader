@@ -2,7 +2,7 @@
 
 
 static void _single_test() {
-  log_buffer_test();
+  sprite_loader_test();
 }
 
 

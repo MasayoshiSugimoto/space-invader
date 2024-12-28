@@ -48,6 +48,8 @@
         "log_buffer.h": "c",
         "log_buffer_adapter.h": "c",
         "log_buffer_test.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "sprite_loader.h": "c",
+        "sprite_loader_test.h": "c"
     }
 }

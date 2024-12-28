@@ -11,6 +11,7 @@
 #include "consts.h"
 #include "window_manager_2_test.h"
 #include "log_buffer_test.h"
+#include "sprite_loader_test.h"
 
 
 void test_suite_run();
