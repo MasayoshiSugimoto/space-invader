@@ -8,7 +8,7 @@
 
 struct SpriteBuffer {
     struct VirtualPixel* buffer;
-    const char* file_name;
+    char file_name[SYSTEM_FILE_NAME_MAX];
     int width;
     int height;
 };
@@ -27,6 +27,7 @@ struct VirtualPixel sprite_buffer_get(const struct SpriteBuffer* sprite_buffer, 
 struct VirtualPixel* sprite_buffer_access(struct SpriteBuffer* sprite_buffer, int x, int y);
 void sprite_buffer_extract_characters(char* buffer, const struct SpriteBuffer* sprite_buffer);
 void sprite_buffer_as_string(const struct SpriteBuffer* sprite_buffer, char* out_buffer);
+void sprite_buffer_file_name_set(struct SpriteBuffer* sprite_buffer, const char* file_name);
 
 
 #endif

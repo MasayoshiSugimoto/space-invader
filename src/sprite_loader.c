@@ -70,7 +70,6 @@ void _path_sprite_set_get(char* buf, const char* file_name) {
 }
 
 
-
 void _sprite_loader_load(struct SpriteBuffer* sprite, const char* file_name) {
   assert(file_name != NULL, "Sprite buffer file name is empty.");
   sprite_buffer_init(sprite);
@@ -108,7 +107,7 @@ void _sprite_loader_load(struct SpriteBuffer* sprite, const char* file_name) {
       assert(c == '\n', "Failed to load sprite. New line expected.");
     }
   }
-  sprite->file_name = file_name;
+  sprite_buffer_file_name_set(sprite, file_name);
   fclose(file);
 }
 
@@ -174,7 +173,8 @@ void sprite_loader_load_sprite_set(const char* sprite_set_file_name) {
     }
     if (count == 1) {
       log_info_f("Sprite file name: %s", buf);
-      _sprite_loader_load(&_sprite_loader.sprites[_sprite_loader.sprites_length++], buf);
+      struct SpriteBuffer* sprite_buffer = &_sprite_loader.sprites[_sprite_loader.sprites_length++];
+      _sprite_loader_load(sprite_buffer, buf);
     }
   } while (count != EOF);
   fclose(file);
@@ -187,6 +187,7 @@ void sprite_loader_clear(void) {
 
 
 struct SpriteBuffer* sprite_loader_sprite_get(const char* file_name) {
+  assert(file_name != NULL, "File name is empty.");
   for (int i = 0; i < _sprite_loader.sprites_length; i++) {
     if (strcmp(_sprite_loader.sprites[i].file_name, file_name) == 0) {
       return &_sprite_loader.sprites[i];

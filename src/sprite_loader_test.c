@@ -23,16 +23,17 @@ void sprite_loader_test(void) {
     log_info("sprite_loader_test...");
     int width = 4;
     int height = 2;
+    sprite_loader_init();
     {
         struct SpriteBuffer sprite;
         sprite_buffer_init(&sprite);
-        sprite.file_name = "sprite_buffer_test_1.dat";
+        sprite_buffer_file_name_set(&sprite, "sprite_buffer_test_1.dat");
         sprite_loader_save(&sprite);
     }
     {
         struct SpriteBuffer sprite_2;
         sprite_buffer_init(&sprite_2);
-        sprite_2.file_name = "sprite_buffer_test_2.dat";
+        sprite_buffer_file_name_set(&sprite_2, "sprite_buffer_test_2.dat");
         sprite_buffer_allocate(&sprite_2, width, height);
         sprite_buffer_clear(&sprite_2);
         sprite_buffer_access(&sprite_2, 0, 0)->character = 'a';
@@ -53,6 +54,7 @@ void sprite_loader_test(void) {
     sprite_loader_load_sprite_set("sprite_set_test.dat");
     {
         struct SpriteBuffer* sprite = sprite_loader_sprite_get("sprite_buffer_test_1.dat");
+        assert(sprite != NULL, "Sprite is null");
         assert_f(sprite->width == 0, "sprite->width -> 0 != %d", sprite->width);
         assert_f(sprite->height == 0, "sprite->height -> 0 != %d", sprite->height);
         assert_f(

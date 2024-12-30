@@ -17,6 +17,7 @@ void test_suite_run() {
     virtual_cursor_test();
     log_buffer_test();
   }
+  log_info("Test suite completed.");
   endwin();  // End ncurses.
   exit(0);
 }

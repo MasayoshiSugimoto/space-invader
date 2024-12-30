@@ -9,7 +9,7 @@ void sprite_buffer_init(struct SpriteBuffer* sprite_buffer) {
     sprite_buffer->buffer = NULL;
     sprite_buffer->width = 0;
     sprite_buffer->height = 0;
-    sprite_buffer->file_name = "uninitialized.dat";
+    strcpy(sprite_buffer->file_name, "uninitialized.dat");
 }
 
 
@@ -119,4 +119,9 @@ void sprite_buffer_as_string(const struct SpriteBuffer* sprite_buffer, char* out
             offset += sprintf(out_buffer + offset, "%03d", sprite_buffer_get(sprite_buffer, x, y).color_pair_id);
         }
     }
+}
+
+
+void sprite_buffer_file_name_set(struct SpriteBuffer* sprite_buffer, const char* file_name) {
+    strcpy(sprite_buffer->file_name, file_name);
 }
