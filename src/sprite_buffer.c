@@ -1,7 +1,16 @@
 #include "sprite_buffer.h"
 
+
 static const struct VirtualPixel _pixel_empty;
-static struct VirtualPixel _pixel_bad_access;  // Used to handle out out buffer access.
+static struct VirtualPixel _pixel_bad_access;  // Used to handle wrong buffer access silently.
+
+
+void sprite_buffer_init(struct SpriteBuffer* sprite_buffer) {
+    sprite_buffer->buffer = NULL;
+    sprite_buffer->width = 0;
+    sprite_buffer->height = 0;
+    sprite_buffer->file_name = "uninitialized.dat";
+}
 
 
 void sprite_buffer_allocate(struct SpriteBuffer* sprite_buffer, int width, int height) {
@@ -87,5 +96,27 @@ void sprite_buffer_extract_characters(char* buffer, const struct SpriteBuffer* s
             }
         }
         buffer[counter++] = '\n';
+    }
+}
+
+
+void sprite_buffer_as_string(const struct SpriteBuffer* sprite_buffer, char* out_buffer) {
+    int offset = 0;
+    offset += sprintf(out_buffer, "%s\n", sprite_buffer->file_name);
+    offset += sprintf(out_buffer + offset, "  width: %d\n", sprite_buffer->width);
+    offset += sprintf(out_buffer + offset, "  height: %d\n", sprite_buffer->height);
+    offset += sprintf(out_buffer + offset, "  buffer.characters:");
+    for (int y = 0; y < sprite_buffer->height; y++) {
+        offset += sprintf(out_buffer + offset, "\n    - ");
+        for (int x = 0; x < sprite_buffer->width; x++) {
+            offset += sprintf(out_buffer + offset, "%c", sprite_buffer_get(sprite_buffer, x, y).character);
+        }
+    }
+    offset += sprintf(out_buffer + offset, "\n  buffer.color_pair_ids:");
+    for (int y = 0; y < sprite_buffer->height; y++) {
+        offset += sprintf(out_buffer + offset, "\n    - ");
+        for (int x = 0; x < sprite_buffer->width; x++) {
+            offset += sprintf(out_buffer + offset, "%03d", sprite_buffer_get(sprite_buffer, x, y).color_pair_id);
+        }
     }
 }
