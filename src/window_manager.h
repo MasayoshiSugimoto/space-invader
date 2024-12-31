@@ -8,21 +8,11 @@
 #include "color.h"
 #include "virtual_screen.h"
 #include "virtual_pixel.h"
+#include "virtual_window.h"
 
 
 #define WINDOW_MANAGER_WIDTH_MAX 800
 #define WINDOW_MANAGER_HEIGHT_MAX 600
-
-
-struct VirtualWindow {
-  // struct VirtualPixel* pixels;
-  int width;
-  int height;
-  int offset_x;
-  int offset_y;
-  bool has_border;
-  bool is_transparent;
-};
 
 
 void window_manager_init(void);  // DEPRECATED

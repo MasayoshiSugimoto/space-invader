@@ -14,7 +14,7 @@ void test_suite_run() {
     color_test();
     virtual_screen_test();
     window_manager_2_test();
-    virtual_cursor_test();
+    virtual_cursor_2_test();
     log_buffer_test();
     sprite_loader_test();
   }

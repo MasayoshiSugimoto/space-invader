@@ -17,6 +17,7 @@
 #define DATA_SPRITE_SET_DIRECTORY (DATA_DIRECTORY "/sprite_sets")
 
 #define SPRITE_DIRECTORY "sprites"
+#define SPRITE_EMPTY_SPRITE_FILE_NAME "uninitialized.dat"
 
 #define SCREEN_WIDTH 80
 #define SCREEN_HEIGHT 20
