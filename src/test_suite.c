@@ -16,6 +16,7 @@ void test_suite_run() {
     window_manager_2_test();
     virtual_cursor_test();
     log_buffer_test();
+    sprite_loader_test();
   }
   log_info("Test suite completed.");
   endwin();  // End ncurses.

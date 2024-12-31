@@ -82,7 +82,9 @@ void _sprite_loader_load(struct SpriteBuffer* sprite, const char* file_name) {
   }
   int width;
   int height;
-  int count = fscanf(file, "%d %d\n", &width, &height);
+  int count = fscanf(file, "%d %d", &width, &height);
+  char c = fgetc(file);
+  assert_f(c == '\n', "New line expected. Got %c", c);
   switch (count) {
     case 0:
       log_fatal_f("Failed to load sprite: %s", _path);
