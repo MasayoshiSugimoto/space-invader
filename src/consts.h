@@ -6,7 +6,7 @@
 #define DEBUG_COLLISION_VISUALISATION_MODE true
 #define DEBUG_ENABLE_TEST false
 
-#define TEST_MODE_ENABLE true
+#define TEST_MODE_ENABLE false
 #define TEST_MODE_IS_SINGLE_TEST false
 
 #define TERMINAL_MIN_WIDTH 100

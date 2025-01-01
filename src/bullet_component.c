@@ -24,6 +24,7 @@ void bullet_component_fire(struct EntitySystem* entity_system, struct Vector bul
   struct SpriteComponentUnit sprite_unit = sprite_component_get(bullet_entity_id);
   sprite_unit.sprite_id = SPRITE_ID_SPACESHIP_BULLET;
   sprite_unit.active = true;
+  sprite_unit.sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET);
   sprite_component_set(&sprite_unit);
 
   bullet_component.active[bullet_entity_id] = true;

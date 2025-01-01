@@ -51,6 +51,7 @@
         "stdlib.h": "c",
         "sprite_loader.h": "c",
         "sprite_loader_test.h": "c",
-        "entity_spaceship.h": "c"
+        "entity_spaceship.h": "c",
+        "bullet_component.h": "c"
     }
 }

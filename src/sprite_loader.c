@@ -123,6 +123,15 @@ void sprite_loader_init(void) {
 }
 
 
+void sprite_loader_one_sprite_load(const char* sprite_file_name) {
+  assert(sprite_file_name != NULL, "sprite_file_name is null");
+  assert(_sprite_loader.sprites_length < SPRITE_LOADER_BUFFER_LENGTH, "Sprite loader already full");
+  log_info_f("Loading one sprite: %s", sprite_file_name);
+  struct SpriteBuffer* sprite_buffer = &_sprite_loader.sprites[_sprite_loader.sprites_length++];
+  _sprite_loader_load(sprite_buffer, sprite_file_name);
+}
+
+
 void sprite_loader_save(const struct SpriteBuffer* sprite) {
   assert(sprite->file_name != NULL, "Sprite buffer file name is empty.");
 
@@ -175,16 +184,10 @@ void sprite_loader_load_sprite_set(const char* sprite_set_file_name) {
     }
     if (count == 1) {
       log_info_f("Sprite file name: %s", buf);
-      struct SpriteBuffer* sprite_buffer = &_sprite_loader.sprites[_sprite_loader.sprites_length++];
-      _sprite_loader_load(sprite_buffer, buf);
+      sprite_loader_one_sprite_load(buf);
     }
   } while (count != EOF);
   fclose(file);
-}
-
-
-void sprite_loader_clear(void) {
-  
 }
 
 
@@ -196,4 +199,12 @@ struct SpriteBuffer* sprite_loader_sprite_get(const char* file_name) {
     }
   }
   return NULL;
+}
+
+
+void sprite_loader_release(void) {
+  for (int i = 0; i < _sprite_loader.sprites_length; i++) {
+    sprite_buffer_free(&_sprite_loader.sprites[i]);
+  }
+  sprite_loader_init();
 }
