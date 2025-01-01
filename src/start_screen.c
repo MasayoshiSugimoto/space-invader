@@ -33,8 +33,8 @@ enum WindowId {
 };
 
 
-static struct VirtualWindow* _windows[WINDOW_ID_MAX];
 static struct FrameTimer _timer;
+static struct VirtualWindow2 _windows[WINDOW_ID_MAX];
 
 
 void _fade_in_title_start(void) {
@@ -43,34 +43,17 @@ void _fade_in_title_start(void) {
 }
 
 
-void _title_render() {
-  struct VirtualWindow* title = _windows[WINDOW_ID_TITLE];
-  window_manager_window_center_screen_x(title);
-  window_manager_window_center_screen_y(title);
-  window_manager_window_draw(title);
-}
-
-
-void _credit_render() {
-  struct VirtualWindow* credits = _windows[WINDOW_ID_CREDITS];
-  window_manager_window_center_screen_x(credits);
-  window_manager_window_center_screen_y(credits);
-  window_manager_window_draw(credits);
-}
-
-
 void _state_update(void) {
-
   switch (_state) {
     case STATE_CREDITS_FADE_IN:
     case STATE_CREDITS_DISPLAY:
     case STATE_CREDITS_FADE_OUT:
-      _credit_render();
+      window_manager_window_draw_2(&_windows[WINDOW_ID_CREDITS]);
       break;
     case STATE_TITLE_FADE_IN:
     case STATE_TITLE_DISPLAY:
     case STATE_TITLE_FADE_OUT:
-      _title_render();
+      window_manager_window_draw_2(&_windows[WINDOW_ID_TITLE]);
       break;
     case STATE_DONE:
       break;
@@ -98,9 +81,18 @@ void _state_update(void) {
 
 
 void start_screen_init(void) {
-  window_manager_init();
-  _windows[WINDOW_ID_CREDITS] = window_manager_window_setup_from_sprite(sprite_get_sprite(SPRITE_ID_CREDITS));
-  _windows[WINDOW_ID_TITLE] = window_manager_window_setup_from_sprite(sprite_get_sprite(SPRITE_ID_TITLE));
+  sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_CREDITS);
+  sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_TITLE);
+  for (int i = 0; i < WINDOW_ID_TITLE; i++) {
+    struct VirtualWindow2* window = &_windows[i];
+    window_manager_window_2_init(window);
+  }
+  _windows[WINDOW_ID_CREDITS].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_CREDITS);
+  _windows[WINDOW_ID_TITLE].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_TITLE);
+  window_manager_window_center_screen_x_2(&_windows[WINDOW_ID_CREDITS]);
+  window_manager_window_center_screen_y_2(&_windows[WINDOW_ID_CREDITS]);
+  window_manager_window_center_screen_x_2(&_windows[WINDOW_ID_TITLE]);
+  window_manager_window_center_screen_y_2(&_windows[WINDOW_ID_TITLE]);
   color_color_set_default();
 
   _fade_in_title_start();
