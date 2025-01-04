@@ -42,6 +42,11 @@ static void _init(void) {
 }
 
 
+static void _release(void) {
+    log_info("Releasing main game system.");
+}
+
+
 void _space_ship_fire(KeyboardKey key) {
     entity_spaceship_fire();
 }
@@ -123,8 +128,9 @@ static void _render(void) {
 
 struct MainSystemMode g_game_main_system_mode = {
     "MAIN_SYSTEM_MODE_GAME",
-    &_init,
-    &_input_update,
-    &_system_update,
-    &_render
+    _init,
+    _release,
+    _input_update,
+    _system_update,
+    _render
 };
