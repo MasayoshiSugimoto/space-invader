@@ -30,9 +30,6 @@ static struct Widget _widget_edit;
 static struct Widget _widget_log;
 static struct Widget _widget_palette;
 static struct LogBuffer _log_buffer;
-// static const struct Color BLACK = {0, 0, 0};
-// static const struct Color WHITE = {255, 255, 255};
-// static ColorPairId _selection_color_pair_id;
 
 
 static void _log(const char* text) {
