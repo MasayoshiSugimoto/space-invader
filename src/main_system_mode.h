@@ -11,6 +11,7 @@ enum MainSystemModeStatus {
 struct MainSystemMode {
     const char* name;
     void (*init)(void);
+    void (*release)(void);
     void (*input_update)(void);
     enum MainSystemModeStatus (*system_update)(void);
     void (*render)(void);

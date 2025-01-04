@@ -33,6 +33,7 @@ int main() {
     event_on_render_end();
     main_system_mode->input_update();
     if (main_system_mode->system_update() == MAIN_SYSTEM_MODE_DONE) {
+      main_system_mode->release();
       break;
     }
   }

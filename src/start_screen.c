@@ -6,9 +6,15 @@
 #define ONE_SECOND milliseconds_as_duration(1000)
 
 
+static void _release(void) {
+  log_info("Releasing start screen.");
+}
+
+
 struct MainSystemMode g_start_screen_main_system_mode = {
     "MAIN_SYSTEM_MODE_START_SCREEN",
     &start_screen_init,
+    &_release,
     &main_system_no_op,
     &start_screen_update,
     &start_screen_render

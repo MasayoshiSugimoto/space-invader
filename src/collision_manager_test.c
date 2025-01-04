@@ -15,7 +15,7 @@ static ColorPairId _color_pair_id_red;
 
 
 static void _init(void) {
-    log_info("Initializing collision manager test...");
+    log_info("Initializing collision manager test.");
     game_init();
     game_init_entities(_entity_datas, array_size(_entity_datas));
     game_screen_init(_screen_width, _screen_height);
@@ -36,6 +36,11 @@ static void _init(void) {
     // Set sprite default color
     sprite_buffer_color_fill(sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP), _color_pair_id_white);
     sprite_buffer_color_fill(sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN), _color_pair_id_white);
+}
+
+
+static void _release(void) {
+    log_info("Releasing collision manager test.");
 }
 
 
@@ -79,6 +84,7 @@ static void _render(void) {
 struct MainSystemMode g_collision_manager_test = {
     "MAIN_SYSTEM_MODE_GAME",
     &_init,
+    &_release,
     &_input_update,
     &_system_update,
     &_render
