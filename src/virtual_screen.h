@@ -13,13 +13,6 @@
 #include "window_manager.h"
 
 
-struct VirtualScreen {
-  struct VirtualPixel* screen;
-  int width;
-  int height;
-} g_virtual_screen;
-
-
 bool virtual_screen_is_inside(int x, int y);
 void virtual_screen_init(void);
 void virtual_screen_allocate(void);

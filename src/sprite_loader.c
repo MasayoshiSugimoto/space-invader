@@ -117,7 +117,7 @@ void _sprite_loader_load(struct SpriteBuffer* sprite, const char* file_name) {
 void sprite_loader_init(void) {
   log_info("Initializing sprite loader...");
   for (int i = 0; i < SPRITE_LOADER_BUFFER_LENGTH; i++) {
-    sprite_buffer_init(&_sprite_loader.sprites[0]);
+    sprite_buffer_init(&_sprite_loader.sprites[i]);
   }
   _sprite_loader.sprites_length = 0;
 }
