@@ -9,7 +9,6 @@
 #include "frame_timer.h"
 
 
-#define COLOR_CUSTOM_COLOR_MAX 5
 #define COLOR_COLOR_MAX 256
 #define COLOR_COLOR_PAIR_MAX 256
 #define COLOR_COLOR_PAIR_ID_DEFAULT 8
@@ -50,10 +49,6 @@ struct ColorPair {
 };
 
 
-const struct Color S_COLOR_BLACK;
-const ColorId COLOR_FIRST_COLOR_ID;
-
-
 void color_color_set_default(void);
 void color_color_palette_push(enum ColorPaletteId color_palette_id);
 enum ColorPaletteId color_color_palette_get_last_pushed();
@@ -75,14 +70,7 @@ void color_update();
 
 void color_init();
 void color_reset();
-void color_palette_init();  // TODO: Deprecated, remove
-const struct Color* color_palette_get_deprecated(unsigned short id);
-size_t color_palette_length_deprecated();
-void color_palette_set_deprecated(const struct Color* palette);
 void color_print(const struct Color* color);
-short color_pair_id_deprecated(short foreground, short background);
-void color_dump_colors_deprecated();
-void color_dump_color_pairs_deprecated();
 
 
 #endif

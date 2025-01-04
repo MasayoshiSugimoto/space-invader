@@ -7,23 +7,9 @@
 #define COLOR_PAIR_FIRST_ID COLOR_COLOR_PAIR_ID_DEFAULT
 
 
-const ColorId COLOR_FIRST_COLOR_ID = 8;
 static const struct Color BLACK = {0, 0, 0};
 static const struct Color WHITE = {255, 255, 255};
-
-
-enum PaletteColor {
-  PALETTE_COLOR_BLACK,
-  PALETTE_COLOR_WHITE,
-  PALETTE_COLOR_MAX
-};
-
-
-struct ColorPairDeprecated {
-  enum ColorPairId id;
-  short foreground_color;
-  short background_color;
-};
+static const ColorId COLOR_FIRST_COLOR_ID = 8;
 
 
 struct Fade {
@@ -31,18 +17,6 @@ struct Fade {
   float alpha_start;
   float alpha_end;
 } _fade;
-
-
-// TODO: Deprecated, remove.
-const struct Color S_COLOR_BLACK = {0, 0, 0};
-struct Color g_colors[COLOR_CUSTOM_COLOR_MAX] = {
-  {0, 0, 0},
-  {1000, 1000, 1000},
-  {1000, 0, 0},
-  {0, 1000, 0},
-  {0, 0, 1000},
-};
-const struct Color* g_custom_colors = NULL;   // TODO: Deprecated, remove.
 
 
 struct Color _color_palette[COLOR_PALETTE_ID_MAX][COLOR_COLOR_MAX];
@@ -53,14 +27,6 @@ ColorId _color_active;
 ColorPairId _color_pair_active;
 enum ColorPaletteId _palette_last_pushed_id;
 enum ColorPaletteId _palette_active_id;
-
-
-const struct ColorPairDeprecated palette[] = {
-  {COLOR_PAIR_ID_DEFAULT, COLOR_WHITE, COLOR_BLACK},
-  {COLOR_PAIR_ID_COLLISION_ON, COLOR_WHITE, COLOR_RED},
-  {COLOR_PAIR_ID_MENU_SELECTION, COLOR_BLACK, COLOR_WHITE},
-  {COLOR_PAIR_ID_MENU_SELECTION, COLOR_RED, COLOR_BLACK},
-};
 
 
 struct ColorManager {
@@ -254,14 +220,6 @@ void color_init() {
   log_info_f("Cyan=%d", COLOR_CYAN);
   log_info_f("White=%d", COLOR_WHITE);
 
-  for (int color_id = 0; color_id < array_size(palette); color_id++) {
-    const struct ColorPairDeprecated* color_pair = &palette[color_id];
-    init_pair(color_id, color_pair->foreground_color, color_pair->background_color);
-  }
-
-  color_dump_colors_deprecated();
-  color_dump_color_pairs_deprecated();
-
   color_reset();
 }
 
@@ -292,73 +250,6 @@ void color_set_pair_mapping(short id, short foreground, short background) {
 }
 
 
-void color_palette_init() {
-  for (int i = 0; i < COLOR_CUSTOM_COLOR_MAX; i++) {
-    color_set_mapping(i, &g_colors[i]);
-  }
-
-  color_set_pair_mapping(1, 1, 0);
-  color_set_pair_mapping(2, 2, 0);
-  color_set_pair_mapping(3, 3, 0);
-  color_set_pair_mapping(4, 4, 0);
-}
-
-
-const struct Color* color_palette_get_deprecated(unsigned short id) {
-  if (id > COLOR_CUSTOM_COLOR_MAX) return NULL;
-  return &g_colors[id];
-}
-
-
-size_t color_palette_length_deprecated() {
-  return COLOR_CUSTOM_COLOR_MAX;
-}
-
-
-void color_palette_set_deprecated(const struct Color* palette) {
-  g_custom_colors = palette;
-  for (int i = 0; i < COLOR_CUSTOM_COLOR_MAX; i++) {
-    color_set_mapping(i, &g_custom_colors[i]);
-  }
-}
-
-
 void color_print(const struct Color* color) {
   log_info_f("red: %d, green: %d, blue: %d", color->red, color->green, color->blue);
-}
-
-
-short color_pair_id_deprecated(short foreground, short background) {
-  return foreground * COLOR_CUSTOM_COLOR_MAX + background;
-}
-
-
-void color_dump_colors_deprecated() {
-  short red;
-  short green;
-  short blue;
-
-  log_info("Colors");
-  log_info_f("  %-6s%-6s%-6s%-6s", "Id", "Red", "Green", "Blue");
-  for (short i = 0; i < COLORS; i++) {
-    int result = color_content(i, &red, &green, &blue);
-    if (result == ERR) continue;
-    log_info_f("  %-6d%-6d%-6d%-6d", i, red, green, blue);
-  }
-  log_info("End");
-}
-
-
-void color_dump_color_pairs_deprecated() {
-  short foreground;
-  short background;
-
-  log_info("ColorPairs");
-  log_info_f("  %-10s%-12s%-12s", "Id", "Foreground", "Background");
-  for (short i = 0; i < COLOR_PAIRS; i++) {
-    int result = pair_content(i, &foreground, &background);
-    if (result == ERR) continue;
-    log_info_f("  %-10d%-12d%-12d", i, foreground, background);
-  }
-  log_info("End");
 }
