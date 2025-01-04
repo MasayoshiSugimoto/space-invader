@@ -2,6 +2,7 @@
 #define EVENT_H
 
 
+#include <curses.h>
 #include "virtual_screen.h"
 #include "frame_timer.h"
 #include "screen.h"
@@ -10,12 +11,14 @@
 #include "main_system_mode.h"
 #include "main_system_game.h"
 #include "sprite_editor_2.h"
+#include "collision_manager_test.h"
 
 
 void event_on_start(void);
 void event_on_frame_start(void);
 void event_on_render_start(void);
 void event_on_render_end(void);
+void event_on_end(void);
 
 
 #endif

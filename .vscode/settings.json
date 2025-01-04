@@ -52,6 +52,8 @@
         "sprite_loader.h": "c",
         "sprite_loader_test.h": "c",
         "entity_spaceship.h": "c",
-        "bullet_component.h": "c"
+        "bullet_component.h": "c",
+        "collision_manager_test.h": "c",
+        "game_screen.h": "c"
     }
 }

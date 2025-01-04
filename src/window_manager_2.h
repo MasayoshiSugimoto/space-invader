@@ -21,7 +21,17 @@ struct VirtualWindow2 {
   int offset_y;
   bool has_border;
   bool is_transparent;
-  const struct SpriteBuffer* buffer;
+  struct SpriteBuffer* buffer;
+  const struct VirtualWindow2* container;
+};
+
+
+// Structure containing the vertices of a window. All vertices are inside the window.
+struct WindowVertex {
+  int top;
+  int right;
+  int bottom;
+  int left;
 };
 
 
@@ -37,13 +47,16 @@ int window_manager_window_get_outer_right_2(const struct VirtualWindow2* window)
 int window_manager_window_get_outer_top_2(const struct VirtualWindow2* window);
 int window_manager_window_get_outer_bottom_2(const struct VirtualWindow2* window);
 bool window_manager_window_is_inside_screen_2(const struct VirtualWindow2* window);
-bool window_manager_window_is_inside_2(const struct VirtualWindow2* window, int x, int y);
+bool window_manager_window_is_inside_relative_2(const struct VirtualWindow2* window, int x, int y);
+bool window_manager_window_is_inside_absolute_2(const struct VirtualWindow2* window, int x, int y);
+bool window_manager_window_is_inside_window_2(const struct VirtualWindow2* window_contained, const struct VirtualWindow2* window_container);
 void window_manager_window_center_screen_x_2(struct VirtualWindow2* window);
 void window_manager_window_center_screen_y_2(struct VirtualWindow2* window);
 void window_manager_window_align_top_screen_2(struct VirtualWindow2* window);
 void window_manager_window_align_right_screen_2(struct VirtualWindow2* window);
 void window_manager_window_align_bottom_screen_2(struct VirtualWindow2* window);
 void window_manager_window_align_left_screen_2(struct VirtualWindow2* window);
+struct WindowVertex window_manager_vertex_get(const struct VirtualWindow2* window);
 void window_manager_cursor_show(struct VirtualWindow2* window, int x, int y);
 void window_manager_cursor_blink(struct VirtualWindow2* window, int x, int y);
 void window_manager_cursor_hide();

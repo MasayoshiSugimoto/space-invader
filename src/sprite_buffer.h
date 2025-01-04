@@ -21,6 +21,7 @@ void sprite_buffer_resize(struct SpriteBuffer* sprite_buffer, int width, int hei
 bool sprite_buffer_is_inside(const struct SpriteBuffer* sprite_buffer, int x, int y);
 void sprite_buffer_clear(struct SpriteBuffer* sprite_buffer);
 void sprite_buffer_fill(struct SpriteBuffer* sprite_buffer, chtype c);
+void sprite_buffer_color_fill(struct SpriteBuffer* sprite_buffer, ColorPairId color_pair_id);
 int sprite_buffer_get_width(const struct SpriteBuffer* sprite_buffer);
 int sprite_buffer_get_height(const struct SpriteBuffer* sprite_buffer);
 struct VirtualPixel sprite_buffer_get(const struct SpriteBuffer* sprite_buffer, int x, int y);

@@ -24,6 +24,7 @@ void window_manager_window_2_init(struct VirtualWindow2* window) {
   window->has_border = false;
   window->is_transparent = false;
   window->buffer = NULL;
+  window->container = NULL;
 }
 
 
@@ -31,10 +32,15 @@ void window_manager_window_draw_2(struct VirtualWindow2* window) {
   int width = _get_width(window);
   int height = _get_height(window);
   for (int x = 0; x < width; x++) {
+    int x_abs = x + window->offset_x;
     for (int y = 0; y < height; y++) {
+      int y_abs = y + window->offset_y;
+      if (window->container != NULL && !window_manager_window_is_inside_absolute_2(window->container, x_abs, y_abs)) {
+        continue;
+      }
       struct VirtualPixel pixel = sprite_buffer_get(window->buffer, x, y);
       if (pixel.character != 0) {
-        virtual_screen_set_char_and_color(window->offset_x + x, window->offset_y + y, pixel.character, pixel.color_pair_id);
+        virtual_screen_set_char_and_color(x_abs, y_abs, pixel.character, pixel.color_pair_id);
       } 
     }
   }
@@ -119,9 +125,29 @@ bool window_manager_window_is_inside_screen_2(const struct VirtualWindow2* windo
 }
 
 
-bool window_manager_window_is_inside_2(const struct VirtualWindow2* window, int x, int y) {
+bool window_manager_window_is_inside_relative_2(const struct VirtualWindow2* window, int x, int y) {
   return 0 <= x && x < _get_width(window)
     && 0 <= y && y < _get_height(window);
+}
+
+
+bool window_manager_window_is_inside_absolute_2(const struct VirtualWindow2* window, int x, int y) {
+  struct WindowVertex v = window_manager_vertex_get(window);
+  return v.left <= x && x <= v.right
+    && v.top <= y && y <= v.bottom;
+}
+
+
+bool window_manager_window_is_inside_window_2(const struct VirtualWindow2* window_contained, const struct VirtualWindow2* window_container) {
+  struct WindowVertex contained_vertex = window_manager_vertex_get(window_contained);
+  struct WindowVertex container_vertex = window_manager_vertex_get(window_container);
+  return (
+    (container_vertex.left <= contained_vertex.left && contained_vertex.left <= container_vertex.right)
+    || (container_vertex.left <= contained_vertex.right && contained_vertex.right <= container_vertex.right)
+  ) && (
+    (container_vertex.top <= contained_vertex.top && contained_vertex.top <= container_vertex.bottom)
+    || (container_vertex.top <= contained_vertex.bottom && contained_vertex.bottom <= container_vertex.bottom)
+  );
 }
 
 
@@ -155,10 +181,21 @@ void window_manager_window_align_left_screen_2(struct VirtualWindow2* window) {
 }
 
 
+struct WindowVertex window_manager_vertex_get(const struct VirtualWindow2* window) {
+  struct WindowVertex v = {
+    top: window->offset_y,
+    right: imax(window->offset_x + _get_width(window) - 1, 0),
+    bottom: imax(window->offset_y + _get_height(window) - 1, 0),
+    left: window->offset_x,
+  };
+  return v;
+}
+
+
 void window_manager_cursor_show(struct VirtualWindow2* window, int x, int y) {
   int absolute_x = window->offset_x + x;
   int absolute_y = window->offset_y + y;
-  if (window_manager_window_is_inside_2(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {
+  if (window_manager_window_is_inside_relative_2(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {
     move(absolute_y, absolute_x);
     curs_set(CURSOR_VISIBILITY_NORMAL);
   } else {
@@ -170,7 +207,7 @@ void window_manager_cursor_show(struct VirtualWindow2* window, int x, int y) {
 void window_manager_cursor_blink(struct VirtualWindow2* window, int x, int y) {
   int absolute_x = window->offset_x + x;
   int absolute_y = window->offset_y + y;
-  if (window_manager_window_is_inside_2(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {
+  if (window_manager_window_is_inside_relative_2(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {
     move(absolute_y, absolute_x);
     curs_set(CURSOR_VISIBILITY_HIGH_VISIBILITY);
   } else {

@@ -19,6 +19,6 @@ void test_suite_run() {
     sprite_loader_test();
   }
   log_info("Test suite completed.");
-  endwin();  // End ncurses.
+  event_on_end();
   exit(0);
 }

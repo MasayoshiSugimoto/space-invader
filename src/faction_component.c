@@ -30,3 +30,9 @@ bool faction_component_is_enemy(EntityId entity_id_1, EntityId entity_id_2) {
 void faction_component_disable(EntityId entity_id) {
   faction_component.active[entity_id] = false;
 }
+
+
+enum FactionId faction_component_faction_id_get(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  return faction_component.faction_map[entity_id];
+}

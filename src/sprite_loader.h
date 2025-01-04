@@ -7,8 +7,12 @@
 
 
 #define SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET "spaceship_bullet.dat"
+#define SPRITE_LOADER_FILE_NAME_SPACESHIP "spaceship.dat"
+#define SPRITE_LOADER_FILE_NAME_ALIEN "alien.dat"
 #define SPRITE_LOADER_FILE_NAME_TITLE "title.dat"
 #define SPRITE_LOADER_FILE_NAME_CREDITS "credits.dat"
+
+#define SPRITE_LOADER_SPRITE_SET_LEVEL_1 "level_1.dat"
 
 
 void sprite_loader_init(void);

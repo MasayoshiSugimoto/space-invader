@@ -5,7 +5,7 @@
 struct InputTableRow {
   enum GameState game_state;
   KeyboardKey key;
-  void (*update_with_input)(struct Game* game, KeyboardKey key);
+  void (*update_with_input)(KeyboardKey key);
 };
 
 

@@ -56,6 +56,14 @@ void sprite_buffer_fill(struct SpriteBuffer* sprite_buffer, chtype c) {
 }
 
 
+void sprite_buffer_color_fill(struct SpriteBuffer* sprite_buffer, ColorPairId color_pair_id) {
+    int length = sprite_buffer->width * sprite_buffer->height;
+    for (int i = 0; i < length; i++) {
+        sprite_buffer->buffer[i].color_pair_id = color_pair_id;
+    }
+}
+
+
 int sprite_buffer_get_width(const struct SpriteBuffer* sprite_buffer) {
     return sprite_buffer->width;
 }

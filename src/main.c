@@ -22,7 +22,6 @@ int main() {
   event_on_start();
   const struct MainSystemMode* main_system_mode = NULL;
 
-  // Loop to track cursor position
   while (true) {
     event_on_frame_start();
     if (main_system_mode != main_system_mode_get()) {
@@ -38,7 +37,7 @@ int main() {
     }
   }
 
-  endwin();  // End ncurses.
+  event_on_end();
   return 0;
 }
 

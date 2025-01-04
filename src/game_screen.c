@@ -1,0 +1,34 @@
+#include "game_screen.h"
+
+
+static struct VirtualWindow2 _window;
+static struct SpriteBuffer _buffer;
+
+
+void game_screen_init(int width, int height) {
+    log_info("Initializing game screen...");
+    window_manager_window_2_init(&_window);
+    _window.buffer = &_buffer;
+    _window.has_border = true;
+    sprite_buffer_init(&_buffer);
+    sprite_buffer_allocate(&_buffer, width, height);
+    sprite_buffer_clear(&_buffer);
+    window_manager_window_center_screen_x_2(&_window);
+    window_manager_window_center_screen_y_2(&_window);
+}
+
+
+void game_screen_release(void) {
+    log_info("Releasing game screen...");
+    sprite_buffer_free(&_buffer);
+}
+
+
+const struct VirtualWindow2* game_screen_get(void) {
+    return &_window;
+}
+
+
+void game_screen_render(void) {
+    window_manager_window_draw_2(&_window);
+}

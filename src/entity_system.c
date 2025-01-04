@@ -2,6 +2,9 @@
 #include "sprite_component.h"
 
 
+static struct EntitySystem _entity_system;
+
+
 EntityId next_id(EntityId id) {
   return (id + 1) % ENTITY_MAX;
 }
@@ -12,9 +15,10 @@ EntityId as_id(EntityId id) {
 }
 
 
-struct EntitySystem* entity_system_create() {
-  return malloc(sizeof(struct EntitySystem));
+struct EntitySystem* entity_system_get(void) {
+  return &_entity_system;
 }
+
 
 void entity_system_init(struct EntitySystem* entity_system) {
   entity_system->next_entity = 0;

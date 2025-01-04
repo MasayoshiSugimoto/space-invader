@@ -10,10 +10,19 @@ struct RenderingUnit {
 };
 
 
-static struct Game _game;
 static struct VirtualWindow* _game_screen;
 static struct RenderingUnit _rendering_units[ENTITY_MAX];
 static int _rendering_unit_count;
+const struct EntityData _entity_datas[] = {
+  {{37, 16}, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER, SPRITE_LOADER_FILE_NAME_SPACESHIP},
+  {{10, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{17, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{24, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{31, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{38, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{45, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+  {{52, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+};
 
 
 static void _init_local(void) {
@@ -27,21 +36,22 @@ static void _init_local(void) {
 
 static void _init(void) {
     _init_local();
-    game_init(&_game);
+    game_init();
+    game_init_entities(_entity_datas, array_size(_entity_datas));
     // _entities_to_window(_game.entity_system);
 }
 
 
 void _space_ship_fire(KeyboardKey key) {
-    entity_spaceship_fire(&_game);
+    entity_spaceship_fire();
 }
 
 
 void _space_ship_move_left(KeyboardKey key) {
     struct Vector v = {-1, 0};
     entity_system_add_coordinates(
-        _game.entity_system,
-        _game.spaceship_id,
+        entity_system_get(),
+        entity_spaceship_get_entity_id(),
         v
     );
 }
@@ -50,8 +60,8 @@ void _space_ship_move_left(KeyboardKey key) {
 void _space_ship_move_right(KeyboardKey key) {
     struct Vector v = {1, 0};
     entity_system_add_coordinates(
-        _game.entity_system,
-        _game.spaceship_id,
+        entity_system_get(),
+        entity_spaceship_get_entity_id(),
         v
     );
 }
@@ -73,7 +83,7 @@ static void _input_update(void) {
 
 
 static enum MainSystemModeStatus _system_update(void) {
-    game_update(&_game);
+    game_update();
 
     return MAIN_SYSTEM_MODE_RUNNING;
 }
@@ -85,6 +95,7 @@ static void _render(void) {
     window_manager_window_draw(_game_screen);
 
     struct Vector top_left = {_game_screen->offset_x, _game_screen->offset_y};
+    struct EntitySystem* entity_system = entity_system_get();
     for (int i = 0; i < ENTITY_MAX; i++) {
         struct SpriteComponentUnit sprite_unit = sprite_component_get(i);
 
@@ -100,7 +111,7 @@ static void _render(void) {
         }
         rendering_unit->entity_id = i;
         rendering_unit->sprite = sprite;
-        struct Vector v = vector_add(_game.entity_system->coordinates[rendering_unit->entity_id], top_left);
+        struct Vector v = vector_add(entity_system->coordinates[rendering_unit->entity_id], top_left);
         window->offset_x = v.x;
         window->offset_y = v.y;
         window_manager_window_draw(window);
