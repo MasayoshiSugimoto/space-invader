@@ -12,7 +12,7 @@ chtype screen_index(int x, int y) {
 }
 
 
-size_t screen_buffer_length() {
+size_t screen_buffer_length(void) {
   return g_virtual_screen.width * g_virtual_screen.height;
 }
 
@@ -22,7 +22,7 @@ int private_get(int x, int y) {
 }
 
 
-void private_screen_clear() {
+void private_screen_clear(void) {
   for (int i = 0; i < screen_buffer_length(); i++) {
     g_virtual_screen.screen[i].character = ' ';
     g_virtual_screen.screen[i].color_pair_id = COLOR_COLOR_PAIR_ID_DEFAULT;
@@ -30,14 +30,14 @@ void private_screen_clear() {
 }
 
 
-void virtual_screen_init() {
+void virtual_screen_init(void) {
   g_virtual_screen.screen = NULL;
   g_virtual_screen.width = 0;
   g_virtual_screen.height = 0;
 }
 
 
-void virtual_screen_setup() {
+void virtual_screen_allocate(void) {
   struct Terminal terminal;
   terminal_init(&terminal);
   g_virtual_screen.width = terminal.width;
@@ -47,12 +47,12 @@ void virtual_screen_setup() {
 }
 
 
-void virtual_screen_reset() {
+void virtual_screen_reset(void) {
   if (g_virtual_screen.screen != NULL) {
     free(g_virtual_screen.screen);
     g_virtual_screen.screen = NULL;
   }
-  virtual_screen_setup();
+  virtual_screen_allocate();
 }
 
 
@@ -79,7 +79,7 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 }
 
 
-void virtual_screen_render() {
+void virtual_screen_render(void) {
   for (int x = 0; x < g_virtual_screen.width; x++) {
     for (int y = 0; y < g_virtual_screen.height; y++) {
       struct VirtualPixel* pixel = &g_virtual_screen.screen[screen_index(x, y)];
@@ -93,21 +93,21 @@ void virtual_screen_render() {
 }
 
 
-int virtual_screen_center_x() {
+int virtual_screen_center_x(void) {
   return g_virtual_screen.width / 2;
 }
 
 
-int virtual_screen_center_y() {
+int virtual_screen_center_y(void) {
   return g_virtual_screen.height / 2;
 }
 
 
-int virtual_screen_get_width() {
+int virtual_screen_get_width(void) {
   return g_virtual_screen.width;
 }
 
 
-int virtual_screen_get_height() {
+int virtual_screen_get_height(void) {
   return g_virtual_screen.height;
 }

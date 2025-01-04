@@ -3,7 +3,7 @@
 
 void event_on_start(void) {
     log_init();
-    log_info("Launching initialization sequence...");
+    log_info("Launching program initialization sequence...");
     initscr();
     noecho();
     cbreak();
@@ -15,7 +15,7 @@ void event_on_start(void) {
     color_init();
     color_color_set_default();
     virtual_screen_init();
-    virtual_screen_setup();
+    virtual_screen_allocate();
     frame_timer_init();
     timer_frame_init();
 

@@ -21,17 +21,18 @@ struct VirtualScreen {
 
 
 bool virtual_screen_is_inside(int x, int y);
-void virtual_screen_init();
-void virtual_screen_setup();
-void virtual_screen_reset();
+void virtual_screen_init(void);
+void virtual_screen_allocate(void);
+void virtual_screen_release(void);
+void virtual_screen_reset(void);
 void virtual_screen_set_char(int x, int y, const chtype ch);
 void virtual_screen_set_char_and_color(int x, int y, const chtype ch, ColorPairId color_pair_id);
 void virtual_screen_set_string(int x, int y, const char* string);
-void virtual_screen_render();
-int virtual_screen_center_x();
-int virtual_screen_center_y();
-int virtual_screen_get_width();
-int virtual_screen_get_height();
+void virtual_screen_render(void);
+int virtual_screen_center_x(void);
+int virtual_screen_center_y(void);
+int virtual_screen_get_width(void);
+int virtual_screen_get_height(void);
 
 
 #endif

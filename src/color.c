@@ -24,7 +24,6 @@ size_t _color_palette_sizes[COLOR_PALETTE_ID_MAX];
 struct ColorPair _color_pair_palette[COLOR_COLOR_PAIR_MAX];
 size_t _color_pair_palette_size;
 ColorId _color_active;
-ColorPairId _color_pair_active;
 enum ColorPaletteId _palette_last_pushed_id;
 enum ColorPaletteId _palette_active_id;
 
@@ -90,7 +89,7 @@ void color_color_set_default(void) {
   color_color_palette_activate(color_palette_id);
   ColorId black_id = color_color_palette_add(BLACK);
   ColorId white_id = color_color_palette_add(WHITE);
-  color_color_pair_add(black_id, white_id);  // 1
+  color_color_pair_add(black_id, white_id);
   color_color_palette_push(color_palette_id);
   color_color_pair_push();
 }
@@ -233,7 +232,6 @@ void color_reset() {
   memset(&_color_pair_palette, 0, sizeof(_color_pair_palette));
   _color_pair_palette_size = COLOR_PAIR_FIRST_ID;
   _color_active = 0;
-  _color_pair_active = 0;
   _palette_last_pushed_id = 0;
   _palette_active_id = 0;
   _fade_init();

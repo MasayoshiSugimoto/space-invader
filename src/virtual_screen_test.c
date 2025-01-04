@@ -39,7 +39,7 @@ void virtual_screen_test() {
     const char* characters = "abcdefghijklmnopqrstuvwxyz";
 
     virtual_screen_init();
-    virtual_screen_setup();
+    virtual_screen_allocate();
     erase();
     virtual_screen_set_string(0, 0, "TEST VIRTUAL SCREEN");
     virtual_screen_set_string(0, 1, "===================");
