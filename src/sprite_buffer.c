@@ -1,7 +1,7 @@
 #include "sprite_buffer.h"
 
 
-static const struct VirtualPixel _pixel_empty;
+static const struct VirtualPixel _pixel_empty = {' ', 0};
 static struct VirtualPixel _pixel_bad_access;  // Used to handle wrong buffer access silently.
 
 
@@ -87,7 +87,8 @@ struct VirtualPixel* sprite_buffer_access(struct SpriteBuffer* sprite_buffer, in
     if (sprite_buffer_is_inside(sprite_buffer, x, y)) {
         return &sprite_buffer->buffer[y * sprite_buffer->width + x];
     } else {
-        memset(&_pixel_bad_access, 0, sizeof(_pixel_bad_access));
+        _pixel_bad_access.character = ' ';
+        _pixel_bad_access.color_pair_id = 0;
         return &_pixel_bad_access;
     }
 }

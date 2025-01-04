@@ -172,6 +172,11 @@ static void _init(void) {
 }
 
 
+static void _release(void) {
+  log_info("Releasing sprite editor.");
+}
+
+
 static void _input_update(void) {
   KeyboardKey key = input_get();
   if (input_process(_input_mappings_default, array_size(_input_mappings_default), key) == key) return;
@@ -207,6 +212,7 @@ static void _render(void) {
 struct MainSystemMode g_main_system_mode_sprite_editor_2 = {
   "MAIN_SYSTEM_MODE_SPRITE_EDITOR_2",
   _init,
+  _release,
   _input_update,
   _system_update,
   _render

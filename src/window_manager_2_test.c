@@ -1,8 +1,8 @@
 #include "window_manager_2_test.h"
 
 
-#define WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT 64
-#define WINDOW_MANAGER_TEST_FOREFRONT_INDEX 64
+#define WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT 16
+#define WINDOW_MANAGER_TEST_FOREFRONT_INDEX WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT
 #define WINDOW_MANAGER_TEST_TOTAL_WINDOW_COUNT (WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT + 1)
 
 
@@ -77,6 +77,7 @@ static void window_manager_test_random() {
     for (int i = 0; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
         struct SpriteBuffer* sprite_buffer = &_sprite_buffers[i];
         sprite_buffer_allocate(sprite_buffer, _rand_size(), _rand_size());
+        sprite_buffer_clear(sprite_buffer);
         _random_fill(sprite_buffer);
         dx[i] = (rand() % 5) - 2;
         dy[i] = (rand() % 5) - 2;
