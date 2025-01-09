@@ -28,16 +28,16 @@ struct Screen* screen_get_screen() {
 }
 
 
-void screen_init(struct Screen* screen) {
+void screen_init(void) {
   int width = SCREEN_WIDTH;
   int height = SCREEN_HEIGHT;
 
-  screen->width = width;
-  screen->height = height;
-  screen->screen_buffer = malloc(sizeof(ScreenCharacter) * width * height);
-  for (int i = 0; i < array_size(screen->windows); i++) {
-    screen->windows[i].position = VZERO;
-    screen->windows[i].sprite_id = SPRITE_ID_NONE;
+  l_screen.width = width;
+  l_screen.height = height;
+  l_screen.screen_buffer = malloc(sizeof(ScreenCharacter) * width * height);
+  for (int i = 0; i < array_size(l_screen.windows); i++) {
+    l_screen.windows[i].position = VZERO;
+    l_screen.windows[i].sprite_id = SPRITE_ID_NONE;
   }
 }
 

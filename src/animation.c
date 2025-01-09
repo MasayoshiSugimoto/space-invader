@@ -95,7 +95,6 @@ void animation_init() {
 
 
 void animation_update(Duration delta_time) {
-  struct EntitySystem* entity_system = entity_system_get();
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!animation_component.active[entity_id]) continue;
     struct AnimationStatus* animation_status = &animation_component.status[entity_id];

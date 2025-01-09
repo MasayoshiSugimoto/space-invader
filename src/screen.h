@@ -59,7 +59,7 @@ const struct ScreenAlignment SCREEN_ALIGNMENT_CENTER_CENTER;
 
 
 struct Screen* screen_get_screen();
-void screen_init(struct Screen* screen);
+void screen_init(void);
 void screen_set_entity_alignment(const struct Screen* screen, struct EntitySystem* entity_system, EntityId entity_id, const struct ScreenAlignment screen_alignment);
 
 

@@ -1,7 +1,7 @@
 #include "event.h"
 
 
-void event_on_start(void) {
+void event_on_program_start(void) {
     log_init();
     log_info("Launching program initialization sequence...");
     initscr();
@@ -13,16 +13,22 @@ void event_on_start(void) {
     srand(time(NULL));
 
     color_init();
+    sprite_init();
+}
+
+
+void event_on_start(void) {
+    event_on_program_start();
+    
     color_color_set_default();
     virtual_screen_init();
     virtual_screen_allocate();
     frame_timer_init();
     timer_frame_init();
-
-    sprite_init();
+    
     sprite_loader_init();
     sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
-    screen_init(screen_get_screen());
+    screen_init();
 
     collision_manager_init();
     collision_manager_allocate(SCREEN_WIDTH, SCREEN_HEIGHT);
