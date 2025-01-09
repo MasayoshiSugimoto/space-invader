@@ -54,6 +54,9 @@
         "entity_spaceship.h": "c",
         "bullet_component.h": "c",
         "collision_manager_test.h": "c",
-        "game_screen.h": "c"
+        "game_screen.h": "c",
+        "collision_manager.h": "c",
+        "enemy_ai_basic_component.h": "c",
+        "animation.h": "c"
     }
 }

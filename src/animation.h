@@ -16,7 +16,7 @@ const AnimationId ANIMATION_ID_EXPLOSION;
 
 
 void animation_init();
-void animation_update(struct EntitySystem* entity_system, Duration delta_time);
+void animation_update(Duration delta_time);
 void animation_set(EntityId entity_id, AnimationId animation_id);
 
 

@@ -20,11 +20,11 @@ struct EntitySystem* entity_system_get(void) {
 }
 
 
-void entity_system_init(struct EntitySystem* entity_system) {
-  entity_system->next_entity = 0;
+void entity_system_init(void) {
+  _entity_system.next_entity = 0;
   for (int i = 0; i < ENTITY_MAX; i++) {
-    entity_system->active[i] = false;
-    entity_system->coordinates[i] = VZERO;
+    _entity_system.active[i] = false;
+    _entity_system.coordinates[i] = VZERO;
   }
 }
 

@@ -3,7 +3,6 @@
 
 struct Game {
   enum GameState game_state;
-  struct EntitySystem* entity_system;
   EntityId spaceship_id;
   uint64_t last_frame_time_millisecond;
 };
@@ -13,7 +12,7 @@ static struct Game _game;
 
 
 void game_init_entities(const struct EntityData* entity_datas, size_t entity_datas_length) {
-  struct EntitySystem* entity_system = _game.entity_system;
+  struct EntitySystem* entity_system = entity_system_get();
   for (int i = 0; i < entity_datas_length; i++) {
     EntityId entity_id = entity_system_create_entity(entity_system);
     const struct EntityData* entity_data_ptr = &entity_datas[i];
@@ -35,16 +34,15 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
 void game_init(void) {
   log_info("game_init()");
   _game.game_state = GAME_INIT_GAME_STATE;
-  _game.entity_system = entity_system_get();
   _game.last_frame_time_millisecond = get_current_millisecond();
 
-  sprite_component_init();
-  entity_system_init(_game.entity_system);
+  // sprite_component_init();
+  entity_system_init();
 
-  animation_init();
+  // animation_init();
 
   enemy_ai_basic_init();
-  bullet_component_init();
+  // bullet_component_init();
 
   sprite_component_container_set(game_screen_get());
 }
@@ -70,22 +68,21 @@ void game_apply_collision_to_enemies() {
 
 
 void game_update(void) {
-  collision_manager_update(_game.entity_system);
+  collision_manager_update();
   game_apply_collision_to_enemies();
 
   uint64_t now_millisecond = get_current_millisecond();
   uint64_t delta_time_millisecond = now_millisecond - _game.last_frame_time_millisecond;
   _game.last_frame_time_millisecond = now_millisecond;
-  enemy_ai_basic_update(_game.entity_system, delta_time_millisecond);
-  bullet_component_update(_game.entity_system, delta_time_millisecond);
-  animation_update(_game.entity_system, delta_time_millisecond);
-  bullet_component_cleanup(_game.entity_system);
-  sprite_component_update(_game.entity_system);
+  enemy_ai_basic_update(delta_time_millisecond);
+  bullet_component_update(delta_time_millisecond);
+  animation_update(delta_time_millisecond);
+  bullet_component_cleanup();
+  sprite_component_update();
 }
 
 
 void game_render(void) {
   game_screen_render();
-  sprite_component_render(_game.entity_system);
-  virtual_screen_render();
+  sprite_component_render();
 }

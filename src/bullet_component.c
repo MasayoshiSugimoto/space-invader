@@ -18,7 +18,8 @@ void bullet_component_init() {
 }
 
 
-void bullet_component_fire(struct EntitySystem* entity_system, struct Vector bullet_position) {
+void bullet_component_fire(struct Vector bullet_position) {
+  struct EntitySystem* entity_system = entity_system_get();
   EntityId bullet_entity_id = entity_system_create_entity(entity_system);
   entity_system_set_coordinates(entity_system, bullet_entity_id, bullet_position);
   struct SpriteComponentUnit sprite_unit = sprite_component_get(bullet_entity_id);
@@ -33,13 +34,14 @@ void bullet_component_fire(struct EntitySystem* entity_system, struct Vector bul
 }
 
 
-void bullet_component_setup(struct EntitySystem* entity_system, EntityId entity_id) {
+void bullet_component_setup(EntityId entity_id) {
   assert_entity_id(entity_id);
   bullet_component.active[entity_id] = true;
 }
 
 
-void bullet_component_update(struct EntitySystem* entity_system, uint64_t delta_time_millisecond) {
+void bullet_component_update(uint64_t delta_time_millisecond) {
+  struct EntitySystem* entity_system = entity_system_get();
   bullet_component.timer_millisecond += delta_time_millisecond;
   if (bullet_component.timer_millisecond < UPDATE_RATE_MILLISECOND) return;
   bullet_component.timer_millisecond = 0;
@@ -53,7 +55,8 @@ void bullet_component_update(struct EntitySystem* entity_system, uint64_t delta_
 }
 
 
-void bullet_component_cleanup(struct EntitySystem* entity_system) {
+void bullet_component_cleanup(void) {
+  struct EntitySystem* entity_system = entity_system_get();
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!bullet_component.active[entity_id]) continue;
     if (entity_system_get_coordinates(entity_system, entity_id).y >= 0) continue;
@@ -62,7 +65,7 @@ void bullet_component_cleanup(struct EntitySystem* entity_system) {
 }
 
 
-void bullet_component_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+void bullet_component_disable(EntityId entity_id) {
   assert_entity_id(entity_id);
   bullet_component.active[entity_id] = false;
 }

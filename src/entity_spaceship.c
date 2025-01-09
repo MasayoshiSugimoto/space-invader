@@ -13,7 +13,7 @@ void entity_spaceship_fire(void) {
     spaceship_position.y
   };
 
-  bullet_component_fire(entity_system, bullet_position);
+  bullet_component_fire(bullet_position);
 }
 
 

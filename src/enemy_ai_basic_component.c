@@ -38,7 +38,8 @@ void enemy_ai_basic_init(void) {
 }
 
 
-void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_time_millisecond) {
+void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
+  struct EntitySystem* entity_system = entity_system_get();
   struct EnemyAiBasicComponent* component = &enemy_ai_basic_component;
   component->timer_millisecond += delta_time_millisecond;
   if (component->timer_millisecond < enemy_ai_basic_component.update_rate_millisecond) return;
@@ -94,7 +95,7 @@ void enemy_ai_basic_update(struct EntitySystem* entity_system, uint64_t delta_ti
 }
 
 
-void enemy_ai_basic_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+void enemy_ai_basic_disable(EntityId entity_id) {
   assert_entity_id(entity_id);
   enemy_ai_basic_component.entity_ids[entity_id] = ENTITY_MAX;
 }

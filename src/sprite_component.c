@@ -86,7 +86,8 @@ void sprite_component_disable(EntityId entity_id) {
 }
 
 
-void sprite_component_update(struct EntitySystem* entity_system) {
+void sprite_component_update(void) {
+  struct EntitySystem* entity_system = entity_system_get();
   // Update all windows.
   const struct VirtualWindow2* game_screen_window = game_screen_get();
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
@@ -101,7 +102,8 @@ void sprite_component_update(struct EntitySystem* entity_system) {
 }
 
 
-void sprite_component_render(struct EntitySystem* entity_system) {
+void sprite_component_render(void) {
+  struct EntitySystem* entity_system = entity_system_get();
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!entity_system->active[entity_id]) continue;
     if (!_sprite_component.active[entity_id]) continue;

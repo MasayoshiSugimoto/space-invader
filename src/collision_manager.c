@@ -59,7 +59,8 @@ void collision_manager_release(void) {
 }
 
 
-void collision_manager_update(struct EntitySystem* entity_system) {
+void collision_manager_update(void) {
+  struct EntitySystem* entity_system = entity_system_get();
   // Cleanup the buffer
   for (int i = 0; i < _buffer_length_get(); i++) {
     _buffer[i] = 0;

@@ -41,6 +41,8 @@ static void _init(void) {
 
 static void _release(void) {
     log_info("Releasing collision manager test.");
+    game_screen_release();
+
 }
 
 
@@ -78,6 +80,7 @@ static enum MainSystemModeStatus _system_update(void) {
 static void _render(void) {
     curs_set(CURSOR_VISIBILITY_INVISIBLE);
     game_render();
+    virtual_screen_render();
 }
 
 
