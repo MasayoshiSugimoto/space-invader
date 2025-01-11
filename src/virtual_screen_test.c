@@ -14,13 +14,14 @@ void virtual_screen_test() {
     struct Terminal terminal;
     terminal_init(&terminal);
 
-    color_color_palette_activate(0);
+    color_color_palette_activate(COLOR_PALETTE_ID_DEFAULT);
     ColorId black_id = color_color_palette_add(BLACK);
     ColorId white_id = color_color_palette_add(WHITE);
     ColorId red_id = color_color_palette_add(RED);
     ColorId green_id = color_color_palette_add(GREEN);
     ColorId blue_id = color_color_palette_add(BLUE);
     ColorId magenta_id = color_color_palette_add(MAGENTA);
+    color_color_palette_push(COLOR_PALETTE_ID_DEFAULT);
 
     color_color_pair_add(black_id, white_id);  // 1
     color_color_pair_add(black_id, red_id);  // 2
