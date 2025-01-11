@@ -5,7 +5,6 @@
 #include <curses.h>
 #include "virtual_screen.h"
 #include "frame_timer.h"
-#include "screen.h"
 #include "start_screen.h"
 #include "game_state.h"
 #include "main_system_mode.h"

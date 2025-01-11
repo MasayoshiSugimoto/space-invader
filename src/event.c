@@ -31,7 +31,6 @@ void event_on_system_start(void) {
     timer_frame_init();
     
     sprite_loader_init();
-    screen_init();
 
     collision_manager_init();
     collision_manager_allocate(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -59,7 +58,6 @@ void event_on_render_end(void) {
 void event_on_system_release(void) {
     log_info("Executing system release sequence.");
     collision_manager_release();
-    screen_release();
     sprite_loader_release();
     virtual_screen_release();
 }

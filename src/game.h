@@ -11,7 +11,6 @@
 #include "collision_manager.h"
 #include "animation.h"
 #include "faction_component.h"
-#include "screen.h"
 #include "game_state.h"
 #include "main_system_mode.h"
 #include "entity_data.h"
