@@ -44,6 +44,7 @@ static void _init(void) {
 
 static void _release(void) {
     log_info("Releasing main game system.");
+    
 }
 
 

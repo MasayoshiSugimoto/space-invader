@@ -203,6 +203,7 @@ struct SpriteBuffer* sprite_loader_sprite_get(const char* file_name) {
 
 
 void sprite_loader_release(void) {
+  log_info_f("_sprite_loader.sprites_length=%d", _sprite_loader.sprites_length);
   for (int i = 0; i < _sprite_loader.sprites_length; i++) {
     sprite_buffer_free(&_sprite_loader.sprites[i]);
   }

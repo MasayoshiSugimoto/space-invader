@@ -42,6 +42,19 @@ void screen_init(void) {
 }
 
 
+void screen_release(void) {
+  assert(l_screen.screen_buffer != NULL, "Screen buffer is NULL.");
+  free(l_screen.screen_buffer);
+  l_screen.width = 0;
+  l_screen.height = 0;
+  l_screen.screen_buffer = NULL;
+  for (int i = 0; i < array_size(l_screen.windows); i++) {
+    l_screen.windows[i].position = VZERO;
+    l_screen.windows[i].sprite_id = SPRITE_ID_NONE;
+  }
+}
+
+
 struct RenderingUnit {
   const struct Sprite* sprite;
   EntityId entity_id;

@@ -23,7 +23,6 @@ void sprite_loader_test(void) {
     log_info("sprite_loader_test...");
     int width = 4;
     int height = 2;
-    sprite_loader_init();
     {
         struct SpriteBuffer sprite;
         sprite_buffer_init(&sprite);
@@ -45,6 +44,7 @@ void sprite_loader_test(void) {
         sprite_buffer_access(&sprite_2, 2, 1)->character = 'g';
         sprite_buffer_access(&sprite_2, 3, 1)->character = 'h';
         sprite_loader_save(&sprite_2);
+        sprite_buffer_free(&sprite_2);
     }
     {
         struct SpriteBuffer sprite;

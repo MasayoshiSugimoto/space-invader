@@ -14,11 +14,13 @@
 #include "collision_manager_test.h"
 
 
-void event_on_start(void);
+void event_on_program_start(void);
+void event_on_system_start(void);
 void event_on_frame_start(void);
 void event_on_render_start(void);
 void event_on_render_end(void);
-void event_on_end(void);
+void event_on_system_release(void);
+void event_on_program_shutdown(void);
 
 
 #endif

@@ -2,13 +2,13 @@
 
 
 #define WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT 16
-#define WINDOW_MANAGER_TEST_FOREFRONT_INDEX WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT
-#define WINDOW_MANAGER_TEST_TOTAL_WINDOW_COUNT (WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT + 1)
+#define WINDOW_MANAGER_TEST_FOREFRONT_INDEX 0
+#define WINDOW_MANAGER_TEST_WINDOW_START_INDEX 1
 
 
 static const char* _characters = "abcdefghijklmnopqrstuvwxyz0123456789 -.";
-static struct SpriteBuffer _sprite_buffers[WINDOW_MANAGER_TEST_TOTAL_WINDOW_COUNT];
-static struct VirtualWindow2 _windows[WINDOW_MANAGER_TEST_TOTAL_WINDOW_COUNT];
+static struct SpriteBuffer _sprite_buffers[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
+static struct VirtualWindow2 _windows[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
 static int _x;
 static int _y;
 static char _debug_buffer[2048];
@@ -26,8 +26,10 @@ static void _init(void) {
 
 
 static void _release(void) {
-    for (int i = 0; i < WINDOW_MANAGER_TEST_TOTAL_WINDOW_COUNT; i++) {
-        sprite_buffer_free(&_sprite_buffers[i]);
+    for (int i = 0; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
+        if (_sprite_buffers[i].buffer != NULL) {
+            sprite_buffer_free(&_sprite_buffers[i]);
+        }
     }
 }
 
@@ -74,7 +76,7 @@ static void window_manager_test_random() {
 
     int dx[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
     int dy[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
-    for (int i = 0; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
+    for (int i = WINDOW_MANAGER_TEST_WINDOW_START_INDEX; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
         struct SpriteBuffer* sprite_buffer = &_sprite_buffers[i];
         sprite_buffer_allocate(sprite_buffer, _rand_size(), _rand_size());
         sprite_buffer_clear(sprite_buffer);
@@ -99,7 +101,7 @@ static void window_manager_test_random() {
         event_on_render_start();
         int dt = duration_as_milliseconds(frame_timer_get_elapsed_time(&timer)) / 50;
 
-        for (int i = 0; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
+        for (int i = WINDOW_MANAGER_TEST_WINDOW_START_INDEX; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
             struct VirtualWindow2* window = &_windows[i];
             if (t != dt) {
                 window->offset_x += dx[i];
@@ -146,9 +148,9 @@ static void window_manager_test_alignment() {
 
     int width = 10;
     int height = 5;
-    int window_count = 0;
+    int window_count = WINDOW_MANAGER_TEST_WINDOW_START_INDEX;
 
-    struct SpriteBuffer* sprite_buffer = &_sprite_buffers[0];
+    struct SpriteBuffer* sprite_buffer = &_sprite_buffers[WINDOW_MANAGER_TEST_WINDOW_START_INDEX];
     sprite_buffer_allocate(sprite_buffer, width, height);
     sprite_buffer_clear(sprite_buffer);
 

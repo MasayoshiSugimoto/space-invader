@@ -13,7 +13,6 @@ void virtual_screen_test() {
     log_info("TEST: virtual_screen_test");
     struct Terminal terminal;
     terminal_init(&terminal);
-    color_init();
 
     color_color_palette_activate(0);
     ColorId black_id = color_color_palette_add(BLACK);
@@ -38,8 +37,6 @@ void virtual_screen_test() {
     int color_pair_id_max = 10;
     const char* characters = "abcdefghijklmnopqrstuvwxyz";
 
-    virtual_screen_init();
-    virtual_screen_allocate();
     erase();
     virtual_screen_set_string(0, 0, "TEST VIRTUAL SCREEN");
     virtual_screen_set_string(0, 1, "===================");
@@ -55,5 +52,4 @@ void virtual_screen_test() {
     virtual_screen_render();
     refresh();
     sleep(5/*seconds*/);
-    endwin();
 }

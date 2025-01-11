@@ -16,6 +16,8 @@ static ColorPairId _color_pair_id_red;
 
 static void _init(void) {
     log_info("Initializing collision manager test.");
+    sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
+    
     game_init();
     game_init_entities(_entity_datas, array_size(_entity_datas));
     game_screen_init(_screen_width, _screen_height);
@@ -42,7 +44,6 @@ static void _init(void) {
 static void _release(void) {
     log_info("Releasing collision manager test.");
     game_screen_release();
-
 }
 
 

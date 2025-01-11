@@ -19,12 +19,14 @@ int main() {
     test_suite_run();
   #endif
 
-  event_on_start();
+  event_on_program_start();
   const struct MainSystemMode* main_system_mode = NULL;
 
   while (true) {
     event_on_frame_start();
     if (main_system_mode != main_system_mode_get()) {
+      // if (main_system_mode != NULL) event_on_system_release();
+      event_on_system_start();
       main_system_mode = main_system_mode_get();
       main_system_mode->init();
     }
@@ -38,7 +40,7 @@ int main() {
     }
   }
 
-  event_on_end();
+  event_on_program_shutdown();
   return 0;
 }
 

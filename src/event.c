@@ -3,7 +3,7 @@
 
 void event_on_program_start(void) {
     log_init();
-    log_info("Launching program initialization sequence...");
+    log_info("Executing program initialization sequence.");
     initscr();
     noecho();
     cbreak();
@@ -14,12 +14,16 @@ void event_on_program_start(void) {
 
     color_init();
     sprite_init();
+
+    main_system_mode_set(&g_game_main_system_mode);
+    // main_system_mode_set(&g_start_screen_main_system_mode);
+    // main_system_mode_set(&g_main_system_mode_sprite_editor_2);
+    main_system_mode_set(&g_collision_manager_test);
 }
 
 
-void event_on_start(void) {
-    event_on_program_start();
-    
+void event_on_system_start(void) {
+    log_info("Executing system initialization sequence.");
     color_color_set_default();
     virtual_screen_init();
     virtual_screen_allocate();
@@ -27,16 +31,10 @@ void event_on_start(void) {
     timer_frame_init();
     
     sprite_loader_init();
-    sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
     screen_init();
 
     collision_manager_init();
     collision_manager_allocate(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    main_system_mode_set(&g_game_main_system_mode);
-    // main_system_mode_set(&g_start_screen_main_system_mode);
-    // main_system_mode_set(&g_main_system_mode_sprite_editor_2);
-    main_system_mode_set(&g_collision_manager_test);
 }
 
 
@@ -58,7 +56,17 @@ void event_on_render_end(void) {
 }
 
 
-void event_on_end(void) {
-    log_info("Launching ending sequence...");
+void event_on_system_release(void) {
+    log_info("Executing system release sequence.");
+    collision_manager_release();
+    screen_release();
+    sprite_loader_release();
+    virtual_screen_release();
+}
+
+
+void event_on_program_shutdown(void) {
+    log_info("Executing program shutdown sequence.");
+    color_init();
     endwin();  // End ncurses.
 }

@@ -21,8 +21,9 @@ void sprite_buffer_allocate(struct SpriteBuffer* sprite_buffer, int width, int h
 
 
 void sprite_buffer_free(struct SpriteBuffer* sprite_buffer) {
-    assert(sprite_buffer->buffer != NULL, "sprite_buffer.buffer = NULL");
-    free(sprite_buffer->buffer);
+    if (sprite_buffer->buffer != NULL) {
+        free(sprite_buffer->buffer);
+    }
     sprite_buffer->buffer = NULL;
     sprite_buffer->width = 0;
     sprite_buffer->height = 0;

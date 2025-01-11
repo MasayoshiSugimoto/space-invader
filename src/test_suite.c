@@ -7,18 +7,27 @@ static void _single_test() {
 
 
 void test_suite_run() {
-  event_on_start();
+  event_on_program_start();
   if (TEST_MODE_IS_SINGLE_TEST) {
+    event_on_system_start();
     _single_test();
+    event_on_system_release();
   } else {
-    color_test();
-    virtual_screen_test();
-    window_manager_2_test();
-    virtual_cursor_2_test();
-    log_buffer_test();
-    sprite_loader_test();
+    void (*fs[])(void) = {
+      color_test,
+      virtual_screen_test,
+      window_manager_2_test,
+      virtual_cursor_2_test,
+      log_buffer_test,
+      sprite_loader_test
+    };
+    for (int i = 0; i < array_size(fs); i++) {
+      event_on_system_start();
+      fs[i]();
+      event_on_system_release();
+    }
   }
+  event_on_program_shutdown();
   log_info("Test suite completed.");
-  event_on_end();
   exit(0);
 }
