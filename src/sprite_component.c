@@ -18,14 +18,6 @@ void sprite_component_init() {
 }
 
 
-void sprite_component_setup_deprecated(EntityId entity_id, enum SpriteId sprite_id) {
-  assert_entity_id(entity_id);
-  _sprite_component.sprite_id[entity_id] = sprite_id;
-  _sprite_component.active[entity_id] = true;
-  _sprite_component.windows[entity_id].buffer = NULL;
-}
-
-
 void sprite_component_setup(EntityId entity_id, struct SpriteBuffer* sprite_buffer) {
   assert_entity_id(entity_id);
   _sprite_component.active[entity_id] = true;

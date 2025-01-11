@@ -35,7 +35,6 @@ EntityId entity_system_create_entity(struct EntitySystem* entity_system) {
       entity_system->next_entity = next_id(entity_id);
       entity_system->active[entity_id] = true;
       entity_system->coordinates[entity_id] = VZERO;
-      sprite_component_setup_deprecated(entity_id, SPRITE_ID_NONE);
       return entity_id;
     }
   }

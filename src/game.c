@@ -25,8 +25,6 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     sprite_component_set(&sprite_unit);
 
     faction_component_set(entity_id, entity_data_ptr->faction_id);
-    enum SpriteId sprite_id = sprite_component_get_sprite_id(entity_id);
-    log_info_f("Entity created: {id=%ld, sprite=%s}", entity_id, sprite_get_file_name(sprite_id));
 
     if (entity_data_ptr->is_basic_ai_active) {
       enemy_ai_basic_activate(i);
