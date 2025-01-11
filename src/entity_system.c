@@ -1,5 +1,4 @@
 #include "entity_system.h"
-#include "sprite_component.h"
 
 
 static struct EntitySystem _entity_system;
@@ -86,4 +85,10 @@ void entity_system_add_coordinates(
 void entity_system_disable(struct EntitySystem* entity_system, EntityId entity_id) {
   assert_entity_id(entity_id);
   entity_system->active[entity_id] = false;
+}
+
+
+bool entity_system_is_active(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  return _entity_system.active[entity_id];
 }

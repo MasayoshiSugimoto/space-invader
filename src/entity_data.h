@@ -13,6 +13,7 @@ struct EntityData {
   bool active;
   enum FactionId faction_id;
   const char* sprite_file_name;
+  bool is_basic_ai_active;
 };
 
 

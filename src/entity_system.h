@@ -54,6 +54,7 @@ void entity_system_add_coordinates(
     struct Vector delta
 );
 void entity_system_disable(struct EntitySystem*, EntityId);
+bool entity_system_is_active(EntityId entity_id);
 
 
 #endif
