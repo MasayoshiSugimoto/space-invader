@@ -2,9 +2,7 @@
 #define INPUT_H
 
 
-#include "entity_spaceship.h"
 #include "keyboard.h"
-#include "input.h"
 
 
 struct InputMapping {

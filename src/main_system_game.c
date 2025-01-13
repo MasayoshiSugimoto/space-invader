@@ -49,7 +49,7 @@ static void _release(void) {
 
 
 void _space_ship_fire(KeyboardKey key) {
-    entity_spaceship_fire();
+    entity_spaceship_fire(key);
 }
 
 

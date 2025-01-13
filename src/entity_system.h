@@ -34,7 +34,7 @@ struct EntitySystem {
 
 struct EntitySystem* entity_system_get(void);
 void entity_system_init(void);
-EntityId entity_system_create_entity(struct EntitySystem* entity_system);
+EntityId entity_system_create_entity(void);
 void entity_system_delete_entity(
     struct EntitySystem* entity_system,
     EntityId entity_id

@@ -18,7 +18,8 @@ void event_on_program_start(void) {
     main_system_mode_set(&g_game_main_system_mode);
     // main_system_mode_set(&g_start_screen_main_system_mode);
     // main_system_mode_set(&g_main_system_mode_sprite_editor_2);
-    main_system_mode_set(&g_collision_manager_test);
+    // main_system_mode_set(&g_collision_manager_test);
+    main_system_mode_set(&g_entity_spaceship_test);
 }
 
 
@@ -45,7 +46,6 @@ void event_on_frame_start(void) {
 
 void event_on_render_start(void) {
     color_update();
-    virtual_screen_reset();
     erase();
 }
 

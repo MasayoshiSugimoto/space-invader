@@ -14,7 +14,7 @@ static struct Game _game;
 void game_init_entities(const struct EntityData* entity_datas, size_t entity_datas_length) {
   struct EntitySystem* entity_system = entity_system_get();
   for (int i = 0; i < entity_datas_length; i++) {
-    EntityId entity_id = entity_system_create_entity(entity_system);
+    EntityId entity_id = entity_system_create_entity();
     const struct EntityData* entity_data_ptr = &entity_datas[i];
     entity_system_set_coordinates(entity_system, entity_id, entity_data_ptr->coordinates);
 
@@ -38,15 +38,17 @@ void game_init(void) {
   _game.game_state = GAME_INIT_GAME_STATE;
   _game.last_frame_time_millisecond = get_current_millisecond();
 
-  // sprite_component_init();
+  sprite_component_init();
   entity_system_init();
 
   // animation_init();
 
   enemy_ai_basic_init();
-  // bullet_component_init();
+  bullet_component_init();
 
   sprite_component_container_set(game_screen_get());
+
+  bullet_component_setup();
 }
 
 
@@ -70,6 +72,7 @@ void game_apply_collision_to_enemies() {
 
 
 void game_update(void) {
+  sprite_component_update();
   collision_manager_update();
   game_apply_collision_to_enemies();
 
@@ -77,10 +80,8 @@ void game_update(void) {
   uint64_t delta_time_millisecond = now_millisecond - _game.last_frame_time_millisecond;
   _game.last_frame_time_millisecond = now_millisecond;
   enemy_ai_basic_update(delta_time_millisecond);
-  bullet_component_update(delta_time_millisecond);
+  bullet_component_update();
   animation_update(delta_time_millisecond);
-  bullet_component_cleanup();
-  sprite_component_update();
 }
 
 

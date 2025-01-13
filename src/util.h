@@ -9,7 +9,7 @@
 #define PI 3.14159265359
 
 
-#define array_size(arr) sizeof(arr) / sizeof(arr[0])
+#define array_size(arr) (sizeof(arr) / sizeof(arr[0]))
 
 #define boolean_as_string(b) b ? "true" : "false"
 

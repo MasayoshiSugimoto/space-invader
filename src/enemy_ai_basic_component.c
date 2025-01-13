@@ -28,6 +28,7 @@ struct EnemyAiBasicComponent {
 
 
 void enemy_ai_basic_init(void) {
+  log_info("Initializing enemy basic ai.");
   _ai.direction = DIRECTION_RIGHT;
   _ai.timer_millisecond = 0;
   for (int i = 0; i < ENTITY_MAX; i++) {

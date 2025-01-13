@@ -194,6 +194,7 @@ void sprite_loader_load_sprite_set(const char* sprite_set_file_name) {
 struct SpriteBuffer* sprite_loader_sprite_get(const char* file_name) {
   assert(file_name != NULL, "File name is empty.");
   for (int i = 0; i < _sprite_loader.sprites_length; i++) {
+
     if (strcmp(_sprite_loader.sprites[i].file_name, file_name) == 0) {
       return &_sprite_loader.sprites[i];
     }

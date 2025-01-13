@@ -58,6 +58,8 @@
         "collision_manager.h": "c",
         "enemy_ai_basic_component.h": "c",
         "animation.h": "c",
-        "vector.h": "c"
+        "vector.h": "c",
+        "entity_spaceship_test.h": "c",
+        "recuring_frame_timer.h": "c"
     }
 }

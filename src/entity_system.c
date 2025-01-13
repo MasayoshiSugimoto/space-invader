@@ -20,6 +20,7 @@ struct EntitySystem* entity_system_get(void) {
 
 
 void entity_system_init(void) {
+  log_info("Initializing entity system.");
   _entity_system.next_entity = 0;
   for (int i = 0; i < ENTITY_MAX; i++) {
     _entity_system.active[i] = false;
@@ -28,13 +29,13 @@ void entity_system_init(void) {
 }
 
 
-EntityId entity_system_create_entity(struct EntitySystem* entity_system) {
+EntityId entity_system_create_entity(void) {
   for (int i = 0; i < ENTITY_MAX; i++) {
-    EntityId entity_id = as_id(entity_system->next_entity + i);
-    if (!entity_system->active[entity_id]) {
-      entity_system->next_entity = next_id(entity_id);
-      entity_system->active[entity_id] = true;
-      entity_system->coordinates[entity_id] = VZERO;
+    EntityId entity_id = as_id(_entity_system.next_entity + i);
+    if (!_entity_system.active[entity_id]) {
+      _entity_system.next_entity = next_id(entity_id);
+      _entity_system.active[entity_id] = true;
+      _entity_system.coordinates[entity_id] = VZERO;
       return entity_id;
     }
   }
