@@ -20,11 +20,10 @@ void entity_spaceship_init(void) {
 void entity_spaceship_fire(KeyboardKey key) {
   log_info("Entity spaceship fire event.");
   EntityId entity_id = entity_spaceship_get_entity_id();
-  struct EntitySystem* entity_system = entity_system_get();
   if (!sprite_component_is_active(entity_id)) return;
   const struct VirtualWindow2* window = sprite_component_window_get(entity_id);
   if (window == NULL) return;
-  struct Vector spaceship_position = entity_system_get_coordinates(entity_system, entity_id);
+  struct Vector spaceship_position = entity_system_get_coordinates(entity_id);
   struct Vector bullet_position = {
     spaceship_position.x + window->buffer->width / 2,
     spaceship_position.y
@@ -51,7 +50,7 @@ void entity_spaceship_move_left(KeyboardKey key) {
   log_info("Entity spaceship move left event.");
   struct Vector dv = {-1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
-  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  struct Vector v = entity_system_get_coordinates(entity_id);
   sprite_component_position_move(entity_id, dv);
   if (!window_manager_window_is_inside_window_completely_2(sprite_component_window_get(entity_id), game_screen_get())) {
     sprite_component_position_set(entity_id, v);
@@ -63,7 +62,7 @@ void entity_spaceship_move_right(KeyboardKey key) {
   log_info("Entity spaceship move right event.");
   struct Vector dv = {1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
-  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  struct Vector v = entity_system_get_coordinates(entity_id);
   sprite_component_position_move(entity_id, dv);
   if (!window_manager_window_is_inside_window_completely_2(sprite_component_window_get(entity_id), game_screen_get())) {
     sprite_component_position_set(entity_id, v);

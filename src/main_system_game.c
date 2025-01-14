@@ -55,21 +55,13 @@ void _space_ship_fire(KeyboardKey key) {
 
 void _space_ship_move_left(KeyboardKey key) {
     struct Vector v = {-1, 0};
-    entity_system_add_coordinates(
-        entity_system_get(),
-        entity_spaceship_get_entity_id(),
-        v
-    );
+    entity_system_add_coordinates(entity_spaceship_get_entity_id(), v);
 }
 
 
 void _space_ship_move_right(KeyboardKey key) {
     struct Vector v = {1, 0};
-    entity_system_add_coordinates(
-        entity_system_get(),
-        entity_spaceship_get_entity_id(),
-        v
-    );
+    entity_system_add_coordinates(entity_spaceship_get_entity_id(), v);
 }
 
 
@@ -101,7 +93,6 @@ static void _render(void) {
     window_manager_window_draw(_game_screen);
 
     struct Vector top_left = {_game_screen->offset_x, _game_screen->offset_y};
-    struct EntitySystem* entity_system = entity_system_get();
     for (int i = 0; i < ENTITY_MAX; i++) {
         struct SpriteComponentUnit sprite_unit = sprite_component_get(i);
 
@@ -117,7 +108,7 @@ static void _render(void) {
         }
         rendering_unit->entity_id = i;
         rendering_unit->sprite = sprite;
-        struct Vector v = vector_add(entity_system->coordinates[rendering_unit->entity_id], top_left);
+        struct Vector v = vector_add(entity_system_get_coordinates(rendering_unit->entity_id), top_left);
         window->offset_x = v.x;
         window->offset_y = v.y;
         window_manager_window_draw(window);

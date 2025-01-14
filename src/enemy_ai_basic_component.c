@@ -48,7 +48,6 @@ bool _is_active(EntityId entity_id) {
 
 
 void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
-  struct EntitySystem* entity_system = entity_system_get();
   _ai.timer_millisecond += delta_time_millisecond;
   if (_ai.timer_millisecond < _ai.update_rate_millisecond) return;
 
@@ -59,7 +58,7 @@ void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!_is_active(i)) continue;
     struct SpriteComponentUnit sprite_component = sprite_component_get(i);
-    struct Vector v = entity_system->coordinates[i];
+    struct Vector v = entity_system_get_coordinates(i);
     min_x = imin(min_x, v.x);
     max_x = imax(max_x, v.x + sprite_component.sprite_buffer->width);
   }
@@ -83,7 +82,7 @@ void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
   }
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!_is_active(i)) continue;
-    entity_system_add_coordinates(entity_system, i, v);
+    entity_system_add_coordinates(i, v);
   }
 }
 

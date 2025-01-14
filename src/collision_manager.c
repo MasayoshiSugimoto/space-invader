@@ -26,8 +26,8 @@ int _buffer_length_get(void) {
 }
 
 
-bool _is_active_entity(struct EntitySystem* entity_system, EntityId entity_id) {
-  if (!entity_system->active[entity_id]) return false;
+bool _is_active_entity(EntityId entity_id) {
+  if (!entity_system_is_active(entity_id)) return false;
   if (!sprite_component_is_active(entity_id)) return false;
   if (faction_component_faction_id_get(entity_id) == FACTION_ID_NEUTRAL) return false;
   if (faction_component_faction_id_get(entity_id) >= FACTION_ID_MAX) return false;
@@ -60,7 +60,6 @@ void collision_manager_release(void) {
 
 
 void collision_manager_update(void) {
-  struct EntitySystem* entity_system = entity_system_get();
   // Cleanup the buffer
   for (int i = 0; i < _buffer_length_get(); i++) {
     _buffer[i] = 0;
@@ -70,8 +69,8 @@ void collision_manager_update(void) {
   uint8_t* buffer = _buffer;
   for (int i = 0; i < ENTITY_MAX; i++) {
     _is_collisions[i] = false;
-    if (!_is_active_entity(entity_system, i)) continue;
-    struct Vector v = entity_system_get_coordinates(entity_system, i);
+    if (!_is_active_entity(i)) continue;
+    struct Vector v = entity_system_get_coordinates(i);
     struct SpriteBuffer* sprite = sprite_component_get(i).sprite_buffer;
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
@@ -81,9 +80,9 @@ void collision_manager_update(void) {
   }
   // Iterate over all entities and compare their sprite buffer with the collision buffer.
   for (int i = 0; i < ENTITY_MAX; i++) {
-    if (!_is_active_entity(entity_system, i)) continue;
+    if (!_is_active_entity(i)) continue;
     struct SpriteBuffer* sprite = sprite_component_get(i).sprite_buffer;
-    struct Vector v = entity_system_get_coordinates(entity_system, i);
+    struct Vector v = entity_system_get_coordinates(i);
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
         if (buffer[_collision_buffer_index(v.x + dx, v.y + dy)] != faction_component_faction_id_get(i)) {

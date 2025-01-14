@@ -1,7 +1,11 @@
 #include "entity_system.h"
 
 
-static struct EntitySystem _entity_system;
+static struct EntitySystem {
+  EntityId next_entity;
+  bool active[ENTITY_MAX];
+  struct Vector coordinates[ENTITY_MAX];
+} _entity_system;
 
 
 EntityId next_id(EntityId id) {
@@ -11,11 +15,6 @@ EntityId next_id(EntityId id) {
 
 EntityId as_id(EntityId id) {
   return id % ENTITY_MAX;
-}
-
-
-struct EntitySystem* entity_system_get(void) {
-  return &_entity_system;
 }
 
 
@@ -44,47 +43,33 @@ EntityId entity_system_create_entity(void) {
 }
 
 
-void entity_system_delete_entity(
-    struct EntitySystem* entity_system,
-    EntityId entity_id
-) {
+void entity_system_delete_entity(EntityId entity_id) {
   assert_entity_id(entity_id);
-  entity_system->active[entity_id] = false;
+  _entity_system.active[entity_id] = false;
 }
 
 
-struct Vector entity_system_get_coordinates(
-    const struct EntitySystem* entity_system,
-    EntityId entity_id
-) {
+struct Vector entity_system_get_coordinates(EntityId entity_id) {
   assert_entity_id(entity_id);
-  return entity_system->coordinates[entity_id];
+  return _entity_system.coordinates[entity_id];
 }
 
 
-void entity_system_set_coordinates(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    struct Vector coordinates
-) {
+void entity_system_set_coordinates(EntityId entity_id, struct Vector coordinates) {
   assert_entity_id(entity_id);
-  entity_system->coordinates[entity_id] = coordinates;
+  _entity_system.coordinates[entity_id] = coordinates;
 }
 
 
-void entity_system_add_coordinates(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    struct Vector delta
-) {
+void entity_system_add_coordinates(EntityId entity_id, struct Vector delta) {
   assert_entity_id(entity_id);
-  entity_system->coordinates[entity_id] = vector_add(entity_system->coordinates[entity_id], delta);
+  _entity_system.coordinates[entity_id] = vector_add(_entity_system.coordinates[entity_id], delta);
 }
 
 
-void entity_system_disable(struct EntitySystem* entity_system, EntityId entity_id) {
+void entity_system_disable(EntityId entity_id) {
   assert_entity_id(entity_id);
-  entity_system->active[entity_id] = false;
+  _entity_system.active[entity_id] = false;
 }
 
 

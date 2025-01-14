@@ -10,7 +10,6 @@
 
 
 void entity_spaceship_fire(KeyboardKey key);
-void entity_spaceship_update(struct EntitySystem*);
 EntityId entity_spaceship_get_entity_id(void);
 void entity_spaceship_move_left(KeyboardKey key);
 void entity_spaceship_move_right(KeyboardKey key);

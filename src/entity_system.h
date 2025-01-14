@@ -25,35 +25,13 @@ struct Entity {
 };
 
 
-struct EntitySystem {
-  EntityId next_entity;
-  bool active[ENTITY_MAX];
-  struct Vector coordinates[ENTITY_MAX];
-};
-
-
-struct EntitySystem* entity_system_get(void);
 void entity_system_init(void);
 EntityId entity_system_create_entity(void);
-void entity_system_delete_entity(
-    struct EntitySystem* entity_system,
-    EntityId entity_id
-);
-struct Vector entity_system_get_coordinates(
-    const struct EntitySystem* entity_system,
-    EntityId entity_id
-);
-void entity_system_set_coordinates(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    struct Vector coordinates
-);
-void entity_system_add_coordinates(
-    struct EntitySystem* entity_system,
-    EntityId entity_id,
-    struct Vector delta
-);
-void entity_system_disable(struct EntitySystem*, EntityId);
+void entity_system_delete_entity(EntityId entity_id);
+struct Vector entity_system_get_coordinates(EntityId entity_id);
+void entity_system_set_coordinates(EntityId entity_id, struct Vector coordinates);
+void entity_system_add_coordinates(EntityId entity_id, struct Vector delta);
+void entity_system_disable(EntityId entity_id);
 bool entity_system_is_active(EntityId entity_id);
 
 

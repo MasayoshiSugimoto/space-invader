@@ -90,14 +90,13 @@ void sprite_component_enable(EntityId entity_id) {
 
 
 void sprite_component_update(void) {
-  struct EntitySystem* entity_system = entity_system_get();
   // Update all windows.
   const struct VirtualWindow2* game_screen_window = game_screen_get();
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    if (!entity_system->active[entity_id]) continue;
+    if (!entity_system_is_active(entity_id)) continue;
     if (!_sprite_component.active[entity_id]) continue;
     struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
-    struct Vector v = entity_system_get_coordinates(entity_system, entity_id);
+    struct Vector v = entity_system_get_coordinates(entity_id);
     window->offset_x = v.x + game_screen_window->offset_x;
     window->offset_y = v.y + game_screen_window->offset_y;
     _sprite_component.windows[entity_id].container = _sprite_component.container;
@@ -106,9 +105,8 @@ void sprite_component_update(void) {
 
 
 void sprite_component_render(void) {
-  struct EntitySystem* entity_system = entity_system_get();
   for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    if (!entity_system->active[entity_id]) continue;
+    if (!entity_system_is_active(entity_id)) continue;
     if (!_sprite_component.active[entity_id]) continue;
     struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
     assert_f(window->buffer != NULL, "Attempt to draw null sprite buffer for entity id: %d", entity_id);
@@ -133,8 +131,8 @@ void sprite_component_position_move(EntityId entity_id, struct Vector dv) {
   assert_entity_id(entity_id);
   if (!_sprite_component.active[entity_id]) return;
   const struct VirtualWindow2* game_screen_window = game_screen_get();
-  entity_system_add_coordinates(entity_system_get(), entity_id, dv);
-  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  entity_system_add_coordinates(entity_id, dv);
+  struct Vector v = entity_system_get_coordinates(entity_id);
   struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
   window->offset_x = v.x + game_screen_window->offset_x;
   window->offset_y = v.y + game_screen_window->offset_y;
@@ -145,7 +143,7 @@ void sprite_component_position_set(EntityId entity_id, struct Vector v) {
   assert_entity_id(entity_id);
   if (!_sprite_component.active[entity_id]) return;
   const struct VirtualWindow2* game_screen_window = game_screen_get();
-  entity_system_set_coordinates(entity_system_get(), entity_id, v);
+  entity_system_set_coordinates(entity_id, v);
   struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
   window->offset_x = v.x + game_screen_window->offset_x;
   window->offset_y = v.y + game_screen_window->offset_y;

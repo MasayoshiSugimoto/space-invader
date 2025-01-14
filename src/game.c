@@ -12,11 +12,10 @@ static struct Game _game;
 
 
 void game_init_entities(const struct EntityData* entity_datas, size_t entity_datas_length) {
-  struct EntitySystem* entity_system = entity_system_get();
   for (int i = 0; i < entity_datas_length; i++) {
     EntityId entity_id = entity_system_create_entity();
     const struct EntityData* entity_data_ptr = &entity_datas[i];
-    entity_system_set_coordinates(entity_system, entity_id, entity_data_ptr->coordinates);
+    entity_system_set_coordinates(entity_id, entity_data_ptr->coordinates);
 
     struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
     sprite_unit.sprite_id = entity_data_ptr->sprite_id;
@@ -27,7 +26,7 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     faction_component_set(entity_id, entity_data_ptr->faction_id);
 
     if (entity_data_ptr->is_basic_ai_active) {
-      enemy_ai_basic_activate(i);
+      enemy_ai_basic_activate(entity_id);
     }
   }
 }

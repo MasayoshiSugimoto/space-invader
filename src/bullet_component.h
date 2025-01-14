@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include "entity_system.h"
 #include "sprite_component.h"
-#include "component_manager.h"
 #include "faction_component.h"
 #include "sprite_buffer.h"
 #include "sprite_loader.h"

@@ -17,7 +17,7 @@ void _on_timer(void* param) {
   struct Vector v = {0, -1};
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     if (!_bullet_components[i].active) continue;
-    entity_system_add_coordinates(entity_system_get(), _bullet_components[i].entity_id, v);
+    entity_system_add_coordinates(_bullet_components[i].entity_id, v);
   }
 }
 
@@ -58,9 +58,8 @@ void bullet_component_fire(struct Vector bullet_position) {
     log_info("No remaining available bullet.");
     return;  // Already fired the max number of bullets.
   }
-  struct EntitySystem* entity_system = entity_system_get();
   bullet->active = true;
-  entity_system_set_coordinates(entity_system, bullet->entity_id, bullet_position);
+  entity_system_set_coordinates(bullet->entity_id, bullet_position);
   sprite_component_enable(bullet->entity_id);
 }
 
@@ -84,7 +83,7 @@ void bullet_component_update(void) {
 void bullet_component_cleanup(void) {
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     EntityId entity_id = _bullet_components[i].entity_id;
-    entity_system_disable(entity_system_get(), entity_id);
+    entity_system_disable(entity_id);
     sprite_component_disable(entity_id);
     faction_component_disable(entity_id);
   }
