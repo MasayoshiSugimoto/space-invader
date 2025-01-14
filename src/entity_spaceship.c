@@ -49,21 +49,23 @@ EntityId entity_spaceship_get_entity_id(void) {
 
 void entity_spaceship_move_left(KeyboardKey key) {
   log_info("Entity spaceship move left event.");
-  struct Vector v = {-1, 0};
-  entity_system_add_coordinates(
-    entity_system_get(),
-    entity_spaceship_get_entity_id(),
-    v
-  );
+  struct Vector dv = {-1, 0};
+  EntityId entity_id = entity_spaceship_get_entity_id();
+  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  sprite_component_position_move(entity_id, dv);
+  if (!window_manager_window_is_inside_window_completely_2(sprite_component_window_get(entity_id), game_screen_get())) {
+    sprite_component_position_set(entity_id, v);
+  }
 }
 
 
 void entity_spaceship_move_right(KeyboardKey key) {
   log_info("Entity spaceship move right event.");
-  struct Vector v = {1, 0};
-  entity_system_add_coordinates(
-    entity_system_get(),
-    entity_spaceship_get_entity_id(),
-    v
-  );
+  struct Vector dv = {1, 0};
+  EntityId entity_id = entity_spaceship_get_entity_id();
+  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  sprite_component_position_move(entity_id, dv);
+  if (!window_manager_window_is_inside_window_completely_2(sprite_component_window_get(entity_id), game_screen_get())) {
+    sprite_component_position_set(entity_id, v);
+  }
 }

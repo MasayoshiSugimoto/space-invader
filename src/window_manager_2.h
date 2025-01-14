@@ -50,6 +50,7 @@ bool window_manager_window_is_inside_screen_2(const struct VirtualWindow2* windo
 bool window_manager_window_is_inside_relative_2(const struct VirtualWindow2* window, int x, int y);
 bool window_manager_window_is_inside_absolute_2(const struct VirtualWindow2* window, int x, int y);
 bool window_manager_window_is_inside_window_2(const struct VirtualWindow2* window_contained, const struct VirtualWindow2* window_container);
+bool window_manager_window_is_inside_window_completely_2(const struct VirtualWindow2* window_contained, const struct VirtualWindow2* window_container);
 void window_manager_window_center_screen_x_2(struct VirtualWindow2* window);
 void window_manager_window_center_screen_y_2(struct VirtualWindow2* window);
 void window_manager_window_align_top_screen_2(struct VirtualWindow2* window);

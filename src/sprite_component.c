@@ -127,3 +127,26 @@ void sprite_component_container_set(const struct VirtualWindow2* window) {
   if (_trace) log_info("Set sprite component container.");
   _sprite_component.container = window;
 }
+
+
+void sprite_component_position_move(EntityId entity_id, struct Vector dv) {
+  assert_entity_id(entity_id);
+  if (!_sprite_component.active[entity_id]) return;
+  const struct VirtualWindow2* game_screen_window = game_screen_get();
+  entity_system_add_coordinates(entity_system_get(), entity_id, dv);
+  struct Vector v = entity_system_get_coordinates(entity_system_get(), entity_id);
+  struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
+  window->offset_x = v.x + game_screen_window->offset_x;
+  window->offset_y = v.y + game_screen_window->offset_y;
+}
+
+
+void sprite_component_position_set(EntityId entity_id, struct Vector v) {
+  assert_entity_id(entity_id);
+  if (!_sprite_component.active[entity_id]) return;
+  const struct VirtualWindow2* game_screen_window = game_screen_get();
+  entity_system_set_coordinates(entity_system_get(), entity_id, v);
+  struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
+  window->offset_x = v.x + game_screen_window->offset_x;
+  window->offset_y = v.y + game_screen_window->offset_y;
+}

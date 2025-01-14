@@ -30,6 +30,8 @@ void sprite_component_update(void);
 void sprite_component_render(void);
 const struct VirtualWindow2* sprite_component_window_get(EntityId entity_id);
 void sprite_component_container_set(const struct VirtualWindow2* window);
+void sprite_component_position_move(EntityId entity_id, struct Vector dv);
+void sprite_component_position_set(EntityId entity_id, struct Vector v);
 
 
 #endif

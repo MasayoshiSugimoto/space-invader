@@ -151,6 +151,34 @@ bool window_manager_window_is_inside_window_2(const struct VirtualWindow2* windo
 }
 
 
+bool window_manager_window_is_inside_window_completely_2(
+  const struct VirtualWindow2* window_contained, 
+  const struct VirtualWindow2* window_container
+) {
+  if (!window_manager_window_is_inside_absolute_2(
+    window_container, 
+    window_contained->offset_x, 
+    window_contained->offset_y
+  )) return false;
+  if (!window_manager_window_is_inside_absolute_2(
+    window_container, 
+    window_contained->offset_x + _get_width(window_contained) - 1, 
+    window_contained->offset_y
+  )) return false;
+  if (!window_manager_window_is_inside_absolute_2(
+    window_container, 
+    window_contained->offset_x + _get_width(window_contained) - 1, 
+    window_contained->offset_y + _get_height(window_contained) - 1
+  )) return false;
+  if (!window_manager_window_is_inside_absolute_2(
+    window_container, 
+    window_contained->offset_x, 
+    window_contained->offset_y + _get_height(window_contained) - 1
+  )) return false;
+  return true;
+}
+
+
 void window_manager_window_center_screen_x_2(struct VirtualWindow2* window) {
   window->offset_x = virtual_screen_center_x() - _get_width(window) / 2;
 }
