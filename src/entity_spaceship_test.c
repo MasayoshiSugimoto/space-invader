@@ -2,11 +2,13 @@
 
 
 static struct RecuringFrameTimer _timer;
+static const int _width = 21;
+static const int _height = 20;
 
 
 static const struct EntityData _entity_datas[] = {
   {
-    coordinates: {37, 15}, 
+    coordinates: {8, 16}, 
     sprite_id: SPRITE_ID_SPACESHIP, 
     active: true, 
     faction_id: FACTION_ID_PLAYER, 
@@ -31,17 +33,66 @@ static void _fire(void) {
 }
 
 static const void (*_event_handlers[])(void) = {
+    // Confirm that only 3 bullets can be fired at once.
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    _fire,
+    // Check that the spaceship cannot go outside of the screen.
+    _move_left,
+    _move_left,
+    _move_left,
+    _move_left,
+    _move_left,
+    _move_left,
+    _move_left,
+    _move_left,
     _move_left,
     _move_left,
     _move_right,
     _move_right,
-    _fire,
-    _fire,
-    _fire,
-    _fire,
-    _fire,
-    _fire,
-    _fire,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
+    _move_right,
 };
 static int _event_counter;
   
@@ -55,14 +106,14 @@ static void _on_event(void* _) {
 static void _init(void) {
     log_info("Initializing entity spaceship test.");
     sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
-    game_screen_init(SCREEN_WIDTH, SCREEN_HEIGHT);
+    game_screen_init(_width, _height);
 
     game_init();
     game_init_entities(_entity_datas, array_size(_entity_datas));
 
     color_reset();
 
-    recurring_frame_timer_set(&_timer, _on_event, NULL, milliseconds_as_duration(500));
+    recurring_frame_timer_set(&_timer, _on_event, NULL, milliseconds_as_duration(100));
     _event_counter = 0;
 }
 
@@ -79,6 +130,9 @@ static void _input_update(void) {
 
 
 static enum MainSystemModeStatus _system_update(void) {
+    if (_event_counter >= array_size(_event_handlers)) {
+        return MAIN_SYSTEM_MODE_DONE;
+    }
     game_update();
     return MAIN_SYSTEM_MODE_RUNNING;
 }
