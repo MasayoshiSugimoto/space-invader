@@ -14,6 +14,7 @@ struct EntityData {
   enum FactionId faction_id;
   const char* sprite_file_name;
   bool is_basic_ai_active;
+  const char* animation_name;
 };
 
 

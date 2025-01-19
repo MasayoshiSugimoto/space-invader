@@ -55,10 +55,10 @@ void sprite_component_set_active(EntityId entity_id, bool active) {
 struct SpriteComponentUnit sprite_component_get(EntityId entity_id) {
   assert_entity_id(entity_id);
   struct SpriteComponentUnit unit = {
-    entity_id: entity_id,
-    active: _sprite_component.active[entity_id],
-    sprite_id: _sprite_component.sprite_id[entity_id],
-    sprite_buffer: _sprite_component.windows[entity_id].buffer
+    .entity_id = entity_id,
+    .active = _sprite_component.active[entity_id],
+    .sprite_id = _sprite_component.sprite_id[entity_id],
+    .sprite_buffer = _sprite_component.windows[entity_id].buffer
   };
   return unit;
 }
@@ -147,4 +147,10 @@ void sprite_component_position_set(EntityId entity_id, struct Vector v) {
   struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
   window->offset_x = v.x + game_screen_window->offset_x;
   window->offset_y = v.y + game_screen_window->offset_y;
+}
+
+
+void sprite_component_sprite_buffer_set(EntityId entity_id, struct SpriteBuffer* sprite_buffer) {
+  assert_entity_id(entity_id);
+  _sprite_component.windows[entity_id].buffer = sprite_buffer;
 }

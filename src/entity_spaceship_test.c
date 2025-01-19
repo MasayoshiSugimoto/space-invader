@@ -8,12 +8,12 @@ static const int _height = 20;
 
 static const struct EntityData _entity_datas[] = {
   {
-    coordinates: {8, 16}, 
-    sprite_id: SPRITE_ID_SPACESHIP, 
-    active: true, 
-    faction_id: FACTION_ID_PLAYER, 
-    sprite_file_name: SPRITE_LOADER_FILE_NAME_SPACESHIP, 
-    is_basic_ai_active: false
+    .coordinates = {8, 16}, 
+    .sprite_id = SPRITE_ID_SPACESHIP, 
+    .active = true, 
+    .faction_id = FACTION_ID_PLAYER, 
+    .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+    .is_basic_ai_active = false
   },
 };
 
@@ -32,7 +32,7 @@ static void _fire(void) {
     entity_spaceship_fire(' ');
 }
 
-static const void (*_event_handlers[])(void) = {
+static void (*_event_handlers[])(void) = {
     // Confirm that only 3 bullets can be fired at once.
     _fire,
     _fire,

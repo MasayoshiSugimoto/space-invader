@@ -8,6 +8,9 @@
 #include "interpolation.h"
 
 
+#define DURATION_ONE_DAY (milliseconds_as_duration(1000 * 60 * 60 * 24))
+
+
 struct FrameTimer {
     Instant start;
     Duration duration;

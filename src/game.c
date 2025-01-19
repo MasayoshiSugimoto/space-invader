@@ -28,6 +28,10 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     if (entity_data_ptr->is_basic_ai_active) {
       enemy_ai_basic_activate(entity_id);
     }
+
+    if (entity_data_ptr->animation_name != NULL) {
+      animation_set(entity_id, entity_data_ptr->animation_name);
+    }
   }
 }
 
@@ -37,17 +41,18 @@ void game_init(void) {
   _game.game_state = GAME_INIT_GAME_STATE;
   _game.last_frame_time_millisecond = get_current_millisecond();
 
+  // Initialization
   sprite_component_init();
   entity_system_init();
-
   // animation_init();
-
   enemy_ai_basic_init();
   bullet_component_init();
+  animation_init();
 
+  // Setup
   sprite_component_container_set(game_screen_get());
-
   bullet_component_setup();
+  animation_setup();
 }
 
 
@@ -80,7 +85,7 @@ void game_update(void) {
   _game.last_frame_time_millisecond = now_millisecond;
   enemy_ai_basic_update(delta_time_millisecond);
   bullet_component_update();
-  animation_update(delta_time_millisecond);
+  animation_update();
 }
 
 

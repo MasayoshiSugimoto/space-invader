@@ -211,10 +211,10 @@ void window_manager_window_align_left_screen_2(struct VirtualWindow2* window) {
 
 struct WindowVertex window_manager_vertex_get(const struct VirtualWindow2* window) {
   struct WindowVertex v = {
-    top: window->offset_y,
-    right: imax(window->offset_x + _get_width(window) - 1, 0),
-    bottom: imax(window->offset_y + _get_height(window) - 1, 0),
-    left: window->offset_x,
+    .top = window->offset_y,
+    .right = imax(window->offset_x + _get_width(window) - 1, 0),
+    .bottom = imax(window->offset_y + _get_height(window) - 1, 0),
+    .left = window->offset_x,
   };
   return v;
 }

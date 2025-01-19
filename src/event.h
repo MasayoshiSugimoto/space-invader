@@ -12,6 +12,7 @@
 #include "sprite_editor_2.h"
 #include "collision_manager_test.h"
 #include "entity_spaceship_test.h"
+#include "animation_test.h"
 
 
 void event_on_program_start(void);

@@ -60,6 +60,8 @@
         "animation.h": "c",
         "vector.h": "c",
         "entity_spaceship_test.h": "c",
-        "recuring_frame_timer.h": "c"
+        "recuring_frame_timer.h": "c",
+        "animation_test.h": "c",
+        "entity_data.h": "c"
     }
 }

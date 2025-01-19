@@ -7,17 +7,16 @@
 #include "entity_system.h"
 #include "timer.h"
 #include "sprite_component.h"
+#include "sprite_loader.h"
 
 
-typedef int AnimationId;
+#define ANIMATION_NAME_EXPLOSION "animation_explosion.dat"
 
 
-const AnimationId ANIMATION_ID_EXPLOSION;
-
-
-void animation_init();
-void animation_update(Duration delta_time);
-void animation_set(EntityId entity_id, AnimationId animation_id);
+void animation_init(void);
+void animation_setup(void);
+void animation_update(void);
+void animation_set(EntityId entity_id, const char* animation_name);
 
 
 #endif

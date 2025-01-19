@@ -107,7 +107,7 @@ void start_screen_init(void) {
 
 
 enum MainSystemModeStatus start_screen_update(void) {
-  return _state == STATE_DONE ? TASK_STATUS_DONE : TASK_STATUS_RUNNING;
+  return _state == STATE_DONE ? MAIN_SYSTEM_MODE_DONE : MAIN_SYSTEM_MODE_RUNNING;
 }
 
 

@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -g 
+CC = clang
+CFLAGS = -Wall -g
 DEP_OPT = -MM -MP
 SRC_DIR = src
 BUILD_DIR = .build
