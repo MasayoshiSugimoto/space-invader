@@ -70,6 +70,7 @@ void sprite_component_set(const struct SpriteComponentUnit* unit) {
   _sprite_component.active[unit->entity_id] = unit->active;
   _sprite_component.sprite_id[unit->entity_id] = unit->sprite_id;
   _sprite_component.windows[unit->entity_id].buffer = unit->sprite_buffer;
+  _sprite_component.windows[unit->entity_id].is_transparent = true;
 }
 
 
@@ -97,8 +98,8 @@ void sprite_component_update(void) {
     if (!_sprite_component.active[entity_id]) continue;
     struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
     struct Vector v = entity_system_get_coordinates(entity_id);
-    window->offset_x = v.x + game_screen_window->offset_x;
-    window->offset_y = v.y + game_screen_window->offset_y;
+    window->offset_x = v.x + game_screen_window->offset_x - window->buffer->width / 2;
+    window->offset_y = v.y + game_screen_window->offset_y - window->buffer->height / 2;
     _sprite_component.windows[entity_id].container = _sprite_component.container;
   }
 }
@@ -134,8 +135,8 @@ void sprite_component_position_move(EntityId entity_id, struct Vector dv) {
   entity_system_add_coordinates(entity_id, dv);
   struct Vector v = entity_system_get_coordinates(entity_id);
   struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
-  window->offset_x = v.x + game_screen_window->offset_x;
-  window->offset_y = v.y + game_screen_window->offset_y;
+  window->offset_x = v.x + game_screen_window->offset_x - window->buffer->width / 2;
+  window->offset_y = v.y + game_screen_window->offset_y - window->buffer->height / 2;
 }
 
 
@@ -145,8 +146,8 @@ void sprite_component_position_set(EntityId entity_id, struct Vector v) {
   const struct VirtualWindow2* game_screen_window = game_screen_get();
   entity_system_set_coordinates(entity_id, v);
   struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
-  window->offset_x = v.x + game_screen_window->offset_x;
-  window->offset_y = v.y + game_screen_window->offset_y;
+  window->offset_x = v.x + game_screen_window->offset_x - window->buffer->width / 2;
+  window->offset_y = v.y + game_screen_window->offset_y - window->buffer->height / 2;
 }
 
 

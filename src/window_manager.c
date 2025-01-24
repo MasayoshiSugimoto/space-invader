@@ -109,7 +109,9 @@ void window_manager_window_draw(struct VirtualWindow* window) {
     int x = _pixels_get_x(window, i) + window->offset_x;
     int y = _pixels_get_y(window, i) + window->offset_y;
     struct VirtualPixel pixel = _pixels[pixel_offset + i];
-    if (!window->is_transparent || pixel.character != 0) {
+    if (!window->is_transparent) {
+      virtual_screen_set_char_and_color(x, y, pixel.character, pixel.color_pair_id);
+    } else if (pixel.character != ' ') {
       virtual_screen_set_char_and_color(x, y, pixel.character, pixel.color_pair_id);
     }
   }

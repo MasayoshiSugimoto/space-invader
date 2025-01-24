@@ -39,7 +39,10 @@ void window_manager_window_draw_2(struct VirtualWindow2* window) {
         continue;
       }
       struct VirtualPixel pixel = sprite_buffer_get(window->buffer, x, y);
-      if (pixel.character != 0) {
+      if (pixel.character == 0) continue;
+      if (!window->is_transparent ) {
+        virtual_screen_set_char_and_color(x_abs, y_abs, pixel.character, pixel.color_pair_id);
+      } else if (window->is_transparent && pixel.character != ' ') {
         virtual_screen_set_char_and_color(x_abs, y_abs, pixel.character, pixel.color_pair_id);
       } 
     }

@@ -3,7 +3,7 @@
 
 static const struct EntityData _entity_datas[] = {
     {
-        .coordinates = {4, 4}, 
+        .coordinates = {6, 4}, 
         .sprite_id = SPRITE_ID_ALIEN,
         .active = true,
         .faction_id = FACTION_ID_ALIEN,
@@ -12,7 +12,7 @@ static const struct EntityData _entity_datas[] = {
         .animation_name = ANIMATION_NAME_EXPLOSION
     },
     {
-        .coordinates = {10, 4}, 
+        .coordinates = {12, 4}, 
         .sprite_id = SPRITE_ID_ALIEN, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
@@ -21,7 +21,7 @@ static const struct EntityData _entity_datas[] = {
         .animation_name = ANIMATION_NAME_EXPLOSION
     },
     {
-        .coordinates = {16, 4}, 
+        .coordinates = {18, 4}, 
         .sprite_id = SPRITE_ID_ALIEN, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
