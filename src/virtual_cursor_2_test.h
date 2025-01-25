@@ -2,7 +2,7 @@
 #define VIRTUAL_CURSOR_2_TEST_H
 
 
-#include "virtual_cursor_2.h"
+#include "virtual_cursor.h"
 #include "window_manager.h"
 #include "event.h"
 

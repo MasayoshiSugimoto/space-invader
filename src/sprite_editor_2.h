@@ -7,7 +7,7 @@
 #include "event.h"
 #include "window_manager.h"
 #include "sprite_buffer.h"
-#include "virtual_cursor_2.h"
+#include "virtual_cursor.h"
 #include "log_buffer.h"
 #include "keyboard.h"
 #include "input.h"

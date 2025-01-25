@@ -17,7 +17,7 @@ enum Mode {
 struct Widget {
   struct SpriteBuffer sprite_buffer;
   struct VirtualWindow window;
-  struct VirtualCursor2 cursor;
+  struct VirtualCursor cursor;
 };
 
 
@@ -41,7 +41,7 @@ static void _log(const char* text) {
 static void _widget_init(struct Widget* widget, int width, int height) {
   sprite_buffer_allocate(&widget->sprite_buffer, width, height);
   sprite_buffer_clear(&widget->sprite_buffer);
-  virtual_cursor_2_init(&widget->cursor, &widget->sprite_buffer);
+  virtual_cursor_init(&widget->cursor, &widget->sprite_buffer);
   window_manager_window_init(&widget->window);
   widget->window.buffer = &widget->sprite_buffer;
 }
@@ -83,22 +83,22 @@ static enum Mode _mode_get(void) {
 
 
 static void _cursor_move_up(KeyboardKey key) {
-  virtual_cursor_2_move_up(&_widget_edit.cursor);
+  virtual_cursor_move_up(&_widget_edit.cursor);
 }
 
 
 static void _cursor_move_right(KeyboardKey key) {
-  virtual_cursor_2_move_right(&_widget_edit.cursor);
+  virtual_cursor_move_right(&_widget_edit.cursor);
 }
 
 
 static void _cursor_move_down(KeyboardKey key) {
-  virtual_cursor_2_move_down(&_widget_edit.cursor);
+  virtual_cursor_move_down(&_widget_edit.cursor);
 }
 
 
 static void _cursor_move_left(KeyboardKey key) {
-  virtual_cursor_2_move_left(&_widget_edit.cursor);
+  virtual_cursor_move_left(&_widget_edit.cursor);
 }
 
 
@@ -107,7 +107,7 @@ static void _key_handle_key_default(KeyboardKey key) {
   int space = 32;
   int tilde = 126;
   if (space <= key && key <= tilde) {
-    virtual_cursor_2_character_set(&_widget_edit.cursor, key, COLOR_PAIR_ID_DEFAULT);
+    virtual_cursor_character_set(&_widget_edit.cursor, key, COLOR_PAIR_ID_DEFAULT);
   }
 }
 
