@@ -6,6 +6,7 @@
 #include "log.h"
 #include "game.h"
 #include "game_screen.h"
+#include "window_manager.h"
 
 
 struct MainSystemMode g_animation_test;

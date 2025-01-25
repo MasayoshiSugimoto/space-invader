@@ -1,7 +1,7 @@
 #include "game_screen.h"
 
 
-static struct VirtualWindow2 _window;
+static struct VirtualWindow _window;
 static struct SpriteBuffer _buffer;
 
 
@@ -24,7 +24,7 @@ void game_screen_release(void) {
 }
 
 
-const struct VirtualWindow2* game_screen_get(void) {
+const struct VirtualWindow* game_screen_get(void) {
     return &_window;
 }
 

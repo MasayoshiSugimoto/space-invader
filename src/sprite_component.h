@@ -13,7 +13,7 @@ struct SpriteComponentUnit {
   bool active;
   enum SpriteId sprite_id;
   struct SpriteBuffer* sprite_buffer;
-  struct VirtualWindow2* window;
+  struct VirtualWindow* window;
 };
 
 
@@ -28,8 +28,8 @@ void sprite_component_disable(EntityId entity_id);
 void sprite_component_enable(EntityId entity_id);
 void sprite_component_update(void);
 void sprite_component_render(void);
-const struct VirtualWindow2* sprite_component_window_get(EntityId entity_id);
-void sprite_component_container_set(const struct VirtualWindow2* window);
+const struct VirtualWindow* sprite_component_window_get(EntityId entity_id);
+void sprite_component_container_set(const struct VirtualWindow* window);
 void sprite_component_position_move(EntityId entity_id, struct Vector dv);
 void sprite_component_position_set(EntityId entity_id, struct Vector v);
 void sprite_component_sprite_buffer_set(EntityId entity_id, struct SpriteBuffer* sprite_buffer);

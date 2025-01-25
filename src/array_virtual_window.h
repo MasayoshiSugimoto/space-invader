@@ -5,11 +5,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "log.h"
-#include "virtual_window_2.h"
+#include "virtual_window.h"
 
 
 struct ArrayVirtualWindow {
-    struct VirtualWindow2* windows;
+    struct VirtualWindow* windows;
     uint16_t length;
 };
 

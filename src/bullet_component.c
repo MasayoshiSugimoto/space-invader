@@ -66,12 +66,12 @@ void bullet_component_fire(struct Vector bullet_position) {
 
 void bullet_component_update(void) {
   recurring_frame_timer_update(&_timer);
-  const struct VirtualWindow2* game_screen = game_screen_get();
+  const struct VirtualWindow* game_screen = game_screen_get();
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     struct BulletComponent* bullet = &_bullet_components[i];
     if (!bullet->active) continue;
     if (!sprite_component_is_active(bullet->entity_id)) continue;
-    const struct VirtualWindow2* window = sprite_component_window_get(bullet->entity_id);
+    const struct VirtualWindow* window = sprite_component_window_get(bullet->entity_id);
     if (window == NULL) continue;
     if (window_manager_window_is_inside_window(window, game_screen)) continue;
     _bullet_components[i].active = false;

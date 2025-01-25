@@ -7,16 +7,16 @@ static const bool _trace = true;
 static struct SpriteComponent {
   bool active[ENTITY_MAX];
   enum SpriteId sprite_id[ENTITY_MAX];
-  struct VirtualWindow2 windows[ENTITY_MAX];
-  const struct VirtualWindow2* container;
+  struct VirtualWindow windows[ENTITY_MAX];
+  const struct VirtualWindow* container;
 } _sprite_component;
 
 
 void _update_window_offset(EntityId entity_id) {
   assert_entity_id(entity_id);
-  const struct VirtualWindow2* game_screen_window = game_screen_get();
+  const struct VirtualWindow* game_screen_window = game_screen_get();
   struct Vector v = entity_system_get_coordinates(entity_id);
-  struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
+  struct VirtualWindow* window = &_sprite_component.windows[entity_id];
   window->offset_x = v.x + game_screen_window->offset_x - window->buffer->width / 2;
   window->offset_y = v.y + game_screen_window->offset_y - window->buffer->height / 2;
 }
@@ -121,7 +121,7 @@ void sprite_component_render(void) {
     for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
       if (!entity_system_is_active(entity_id)) continue;
       if (!_sprite_component.active[entity_id]) continue;
-      struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
+      struct VirtualWindow* window = &_sprite_component.windows[entity_id];
       if (window->z == z_current) {
         assert_f(window->buffer != NULL, "Attempt to draw null sprite buffer for entity id: %d", entity_id);
         window_manager_window_draw(window);
@@ -133,13 +133,13 @@ void sprite_component_render(void) {
 }
 
 
-const struct VirtualWindow2* sprite_component_window_get(EntityId entity_id) {
+const struct VirtualWindow* sprite_component_window_get(EntityId entity_id) {
   assert_entity_id(entity_id);
   return &_sprite_component.windows[entity_id];
 }
 
 
-void sprite_component_container_set(const struct VirtualWindow2* window) {
+void sprite_component_container_set(const struct VirtualWindow* window) {
   if (_trace) log_info("Set sprite component container.");
   _sprite_component.container = window;
 }

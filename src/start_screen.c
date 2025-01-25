@@ -40,7 +40,7 @@ enum WindowId {
 
 
 static struct FrameTimer _timer;
-static struct VirtualWindow2 _windows[WINDOW_ID_MAX];
+static struct VirtualWindow _windows[WINDOW_ID_MAX];
 
 
 void _fade_in_title_start(void) {
@@ -90,7 +90,7 @@ void start_screen_init(void) {
   sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_CREDITS);
   sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_TITLE);
   for (int i = 0; i < WINDOW_ID_TITLE; i++) {
-    struct VirtualWindow2* window = &_windows[i];
+    struct VirtualWindow* window = &_windows[i];
     window_manager_window_init(window);
   }
   _windows[WINDOW_ID_CREDITS].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_CREDITS);

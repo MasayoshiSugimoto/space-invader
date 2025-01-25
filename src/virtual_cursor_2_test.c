@@ -81,7 +81,7 @@ void virtual_cursor_2_test() {
     virtual_cursor_2_text_print(&cursor_3, _buf);
     virtual_cursor_2_new_line(&cursor_3);
 
-    struct VirtualWindow2 window0;
+    struct VirtualWindow window0;
     window_manager_window_init(&window0);
     window0.buffer = &sprite_buffer_0;
 
@@ -90,7 +90,7 @@ void virtual_cursor_2_test() {
     int offset_y = 5;
     int offset_x = border;
     
-    struct VirtualWindow2 window1;
+    struct VirtualWindow window1;
     window_manager_window_init(&window1);
     window1.has_border = true;
     window1.buffer = &sprite_buffer_1;
@@ -99,7 +99,7 @@ void virtual_cursor_2_test() {
 
     offset_x += border + margin + width;
 
-    struct VirtualWindow2 window2;
+    struct VirtualWindow window2;
     window_manager_window_init(&window2);
     window2.has_border = true;
     window2.buffer = &sprite_buffer_2;
@@ -108,7 +108,7 @@ void virtual_cursor_2_test() {
 
     offset_x += border + margin + width;
 
-    struct VirtualWindow2 window3;
+    struct VirtualWindow window3;
     window_manager_window_init(&window3);
     window3.has_border = true;
     window3.buffer = &sprite_buffer_3;

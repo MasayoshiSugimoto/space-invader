@@ -8,7 +8,7 @@
 
 static const char* _characters = "abcdefghijklmnopqrstuvwxyz0123456789 -.";
 static struct SpriteBuffer _sprite_buffers[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
-static struct VirtualWindow2 _windows[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
+static struct VirtualWindow _windows[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
 static int _x;
 static int _y;
 static char _debug_buffer[2048];
@@ -54,7 +54,7 @@ static void _random_fill(struct SpriteBuffer* sprite_buffer) {
 }
 
 
-static void _set_random_position(struct VirtualWindow2* window) {
+static void _set_random_position(struct VirtualWindow* window) {
     window->offset_x = rand() % virtual_screen_get_width();
     window->offset_y = rand() % virtual_screen_get_height();
 }
@@ -83,7 +83,7 @@ static void window_manager_test_random() {
         _random_fill(sprite_buffer);
         dx[i] = (rand() % 5) - 2;
         dy[i] = (rand() % 5) - 2;
-        struct VirtualWindow2* window = &_windows[i];
+        struct VirtualWindow* window = &_windows[i];
         window_manager_window_init(window);
         window->buffer = sprite_buffer;
         window->has_border = true;
@@ -102,7 +102,7 @@ static void window_manager_test_random() {
         int dt = duration_as_milliseconds(frame_timer_get_elapsed_time(&timer)) / 50;
 
         for (int i = WINDOW_MANAGER_TEST_WINDOW_START_INDEX; i < WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT; i++) {
-            struct VirtualWindow2* window = &_windows[i];
+            struct VirtualWindow* window = &_windows[i];
             if (t != dt) {
                 window->offset_x += dx[i];
                 window->offset_y += dy[i];
@@ -113,7 +113,7 @@ static void window_manager_test_random() {
             }
         }
 
-        struct VirtualWindow2* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
+        struct VirtualWindow* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
         window_manager_window_init(forefront_window);
         forefront_window->buffer = forefront_sprite_buffer;
         window_manager_window_draw(forefront_window);
@@ -142,7 +142,7 @@ static void window_manager_test_alignment() {
     _print_ln(forefront_sprite_buffer, "================================");
     _print_ln(forefront_sprite_buffer, "Testing different window alignment relative to the screen.");
 
-    struct VirtualWindow2* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
+    struct VirtualWindow* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
     window_manager_window_init(forefront_window);
     forefront_window->buffer = forefront_sprite_buffer;
 
@@ -154,55 +154,55 @@ static void window_manager_test_alignment() {
     sprite_buffer_allocate(sprite_buffer, width, height);
     sprite_buffer_clear(sprite_buffer);
 
-    struct VirtualWindow2* window_top_left = &_windows[window_count++];
+    struct VirtualWindow* window_top_left = &_windows[window_count++];
     window_top_left->buffer = sprite_buffer;
     window_top_left->has_border = true;
     window_manager_window_align_left_screen(window_top_left);
     window_manager_window_align_top_screen(window_top_left);
 
-    struct VirtualWindow2* window_top_center = &_windows[window_count++];
+    struct VirtualWindow* window_top_center = &_windows[window_count++];
     window_top_center->buffer = sprite_buffer;
     window_top_center->has_border = true;
     window_manager_window_center_screen_x(window_top_center);
     window_manager_window_align_top_screen(window_top_center);
 
-    struct VirtualWindow2* window_top_right = &_windows[window_count++];
+    struct VirtualWindow* window_top_right = &_windows[window_count++];
     window_top_right->buffer = sprite_buffer;
     window_top_right->has_border = true;
     window_manager_window_align_right_screen(window_top_right);
     window_manager_window_align_top_screen(window_top_right);
 
-    struct VirtualWindow2* window_center_left = &_windows[window_count++];
+    struct VirtualWindow* window_center_left = &_windows[window_count++];
     window_center_left->buffer = sprite_buffer;
     window_center_left->has_border = true;
     window_manager_window_align_left_screen(window_center_left);
     window_manager_window_center_screen_y(window_center_left);
 
-    struct VirtualWindow2* window_center_center = &_windows[window_count++];
+    struct VirtualWindow* window_center_center = &_windows[window_count++];
     window_center_center->buffer = sprite_buffer;
     window_center_center->has_border = true;
     window_manager_window_center_screen_x(window_center_center);
     window_manager_window_center_screen_y(window_center_center);
 
-    struct VirtualWindow2* window_center_right = &_windows[window_count++];
+    struct VirtualWindow* window_center_right = &_windows[window_count++];
     window_center_right->buffer = sprite_buffer;
     window_center_right->has_border = true;
     window_manager_window_align_right_screen(window_center_right);
     window_manager_window_center_screen_y(window_center_right);
 
-    struct VirtualWindow2* window_bottom_left = &_windows[window_count++];
+    struct VirtualWindow* window_bottom_left = &_windows[window_count++];
     window_bottom_left->buffer = sprite_buffer;
     window_bottom_left->has_border = true;
     window_manager_window_align_left_screen(window_bottom_left);
     window_manager_window_align_bottom_screen(window_bottom_left);
 
-    struct VirtualWindow2* window_bottom_center = &_windows[window_count++];
+    struct VirtualWindow* window_bottom_center = &_windows[window_count++];
     window_bottom_center->buffer = sprite_buffer;
     window_bottom_center->has_border = true;
     window_manager_window_center_screen_x(window_bottom_center);
     window_manager_window_align_bottom_screen(window_bottom_center);
 
-    struct VirtualWindow2* window_bottom_right = &_windows[window_count++];
+    struct VirtualWindow* window_bottom_right = &_windows[window_count++];
     window_bottom_right->buffer = sprite_buffer;
     window_bottom_right->has_border = true;
     window_manager_window_align_right_screen(window_bottom_right);

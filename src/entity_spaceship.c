@@ -21,7 +21,7 @@ void entity_spaceship_fire(KeyboardKey key) {
   log_info("Entity spaceship fire event.");
   EntityId entity_id = entity_spaceship_get_entity_id();
   if (!sprite_component_is_active(entity_id)) return;
-  const struct VirtualWindow2* window = sprite_component_window_get(entity_id);
+  const struct VirtualWindow* window = sprite_component_window_get(entity_id);
   if (window == NULL) return;
   struct Vector spaceship_position = entity_system_get_coordinates(entity_id);
   struct Vector bullet_position = {
@@ -35,7 +35,7 @@ void entity_spaceship_fire(KeyboardKey key) {
 EntityId entity_spaceship_get_entity_id(void) {
   // TODO: Find a better solution
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    const struct VirtualWindow2* window = sprite_component_window_get(entity_id);
+    const struct VirtualWindow* window = sprite_component_window_get(entity_id);
     if (window == NULL) continue;
     if (!sprite_component_is_active(entity_id)) continue;
     if (strcmp(window->buffer->file_name, SPRITE_LOADER_FILE_NAME_SPACESHIP) == 0) {

@@ -8,17 +8,17 @@ enum BufferType {
 };
 
 
-static int _get_width(const struct VirtualWindow2* window) {
+static int _get_width(const struct VirtualWindow* window) {
   return sprite_buffer_get_width(window->buffer);
 }
 
 
-static int _get_height(const struct VirtualWindow2* window) {
+static int _get_height(const struct VirtualWindow* window) {
   return sprite_buffer_get_height(window->buffer);
 }
 
 
-void window_manager_window_init(struct VirtualWindow2* window) {
+void window_manager_window_init(struct VirtualWindow* window) {
   window->offset_x = 0;
   window->offset_y = 0;
   window->has_border = false;
@@ -29,7 +29,7 @@ void window_manager_window_init(struct VirtualWindow2* window) {
 }
 
 
-void window_manager_window_draw(struct VirtualWindow2* window) {
+void window_manager_window_draw(struct VirtualWindow* window) {
   int width = _get_width(window);
   int height = _get_height(window);
   for (int x = 0; x < width; x++) {
@@ -71,51 +71,51 @@ void window_manager_window_draw(struct VirtualWindow2* window) {
 }
 
 
-int window_manager_window_get_outer_offset_x(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_offset_x(const struct VirtualWindow* window) {
   return window->offset_x - 1;
 }
 
 
-int window_manager_window_get_outer_offset_y(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_offset_y(const struct VirtualWindow* window) {
   return window->offset_y - 1;
 }
 
 
-int window_manager_window_get_outer_width(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_width(const struct VirtualWindow* window) {
   return _get_width(window) + 2;
 }
 
 
-int window_manager_window_get_outer_height(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_height(const struct VirtualWindow* window) {
   return _get_height(window) + 2;
 }
 
 
-int window_manager_window_get_outer_left(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_left(const struct VirtualWindow* window) {
   int delta = window->has_border ? 1 : 0;
   return window->offset_x - delta;
 }
 
 
-int window_manager_window_get_outer_right(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_right(const struct VirtualWindow* window) {
   int delta = window->has_border ? 0 : 1;
   return window->offset_x + _get_width(window) - delta;
 }
 
 
-int window_manager_window_get_outer_top(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_top(const struct VirtualWindow* window) {
   int delta = window->has_border ? 1 : 0;
   return window->offset_y - delta;
 }
 
 
-int window_manager_window_get_outer_bottom(const struct VirtualWindow2* window) {
+int window_manager_window_get_outer_bottom(const struct VirtualWindow* window) {
   int delta = window->has_border ? 0 : 1;
   return window->offset_y + _get_height(window) - delta;
 }
 
 
-bool window_manager_window_is_inside_screen(const struct VirtualWindow2* window) {
+bool window_manager_window_is_inside_screen(const struct VirtualWindow* window) {
   if (window_manager_window_get_outer_left(window) >= virtual_screen_get_width()) {
     return false;
   } else if (window_manager_window_get_outer_right(window) < 0) {
@@ -129,20 +129,20 @@ bool window_manager_window_is_inside_screen(const struct VirtualWindow2* window)
 }
 
 
-bool window_manager_window_is_inside_relative(const struct VirtualWindow2* window, int x, int y) {
+bool window_manager_window_is_inside_relative(const struct VirtualWindow* window, int x, int y) {
   return 0 <= x && x < _get_width(window)
     && 0 <= y && y < _get_height(window);
 }
 
 
-bool window_manager_window_is_inside_absolute(const struct VirtualWindow2* window, int x, int y) {
+bool window_manager_window_is_inside_absolute(const struct VirtualWindow* window, int x, int y) {
   struct WindowVertex v = window_manager_vertex_get(window);
   return v.left <= x && x <= v.right
     && v.top <= y && y <= v.bottom;
 }
 
 
-bool window_manager_window_is_inside_window(const struct VirtualWindow2* window_contained, const struct VirtualWindow2* window_container) {
+bool window_manager_window_is_inside_window(const struct VirtualWindow* window_contained, const struct VirtualWindow* window_container) {
   struct WindowVertex contained_vertex = window_manager_vertex_get(window_contained);
   struct WindowVertex container_vertex = window_manager_vertex_get(window_container);
   return (
@@ -156,8 +156,8 @@ bool window_manager_window_is_inside_window(const struct VirtualWindow2* window_
 
 
 bool window_manager_window_is_inside_window_completely(
-  const struct VirtualWindow2* window_contained, 
-  const struct VirtualWindow2* window_container
+  const struct VirtualWindow* window_contained, 
+  const struct VirtualWindow* window_container
 ) {
   if (!window_manager_window_is_inside_absolute(
     window_container, 
@@ -183,37 +183,37 @@ bool window_manager_window_is_inside_window_completely(
 }
 
 
-void window_manager_window_center_screen_x(struct VirtualWindow2* window) {
+void window_manager_window_center_screen_x(struct VirtualWindow* window) {
   window->offset_x = virtual_screen_center_x() - _get_width(window) / 2;
 }
 
 
-void window_manager_window_center_screen_y(struct VirtualWindow2* window) {
+void window_manager_window_center_screen_y(struct VirtualWindow* window) {
   window->offset_y = virtual_screen_center_y() - _get_height(window) / 2;
 }
 
 
-void window_manager_window_align_top_screen(struct VirtualWindow2* window) {
+void window_manager_window_align_top_screen(struct VirtualWindow* window) {
   window->offset_y = window->has_border ? 1 : 0;
 }
 
 
-void window_manager_window_align_right_screen(struct VirtualWindow2* window) {
+void window_manager_window_align_right_screen(struct VirtualWindow* window) {
   window->offset_x = virtual_screen_get_width() - _get_width(window) - (window->has_border ? 1 : 0);
 }
 
 
-void window_manager_window_align_bottom_screen(struct VirtualWindow2* window) {
+void window_manager_window_align_bottom_screen(struct VirtualWindow* window) {
   window->offset_y = virtual_screen_get_height() - _get_height(window) - (window->has_border ? 1 : 0);
 }
 
 
-void window_manager_window_align_left_screen(struct VirtualWindow2* window) {
+void window_manager_window_align_left_screen(struct VirtualWindow* window) {
   window->offset_x = window->has_border ? 1 : 0;
 }
 
 
-struct WindowVertex window_manager_vertex_get(const struct VirtualWindow2* window) {
+struct WindowVertex window_manager_vertex_get(const struct VirtualWindow* window) {
   struct WindowVertex v = {
     .top = window->offset_y,
     .right = imax(window->offset_x + _get_width(window) - 1, 0),
@@ -224,7 +224,7 @@ struct WindowVertex window_manager_vertex_get(const struct VirtualWindow2* windo
 }
 
 
-void window_manager_cursor_show(struct VirtualWindow2* window, int x, int y) {
+void window_manager_cursor_show(struct VirtualWindow* window, int x, int y) {
   int absolute_x = window->offset_x + x;
   int absolute_y = window->offset_y + y;
   if (window_manager_window_is_inside_relative(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {
@@ -236,7 +236,7 @@ void window_manager_cursor_show(struct VirtualWindow2* window, int x, int y) {
 }
 
 
-void window_manager_cursor_blink(struct VirtualWindow2* window, int x, int y) {
+void window_manager_cursor_blink(struct VirtualWindow* window, int x, int y) {
   int absolute_x = window->offset_x + x;
   int absolute_y = window->offset_y + y;
   if (window_manager_window_is_inside_relative(window, x, y) && virtual_screen_is_inside(absolute_x, absolute_y)) {

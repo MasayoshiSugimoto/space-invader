@@ -58,12 +58,12 @@ void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!_is_active(i)) continue;
     struct SpriteComponentUnit sprite_component = sprite_component_get(i);
-    struct VirtualWindow2* window = sprite_component.window;
+    struct VirtualWindow* window = sprite_component.window;
     min_x = imin(min_x, window->offset_x);
     max_x = imax(max_x, window->offset_x + sprite_component.sprite_buffer->width);
   }
 
-  const struct VirtualWindow2* game_screen = game_screen_get();
+  const struct VirtualWindow* game_screen = game_screen_get();
   bool is_change_direction = false;
   if (_ai.direction == DIRECTION_RIGHT && max_x >= virtual_window_right_get(game_screen) - _ai.margin_from_border) {
     _ai.direction = DIRECTION_LEFT;

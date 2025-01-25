@@ -1,7 +1,7 @@
 #include "log_buffer_test.h"
 
 
-static struct VirtualWindow2 window;
+static struct VirtualWindow window;
 static struct SpriteBuffer sprite_buffer;
 static struct LogBuffer log_buffer;
 static int log_buffer_size = 1024 * 50;

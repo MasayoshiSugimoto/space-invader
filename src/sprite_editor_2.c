@@ -16,7 +16,7 @@ enum Mode {
 
 struct Widget {
   struct SpriteBuffer sprite_buffer;
-  struct VirtualWindow2 window;
+  struct VirtualWindow window;
   struct VirtualCursor2 cursor;
 };
 
