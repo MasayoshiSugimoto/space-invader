@@ -10,7 +10,7 @@
 #include "sprite.h"
 #include "color.h"
 #include "log.h"
-#include "window_manager.h"
+#include "virtual_pixel.h"
 
 
 bool virtual_screen_is_inside(int x, int y);
