@@ -106,13 +106,23 @@ void sprite_component_update(void) {
 
 
 void sprite_component_render(void) {
-  for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    if (!entity_system_is_active(entity_id)) continue;
-    if (!_sprite_component.active[entity_id]) continue;
-    struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
-    assert_f(window->buffer != NULL, "Attempt to draw null sprite buffer for entity id: %d", entity_id);
-    window_manager_window_draw_2(window);
-  }
+  uint8_t z_current = 0;
+  uint8_t z_next = 0;
+  do {
+    z_current = z_next;
+    z_next = UINT8_MAX;
+    for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+      if (!entity_system_is_active(entity_id)) continue;
+      if (!_sprite_component.active[entity_id]) continue;
+      struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
+      if (window->z == z_current) {
+        assert_f(window->buffer != NULL, "Attempt to draw null sprite buffer for entity id: %d", entity_id);
+        window_manager_window_draw_2(window);
+      } else if (window->z > z_current && window->z < z_next) {
+        z_next = window->z;
+      }
+    }
+  } while (z_next != UINT8_MAX);
 }
 
 
@@ -154,4 +164,10 @@ void sprite_component_position_set(EntityId entity_id, struct Vector v) {
 void sprite_component_sprite_buffer_set(EntityId entity_id, struct SpriteBuffer* sprite_buffer) {
   assert_entity_id(entity_id);
   _sprite_component.windows[entity_id].buffer = sprite_buffer;
+}
+
+
+void sprite_component_z_set(EntityId entity_id, uint8_t z) {
+  assert_entity_id(entity_id);
+  _sprite_component.windows[entity_id].z = z;
 }

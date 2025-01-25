@@ -33,6 +33,7 @@ void sprite_component_container_set(const struct VirtualWindow2* window);
 void sprite_component_position_move(EntityId entity_id, struct Vector dv);
 void sprite_component_position_set(EntityId entity_id, struct Vector v);
 void sprite_component_sprite_buffer_set(EntityId entity_id, struct SpriteBuffer* sprite_buffer);
+void sprite_component_z_set(EntityId entity_id, uint8_t z);
 
 
 #endif

@@ -62,6 +62,8 @@
         "entity_spaceship_test.h": "c",
         "recuring_frame_timer.h": "c",
         "animation_test.h": "c",
-        "entity_data.h": "c"
+        "entity_data.h": "c",
+        "array_virtual_window.h": "c",
+        "virtual_window_2.h": "c"
     }
 }

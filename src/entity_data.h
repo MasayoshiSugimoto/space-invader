@@ -15,6 +15,7 @@ struct EntityData {
   const char* sprite_file_name;
   bool is_basic_ai_active;
   const char* animation_name;
+  uint8_t z;
 };
 
 

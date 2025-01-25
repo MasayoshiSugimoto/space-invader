@@ -9,6 +9,15 @@ static const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN,
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = false,
+        .z = 1
+    },
+    {
+        .coordinates = {6, 4}, 
+        .sprite_id = SPRITE_ID_ALIEN,
+        .active = true,
+        .faction_id = FACTION_ID_ALIEN,
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = false,
         .animation_name = ANIMATION_NAME_EXPLOSION
     },
     {

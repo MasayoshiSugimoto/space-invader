@@ -10,20 +10,12 @@
 #include "virtual_pixel.h"
 #include "sprite_buffer.h"
 #include "cursor.h"
+#include "virtual_window_2.h"
+#include "array_virtual_window.h"
 
 
 #define WINDOW_MANAGER_WIDTH_MAX 800
 #define WINDOW_MANAGER_HEIGHT_MAX 600
-
-
-struct VirtualWindow2 {
-  int offset_x;
-  int offset_y;
-  bool has_border;
-  bool is_transparent;
-  struct SpriteBuffer* buffer;
-  const struct VirtualWindow2* container;
-};
 
 
 // Structure containing the vertices of a window. All vertices are inside the window.

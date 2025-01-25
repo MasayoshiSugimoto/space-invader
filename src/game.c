@@ -22,6 +22,7 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     sprite_unit.active = entity_data_ptr->active;
     sprite_unit.sprite_buffer = sprite_loader_sprite_get(entity_data_ptr->sprite_file_name);
     sprite_component_set(&sprite_unit);
+    sprite_component_z_set(entity_id, entity_data_ptr->z);
 
     faction_component_set(entity_id, entity_data_ptr->faction_id);
 

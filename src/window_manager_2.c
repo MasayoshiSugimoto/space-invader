@@ -25,6 +25,7 @@ void window_manager_window_2_init(struct VirtualWindow2* window) {
   window->is_transparent = false;
   window->buffer = NULL;
   window->container = NULL;
+  window->z = 0;
 }
 
 
@@ -40,9 +41,9 @@ void window_manager_window_draw_2(struct VirtualWindow2* window) {
       }
       struct VirtualPixel pixel = sprite_buffer_get(window->buffer, x, y);
       if (pixel.character == 0) continue;
-      if (!window->is_transparent ) {
+      if (!window->is_transparent) {
         virtual_screen_set_char_and_color(x_abs, y_abs, pixel.character, pixel.color_pair_id);
-      } else if (window->is_transparent && pixel.character != ' ') {
+      } else if (window->is_transparent && pixel.character != 0) {
         virtual_screen_set_char_and_color(x_abs, y_abs, pixel.character, pixel.color_pair_id);
       } 
     }
