@@ -2,8 +2,8 @@
 
 
 static const struct EntityData _entity_datas[] = {
-  {{10, 3}, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER, SPRITE_LOADER_FILE_NAME_SPACESHIP, false},
-  {{0, 0}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN, true},
+  {{12, 5}, SPRITE_ID_SPACESHIP, true, FACTION_ID_PLAYER, SPRITE_LOADER_FILE_NAME_SPACESHIP, false},
+  {{2, 1}, SPRITE_ID_ALIEN, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN, true},
 };
 static int _screen_width = 25;
 static int _screen_height = 10;

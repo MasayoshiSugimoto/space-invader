@@ -70,8 +70,9 @@ void collision_manager_update(void) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     _is_collisions[i] = false;
     if (!_is_active_entity(i)) continue;
-    struct Vector v = entity_system_get_coordinates(i);
-    const struct SpriteBuffer* sprite = sprite_component_get(i).sprite_buffer;
+    const struct VirtualWindow2* window = sprite_component_window_get(i);
+    struct Vector v = {window->offset_x, window->offset_y};
+    const struct SpriteBuffer* sprite = window->buffer;
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
         buffer[_collision_buffer_index(v.x + dx, v.y + dy)] |= faction_component_faction_id_get(i);
@@ -81,8 +82,9 @@ void collision_manager_update(void) {
   // Iterate over all entities and compare their sprite buffer with the collision buffer.
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!_is_active_entity(i)) continue;
-    const struct SpriteBuffer* sprite = sprite_component_get(i).sprite_buffer;
-    struct Vector v = entity_system_get_coordinates(i);
+    const struct VirtualWindow2* window = sprite_component_window_get(i);
+    const struct SpriteBuffer* sprite = window->buffer;
+    struct Vector v = {window->offset_x, window->offset_y};
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
         if (buffer[_collision_buffer_index(v.x + dx, v.y + dy)] != faction_component_faction_id_get(i)) {

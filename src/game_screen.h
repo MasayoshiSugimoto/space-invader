@@ -4,12 +4,14 @@
 
 #include "window_manager_2.h"
 #include "sprite_component.h"
+#include "rectangle.h"
 
 
 void game_screen_init(int width, int height);
 void game_screen_release(void);
 const struct VirtualWindow2* game_screen_get(void);
 void game_screen_render(void);
+struct Rectangle game_screen_rectangle_get(void);
 
 
 #endif

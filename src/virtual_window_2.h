@@ -4,6 +4,8 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "sprite_buffer.h"
+#include "rectangle.h"
 
 
 struct VirtualWindow2 {
@@ -15,6 +17,13 @@ struct VirtualWindow2 {
   const struct VirtualWindow2* container;
   uint8_t z;
 };
+
+
+int virtual_window_top_get(const struct VirtualWindow2* window);
+int virtual_window_right_get(const struct VirtualWindow2* window);
+int virtual_window_bottom_get(const struct VirtualWindow2* window);
+int virtual_window_left_get(const struct VirtualWindow2* window);
+struct Rectangle virtual_window_as_rectangle(const struct VirtualWindow2* window);
 
 
 #endif
