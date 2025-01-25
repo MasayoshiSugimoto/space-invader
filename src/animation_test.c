@@ -103,7 +103,7 @@ static enum MainSystemModeStatus _system_update(void) {
         // Exit when the alien is out of the screen.
         if (
             strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_ALIEN) == 0
-            && !window_manager_window_is_inside_window_2(sprite_component_window_get(entity_id), game_screen_get())
+            && !window_manager_window_is_inside_window(sprite_component_window_get(entity_id), game_screen_get())
         ) {
             return MAIN_SYSTEM_MODE_DONE;
         }

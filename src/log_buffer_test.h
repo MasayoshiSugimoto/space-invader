@@ -3,7 +3,7 @@
 
 
 #include "cursor.h"
-#include "window_manager_2.h"
+#include "window_manager.h"
 #include "sprite_buffer.h"
 #include "event.h"
 #include "log_buffer.h"

@@ -11,7 +11,7 @@
 #include "sprite_loader.h"
 #include "recuring_frame_timer.h"
 #include "game_screen.h"
-#include "window_manager_2.h"
+#include "window_manager.h"
 
 
 void bullet_component_init(void);

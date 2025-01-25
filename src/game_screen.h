@@ -2,7 +2,7 @@
 #define GAME_SCREEN_H
 
 
-#include "window_manager_2.h"
+#include "window_manager.h"
 #include "sprite_component.h"
 #include "rectangle.h"
 

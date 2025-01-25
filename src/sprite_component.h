@@ -4,7 +4,7 @@
 
 #include "entity_system.h"
 #include "sprite_buffer.h"
-#include "window_manager_2.h"
+#include "window_manager.h"
 #include "game_screen.h"
 
 

@@ -21,7 +21,7 @@ static void _add_random_line(struct SpriteBuffer* sprite_buffer, int length) {
 
 void log_buffer_test(void) {
     log_info("TEST: log_buffer_test");
-    window_manager_window_2_init(&window);
+    window_manager_window_init(&window);
     sprite_buffer_allocate(&sprite_buffer, virtual_screen_get_width(), virtual_screen_get_height());
     window.buffer = &sprite_buffer;
     log_buffer_init(&log_buffer);
@@ -44,7 +44,7 @@ void log_buffer_test(void) {
             t = dt;
         }
 
-        window_manager_window_draw_2(&window);
+        window_manager_window_draw(&window);
 
         virtual_screen_render();
         event_on_render_end();

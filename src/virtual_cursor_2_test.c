@@ -82,7 +82,7 @@ void virtual_cursor_2_test() {
     virtual_cursor_2_new_line(&cursor_3);
 
     struct VirtualWindow2 window0;
-    window_manager_window_2_init(&window0);
+    window_manager_window_init(&window0);
     window0.buffer = &sprite_buffer_0;
 
     int margin = 2;
@@ -91,7 +91,7 @@ void virtual_cursor_2_test() {
     int offset_x = border;
     
     struct VirtualWindow2 window1;
-    window_manager_window_2_init(&window1);
+    window_manager_window_init(&window1);
     window1.has_border = true;
     window1.buffer = &sprite_buffer_1;
     window1.offset_x = offset_x;
@@ -100,7 +100,7 @@ void virtual_cursor_2_test() {
     offset_x += border + margin + width;
 
     struct VirtualWindow2 window2;
-    window_manager_window_2_init(&window2);
+    window_manager_window_init(&window2);
     window2.has_border = true;
     window2.buffer = &sprite_buffer_2;
     window2.offset_x = offset_x;
@@ -109,7 +109,7 @@ void virtual_cursor_2_test() {
     offset_x += border + margin + width;
 
     struct VirtualWindow2 window3;
-    window_manager_window_2_init(&window3);
+    window_manager_window_init(&window3);
     window3.has_border = true;
     window3.buffer = &sprite_buffer_3;
     window3.offset_x = offset_x;
@@ -118,10 +118,10 @@ void virtual_cursor_2_test() {
     event_on_frame_start();
     event_on_render_start();
 
-    window_manager_window_draw_2(&window0);
-    window_manager_window_draw_2(&window1);
-    window_manager_window_draw_2(&window2);
-    window_manager_window_draw_2(&window3);
+    window_manager_window_draw(&window0);
+    window_manager_window_draw(&window1);
+    window_manager_window_draw(&window2);
+    window_manager_window_draw(&window3);
 
     virtual_screen_render();
     event_on_render_end();

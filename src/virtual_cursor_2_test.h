@@ -3,7 +3,7 @@
 
 
 #include "virtual_cursor_2.h"
-#include "window_manager_2.h"
+#include "window_manager.h"
 #include "event.h"
 
 

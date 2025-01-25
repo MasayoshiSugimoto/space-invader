@@ -84,7 +84,7 @@ static void window_manager_test_random() {
         dx[i] = (rand() % 5) - 2;
         dy[i] = (rand() % 5) - 2;
         struct VirtualWindow2* window = &_windows[i];
-        window_manager_window_2_init(window);
+        window_manager_window_init(window);
         window->buffer = sprite_buffer;
         window->has_border = true;
         _set_random_position(window);
@@ -107,16 +107,16 @@ static void window_manager_test_random() {
                 window->offset_x += dx[i];
                 window->offset_y += dy[i];
             }
-            window_manager_window_draw_2(window);
-            if (!window_manager_window_is_inside_screen_2(window)) {
+            window_manager_window_draw(window);
+            if (!window_manager_window_is_inside_screen(window)) {
                 _set_random_position(window);
             }
         }
 
         struct VirtualWindow2* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
-        window_manager_window_2_init(forefront_window);
+        window_manager_window_init(forefront_window);
         forefront_window->buffer = forefront_sprite_buffer;
-        window_manager_window_draw_2(forefront_window);
+        window_manager_window_draw(forefront_window);
 
         if (t != dt) {
             t = dt;
@@ -143,7 +143,7 @@ static void window_manager_test_alignment() {
     _print_ln(forefront_sprite_buffer, "Testing different window alignment relative to the screen.");
 
     struct VirtualWindow2* forefront_window = &_windows[WINDOW_MANAGER_TEST_FOREFRONT_INDEX];
-    window_manager_window_2_init(forefront_window);
+    window_manager_window_init(forefront_window);
     forefront_window->buffer = forefront_sprite_buffer;
 
     int width = 10;
@@ -157,65 +157,65 @@ static void window_manager_test_alignment() {
     struct VirtualWindow2* window_top_left = &_windows[window_count++];
     window_top_left->buffer = sprite_buffer;
     window_top_left->has_border = true;
-    window_manager_window_align_left_screen_2(window_top_left);
-    window_manager_window_align_top_screen_2(window_top_left);
+    window_manager_window_align_left_screen(window_top_left);
+    window_manager_window_align_top_screen(window_top_left);
 
     struct VirtualWindow2* window_top_center = &_windows[window_count++];
     window_top_center->buffer = sprite_buffer;
     window_top_center->has_border = true;
-    window_manager_window_center_screen_x_2(window_top_center);
-    window_manager_window_align_top_screen_2(window_top_center);
+    window_manager_window_center_screen_x(window_top_center);
+    window_manager_window_align_top_screen(window_top_center);
 
     struct VirtualWindow2* window_top_right = &_windows[window_count++];
     window_top_right->buffer = sprite_buffer;
     window_top_right->has_border = true;
-    window_manager_window_align_right_screen_2(window_top_right);
-    window_manager_window_align_top_screen_2(window_top_right);
+    window_manager_window_align_right_screen(window_top_right);
+    window_manager_window_align_top_screen(window_top_right);
 
     struct VirtualWindow2* window_center_left = &_windows[window_count++];
     window_center_left->buffer = sprite_buffer;
     window_center_left->has_border = true;
-    window_manager_window_align_left_screen_2(window_center_left);
-    window_manager_window_center_screen_y_2(window_center_left);
+    window_manager_window_align_left_screen(window_center_left);
+    window_manager_window_center_screen_y(window_center_left);
 
     struct VirtualWindow2* window_center_center = &_windows[window_count++];
     window_center_center->buffer = sprite_buffer;
     window_center_center->has_border = true;
-    window_manager_window_center_screen_x_2(window_center_center);
-    window_manager_window_center_screen_y_2(window_center_center);
+    window_manager_window_center_screen_x(window_center_center);
+    window_manager_window_center_screen_y(window_center_center);
 
     struct VirtualWindow2* window_center_right = &_windows[window_count++];
     window_center_right->buffer = sprite_buffer;
     window_center_right->has_border = true;
-    window_manager_window_align_right_screen_2(window_center_right);
-    window_manager_window_center_screen_y_2(window_center_right);
+    window_manager_window_align_right_screen(window_center_right);
+    window_manager_window_center_screen_y(window_center_right);
 
     struct VirtualWindow2* window_bottom_left = &_windows[window_count++];
     window_bottom_left->buffer = sprite_buffer;
     window_bottom_left->has_border = true;
-    window_manager_window_align_left_screen_2(window_bottom_left);
-    window_manager_window_align_bottom_screen_2(window_bottom_left);
+    window_manager_window_align_left_screen(window_bottom_left);
+    window_manager_window_align_bottom_screen(window_bottom_left);
 
     struct VirtualWindow2* window_bottom_center = &_windows[window_count++];
     window_bottom_center->buffer = sprite_buffer;
     window_bottom_center->has_border = true;
-    window_manager_window_center_screen_x_2(window_bottom_center);
-    window_manager_window_align_bottom_screen_2(window_bottom_center);
+    window_manager_window_center_screen_x(window_bottom_center);
+    window_manager_window_align_bottom_screen(window_bottom_center);
 
     struct VirtualWindow2* window_bottom_right = &_windows[window_count++];
     window_bottom_right->buffer = sprite_buffer;
     window_bottom_right->has_border = true;
-    window_manager_window_align_right_screen_2(window_bottom_right);
-    window_manager_window_align_bottom_screen_2(window_bottom_right);
+    window_manager_window_align_right_screen(window_bottom_right);
+    window_manager_window_align_bottom_screen(window_bottom_right);
 
     event_on_frame_start();
     event_on_render_start();
 
     for (int i = 0; i < window_count; i++) {
-        window_manager_window_draw_2(&_windows[i]);
+        window_manager_window_draw(&_windows[i]);
     }
 
-    window_manager_window_draw_2(forefront_window);
+    window_manager_window_draw(forefront_window);
 
     virtual_screen_render();
     event_on_render_end();

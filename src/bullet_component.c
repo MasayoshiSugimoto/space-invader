@@ -73,7 +73,7 @@ void bullet_component_update(void) {
     if (!sprite_component_is_active(bullet->entity_id)) continue;
     const struct VirtualWindow2* window = sprite_component_window_get(bullet->entity_id);
     if (window == NULL) continue;
-    if (window_manager_window_is_inside_window_2(window, game_screen)) continue;
+    if (window_manager_window_is_inside_window(window, game_screen)) continue;
     _bullet_components[i].active = false;
     sprite_component_disable(bullet->entity_id);
   }

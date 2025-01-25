@@ -54,12 +54,12 @@ void _state_update(void) {
     case STATE_CREDITS_FADE_IN:
     case STATE_CREDITS_DISPLAY:
     case STATE_CREDITS_FADE_OUT:
-      window_manager_window_draw_2(&_windows[WINDOW_ID_CREDITS]);
+      window_manager_window_draw(&_windows[WINDOW_ID_CREDITS]);
       break;
     case STATE_TITLE_FADE_IN:
     case STATE_TITLE_DISPLAY:
     case STATE_TITLE_FADE_OUT:
-      window_manager_window_draw_2(&_windows[WINDOW_ID_TITLE]);
+      window_manager_window_draw(&_windows[WINDOW_ID_TITLE]);
       break;
     case STATE_DONE:
       break;
@@ -91,14 +91,14 @@ void start_screen_init(void) {
   sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_TITLE);
   for (int i = 0; i < WINDOW_ID_TITLE; i++) {
     struct VirtualWindow2* window = &_windows[i];
-    window_manager_window_2_init(window);
+    window_manager_window_init(window);
   }
   _windows[WINDOW_ID_CREDITS].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_CREDITS);
   _windows[WINDOW_ID_TITLE].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_TITLE);
-  window_manager_window_center_screen_x_2(&_windows[WINDOW_ID_CREDITS]);
-  window_manager_window_center_screen_y_2(&_windows[WINDOW_ID_CREDITS]);
-  window_manager_window_center_screen_x_2(&_windows[WINDOW_ID_TITLE]);
-  window_manager_window_center_screen_y_2(&_windows[WINDOW_ID_TITLE]);
+  window_manager_window_center_screen_x(&_windows[WINDOW_ID_CREDITS]);
+  window_manager_window_center_screen_y(&_windows[WINDOW_ID_CREDITS]);
+  window_manager_window_center_screen_x(&_windows[WINDOW_ID_TITLE]);
+  window_manager_window_center_screen_y(&_windows[WINDOW_ID_TITLE]);
   color_color_set_default();
 
   _fade_in_title_start();

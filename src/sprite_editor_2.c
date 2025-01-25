@@ -42,7 +42,7 @@ static void _widget_init(struct Widget* widget, int width, int height) {
   sprite_buffer_allocate(&widget->sprite_buffer, width, height);
   sprite_buffer_clear(&widget->sprite_buffer);
   virtual_cursor_2_init(&widget->cursor, &widget->sprite_buffer);
-  window_manager_window_2_init(&widget->window);
+  window_manager_window_init(&widget->window);
   widget->window.buffer = &widget->sprite_buffer;
 }
 
@@ -198,9 +198,9 @@ static enum MainSystemModeStatus _system_update(void) {
 
 static void _render(void) {
   log_buffer_draw_to_sprite_buffer(&_log_buffer, &_widget_log.sprite_buffer);
-  window_manager_window_draw_2(&_widget_edit.window);
-  window_manager_window_draw_2(&_widget_log.window);
-  window_manager_window_draw_2(&_widget_palette.window);
+  window_manager_window_draw(&_widget_edit.window);
+  window_manager_window_draw(&_widget_log.window);
+  window_manager_window_draw(&_widget_palette.window);
   virtual_screen_render();
   window_manager_cursor_show(&_widget_edit.window, _widget_edit.cursor.x, _widget_edit.cursor.y);
 }

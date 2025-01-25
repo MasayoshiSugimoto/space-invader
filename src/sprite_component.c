@@ -27,7 +27,7 @@ void sprite_component_init() {
   for (int i = 0; i < ENTITY_MAX; i++) {
     _sprite_component.sprite_id[i] = SPRITE_ID_NONE;
     _sprite_component.active[i] = false;
-    window_manager_window_2_init(&_sprite_component.windows[i]);
+    window_manager_window_init(&_sprite_component.windows[i]);
   }
 }
 
@@ -124,7 +124,7 @@ void sprite_component_render(void) {
       struct VirtualWindow2* window = &_sprite_component.windows[entity_id];
       if (window->z == z_current) {
         assert_f(window->buffer != NULL, "Attempt to draw null sprite buffer for entity id: %d", entity_id);
-        window_manager_window_draw_2(window);
+        window_manager_window_draw(window);
       } else if (window->z > z_current && window->z < z_next) {
         z_next = window->z;
       }
