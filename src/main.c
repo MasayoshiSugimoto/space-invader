@@ -1,4 +1,5 @@
 #include <time.h>
+#include <stdlib.h>
 #include "consts.h"
 #include "game.h"
 #include "color.h"
@@ -14,6 +15,8 @@
 
 
 int main() {
+  atexit(event_on_program_shutdown);
+
   #if TEST_MODE_ENABLE
     test_suite_run();
   #endif
@@ -24,7 +27,7 @@ int main() {
   while (true) {
     event_on_frame_start();
     if (main_system_mode != main_system_mode_get()) {
-      // if (main_system_mode != NULL) event_on_system_release();
+      if (main_system_mode != NULL) event_on_system_release();
       event_on_system_start();
       main_system_mode = main_system_mode_get();
       main_system_mode->init();

@@ -24,6 +24,11 @@ void game_screen_release(void) {
 }
 
 
+void game_screen_clear(void) {
+    sprite_buffer_clear(&_buffer);
+}
+
+
 const struct VirtualWindow* game_screen_get(void) {
     return &_window;
 }

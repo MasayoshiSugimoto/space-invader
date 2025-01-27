@@ -6,7 +6,6 @@ static const bool _trace = true;
 
 static struct SpriteComponent {
   bool active[ENTITY_MAX];
-  enum SpriteId sprite_id[ENTITY_MAX];
   struct VirtualWindow windows[ENTITY_MAX];
   const struct VirtualWindow* container;
 } _sprite_component;
@@ -25,7 +24,6 @@ void _update_window_offset(EntityId entity_id) {
 void sprite_component_init() {
   log_info("Initializing sprite component.");
   for (int i = 0; i < ENTITY_MAX; i++) {
-    _sprite_component.sprite_id[i] = SPRITE_ID_NONE;
     _sprite_component.active[i] = false;
     window_manager_window_init(&_sprite_component.windows[i]);
   }
@@ -36,14 +34,7 @@ void sprite_component_setup(EntityId entity_id, struct SpriteBuffer* sprite_buff
   if (_trace) log_info_f("Setting entity id: entity_id=%ld", entity_id);
   assert_entity_id(entity_id);
   _sprite_component.active[entity_id] = true;
-  _sprite_component.sprite_id[entity_id] = SPRITE_ID_NONE;
   _sprite_component.windows[entity_id].buffer = sprite_buffer;
-}
-
-
-enum SpriteId sprite_component_get_sprite_id(EntityId entity_id) {
-  assert_entity_id(entity_id);
-  return _sprite_component.sprite_id[entity_id];
 }
 
 
@@ -67,7 +58,6 @@ struct SpriteComponentUnit sprite_component_get(EntityId entity_id) {
   struct SpriteComponentUnit unit = {
     .entity_id = entity_id,
     .active = _sprite_component.active[entity_id],
-    .sprite_id = _sprite_component.sprite_id[entity_id],
     .sprite_buffer = _sprite_component.windows[entity_id].buffer,
     .window = &_sprite_component.windows[entity_id]
   };
@@ -79,7 +69,6 @@ void sprite_component_set(const struct SpriteComponentUnit* unit) {
   if (_trace) log_info_f("Set component unit: entity_id=%ld", unit->entity_id);
   assert_entity_id(unit->entity_id);
   _sprite_component.active[unit->entity_id] = unit->active;
-  _sprite_component.sprite_id[unit->entity_id] = unit->sprite_id;
   _sprite_component.windows[unit->entity_id].buffer = unit->sprite_buffer;
   _sprite_component.windows[unit->entity_id].is_transparent = true;
 }

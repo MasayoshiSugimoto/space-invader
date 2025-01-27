@@ -70,6 +70,14 @@ void virtual_screen_reset(void) {
 }
 
 
+void virtual_screen_clear(void) {
+  for (int i = 0; i < screen_buffer_length(); i++) {
+    _virtual_screen.screen[i].character = ' ';
+    _virtual_screen.screen[i].color_pair_id = COLOR_COLOR_PAIR_ID_DEFAULT;
+  }
+}
+
+
 void virtual_screen_set_char(int x, int y, const chtype ch) {
   if (virtual_screen_is_inside(x, y)) {
     _virtual_screen.screen[screen_index(x, y)].character = ch;

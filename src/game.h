@@ -5,7 +5,6 @@
 #include "cursor.h"
 #include "entity_system.h"
 #include "consts.h"
-#include "sprite.h"
 #include "enemy_ai_basic_component.h"
 #include "bullet_component.h"
 #include "collision_manager.h"

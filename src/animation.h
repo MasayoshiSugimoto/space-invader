@@ -3,7 +3,6 @@
 
 
 #include <stdbool.h>
-#include "sprite.h"
 #include "entity_system.h"
 #include "timer.h"
 #include "sprite_component.h"

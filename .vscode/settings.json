@@ -64,6 +64,7 @@
         "animation_test.h": "c",
         "entity_data.h": "c",
         "array_virtual_window.h": "c",
-        "virtual_window_2.h": "c"
+        "virtual_window_2.h": "c",
+        "faction_component.h": "c"
     }
 }

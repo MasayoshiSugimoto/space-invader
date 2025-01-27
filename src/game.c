@@ -18,7 +18,6 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     entity_system_set_coordinates(entity_id, entity_data_ptr->coordinates);
 
     struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
-    sprite_unit.sprite_id = entity_data_ptr->sprite_id;
     sprite_unit.active = entity_data_ptr->active;
     sprite_unit.sprite_buffer = sprite_loader_sprite_get(entity_data_ptr->sprite_file_name);
     sprite_component_set(&sprite_unit);

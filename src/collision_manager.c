@@ -17,6 +17,8 @@ bool _is_collisions[ENTITY_MAX];
 
 
 int _collision_buffer_index(int x, int y) {
+  assert(x < _width, "x too big");
+  assert(y < _height, "y too big");
   return y * _width + x;
 }
 
@@ -44,7 +46,7 @@ void collision_manager_init(void) {
 
 
 void collision_manager_allocate(int width, int height) {
-  _buffer = malloc(sizeof(_buffer[0]) * width * height);
+  _buffer = malloc(sizeof(*_buffer) * width * height);
   _width = width;
   _height = height;
 }
@@ -71,11 +73,12 @@ void collision_manager_update(void) {
     _is_collisions[i] = false;
     if (!_is_active_entity(i)) continue;
     const struct VirtualWindow* window = sprite_component_window_get(i);
-    struct Vector v = {window->offset_x, window->offset_y};
+    const struct VirtualWindow* game_window = game_screen_get();
+    struct Vector v = {window->offset_x - game_window->offset_x, window->offset_y - game_window->offset_y};
     const struct SpriteBuffer* sprite = window->buffer;
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
-        buffer[_collision_buffer_index(v.x + dx, v.y + dy)] |= faction_component_faction_id_get(i);
+        buffer[_collision_buffer_index(v.x + dx, v.y + dy)] |= (1 << faction_component_faction_id_get(i));
       }
     }
   }
@@ -83,11 +86,12 @@ void collision_manager_update(void) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     if (!_is_active_entity(i)) continue;
     const struct VirtualWindow* window = sprite_component_window_get(i);
+    const struct VirtualWindow* game_window = game_screen_get();
     const struct SpriteBuffer* sprite = window->buffer;
-    struct Vector v = {window->offset_x, window->offset_y};
+    struct Vector v = {window->offset_x - game_window->offset_x, window->offset_y - game_window->offset_y};
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
-        if (buffer[_collision_buffer_index(v.x + dx, v.y + dy)] != faction_component_faction_id_get(i)) {
+        if (buffer[_collision_buffer_index(v.x + dx, v.y + dy)] != (1 << faction_component_faction_id_get(i))) {
           _is_collisions[i] = true;
           break;
         }

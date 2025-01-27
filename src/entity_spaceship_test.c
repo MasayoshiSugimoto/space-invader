@@ -9,7 +9,6 @@ static const int _height = 20;
 static const struct EntityData _entity_datas[] = {
   {
     .coordinates = {8, 16}, 
-    .sprite_id = SPRITE_ID_SPACESHIP, 
     .active = true, 
     .faction_id = FACTION_ID_PLAYER, 
     .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 

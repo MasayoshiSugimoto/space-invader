@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "vector.h"
 #include "log.h"
-#include "sprite.h"
 
 
 #define ENTITY_MAX 100
