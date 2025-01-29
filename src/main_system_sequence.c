@@ -18,7 +18,9 @@ static void _init(void) {
 
 static void _release(void) {
     log_info("Releasing main system sequence.");
-    _main_systems[_main_systems_index]->release();
+    if (_main_systems_index < _main_systems_length) {
+        _main_systems[_main_systems_index]->release();
+    }
 }
 
 

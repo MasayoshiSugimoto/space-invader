@@ -5,6 +5,7 @@
 #define DEBUG_GAME_BOARD_SHOW_ALL false
 #define DEBUG_COLLISION_VISUALISATION_MODE true
 #define DEBUG_ENABLE_TEST false
+#define DEBUG_NO_SCREEN_OUTPUT false  // Needed to see the memory sanitizer output
 
 #define TEST_MODE_ENABLE false
 #define TEST_MODE_IS_SINGLE_TEST false

@@ -2,7 +2,12 @@
 
 
 void terminal_init(struct Terminal* terminal) {
-  getmaxyx(stdscr, terminal->height, terminal->width);
+  if (DEBUG_NO_SCREEN_OUTPUT) {
+    terminal->height = TERMINAL_MIN_HEIGHT;
+    terminal->width = TERMINAL_MIN_WIDTH;
+  } else {
+    getmaxyx(stdscr, terminal->height, terminal->width);
+  }
 }
 
 

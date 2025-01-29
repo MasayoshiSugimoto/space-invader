@@ -104,11 +104,13 @@ void virtual_screen_set_string(int x, int y, const char* string) {
 void virtual_screen_render(void) {
   for (int x = 0; x < _virtual_screen.width; x++) {
     for (int y = 0; y < _virtual_screen.height; y++) {
-      struct VirtualPixel* pixel = &_virtual_screen.screen[screen_index(x, y)];
-      int color_pair = COLOR_PAIR(pixel->color_pair_id);
-      attron(color_pair);
-      mvaddch(y, x, pixel->character);
-      attroff(color_pair);
+      if (!DEBUG_NO_SCREEN_OUTPUT) {
+        struct VirtualPixel* pixel = &_virtual_screen.screen[screen_index(x, y)];
+        int color_pair = COLOR_PAIR(pixel->color_pair_id);
+        attron(color_pair);
+        mvaddch(y, x, pixel->character);
+        attroff(color_pair);
+      }
     }
   }
   private_screen_clear();

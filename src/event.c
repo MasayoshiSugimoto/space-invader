@@ -4,15 +4,16 @@
 void event_on_program_start(void) {
     log_init();
     log_info("Executing program initialization sequence.");
-    initscr();
-    noecho();
-    cbreak();
-    nodelay(stdscr, true);
-    notimeout(stdscr, true);
-    keypad(stdscr, TRUE);
     srand(time(NULL));
-
-    color_init();
+    if (!DEBUG_NO_SCREEN_OUTPUT) {
+        initscr();
+        noecho();
+        cbreak();
+        nodelay(stdscr, true);
+        notimeout(stdscr, true);
+        keypad(stdscr, TRUE);
+        color_init();
+    }
 
     main_system_mode_set(&g_game_main_system_mode);
     // main_system_mode_set(&g_start_screen_main_system_mode);
@@ -66,6 +67,7 @@ void event_on_system_release(void) {
 
 void event_on_program_shutdown(void) {
     log_info("Executing program shutdown sequence.");
-    color_init();
-    endwin();  // End ncurses.
+    if (!DEBUG_NO_SCREEN_OUTPUT) {
+        endwin();  // End ncurses.
+    }
 }
