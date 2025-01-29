@@ -2,8 +2,20 @@
 
 
 static const struct EntityData _entity_datas[] = {
-  {{12, 5}, true, FACTION_ID_PLAYER, SPRITE_LOADER_FILE_NAME_SPACESHIP, false},
-  {{2, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN, true},
+    {
+        .coordinates = {12, 5},
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER,
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+        .is_basic_ai_active = false
+    },
+    {
+        .coordinates = {2, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN, 
+        .is_basic_ai_active = true
+    },
 };
 static int _screen_width = 25;
 static int _screen_height = 10;

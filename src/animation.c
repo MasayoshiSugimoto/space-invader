@@ -109,3 +109,17 @@ void animation_set(EntityId entity_id, const char* animation_name) {
   frame_timer_timer_init(&_animation_component.status[entity_id]._time_from_begin);
   frame_timer_start(&_animation_component.status[entity_id]._time_from_begin, DURATION_ONE_DAY);
 }
+
+
+bool animation_is_done(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  struct AnimationStatus* status = &_animation_component.status[entity_id];
+  Duration duration = 0;
+  const struct AnimationStep* step = status->animation->animation_begin;
+  while (step < status->animation->animation_end) {
+    duration += step->duration;
+    if (duration >= frame_timer_get_elapsed_time(&status->_time_from_begin)) break;
+    step++;
+  }
+  return step >= status->animation->animation_end;
+}

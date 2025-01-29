@@ -2,11 +2,13 @@
 #define ENTITY_DATA_H
 
 
+#include <stdint.h>
 #include "vector.h"
 #include "faction_component.h"
 
 
 struct EntityData {
+  uint16_t friendly_id;
   struct Vector coordinates;
   bool active;
   enum FactionId faction_id;

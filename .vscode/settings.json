@@ -65,6 +65,8 @@
         "entity_data.h": "c",
         "array_virtual_window.h": "c",
         "virtual_window_2.h": "c",
-        "faction_component.h": "c"
+        "faction_component.h": "c",
+        "main_system_sequence.h": "c",
+        "stdint.h": "c"
     }
 }

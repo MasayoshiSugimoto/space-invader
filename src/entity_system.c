@@ -5,6 +5,7 @@ static struct EntitySystem {
   EntityId next_entity;
   bool active[ENTITY_MAX];
   struct Vector coordinates[ENTITY_MAX];
+  uint16_t friendly_ids[ENTITY_MAX];
 } _entity_system;
 
 
@@ -24,6 +25,7 @@ void entity_system_init(void) {
   for (int i = 0; i < ENTITY_MAX; i++) {
     _entity_system.active[i] = false;
     _entity_system.coordinates[i] = VZERO;
+    _entity_system.friendly_ids[i] = 0;
   }
 }
 
@@ -76,4 +78,24 @@ void entity_system_disable(EntityId entity_id) {
 bool entity_system_is_active(EntityId entity_id) {
   assert_entity_id(entity_id);
   return _entity_system.active[entity_id];
+}
+
+
+void entity_system_set_friendly_id(EntityId entity_id, uint16_t friendly_id) {
+  assert_entity_id(entity_id);
+  _entity_system.friendly_ids[entity_id] = friendly_id;
+}
+
+
+uint16_t entity_system_get_friendly_id(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  return _entity_system.friendly_ids[entity_id];
+}
+
+
+EntityId entity_system_get_by_friendly_id(uint16_t friendly_id) {
+  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+    if (_entity_system.friendly_ids[entity_id] == friendly_id) return entity_id;
+  }
+  return ENTITY_MAX;
 }

@@ -16,6 +16,7 @@ void animation_init(void);
 void animation_setup(void);
 void animation_update(void);
 void animation_set(EntityId entity_id, const char* animation_name);
+bool animation_is_done(EntityId entity_id);
 
 
 #endif

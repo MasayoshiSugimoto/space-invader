@@ -13,6 +13,7 @@
 #include "collision_manager_test.h"
 #include "entity_spaceship_test.h"
 #include "animation_test.h"
+#include "main_system_sequence.h"
 
 
 void event_on_program_start(void);

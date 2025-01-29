@@ -1,0 +1,63 @@
+#include "main_system_sequence.h"
+
+
+static struct MainSystemMode* _main_systems_test[] = {
+    &g_animation_test
+};
+static struct MainSystemMode** _main_systems = _main_systems_test;
+static uint16_t _main_systems_index = 0;
+static uint16_t _main_systems_length = 1;
+static bool _has_changed = false;
+
+
+static void _init(void) {
+    log_info("Initializing main system sequence.");
+    _main_systems[0]->init();
+}
+
+
+static void _release(void) {
+    log_info("Releasing main system sequence.");
+    _main_systems[_main_systems_index]->release();
+}
+
+
+static void _input_update(void) {
+    // We swap the systems here because this function is called first and is in the appropriate timing.
+    struct MainSystemMode* system = _main_systems[_main_systems_index];
+    if (_has_changed) {
+        event_on_system_release();
+        event_on_system_start();
+        _main_systems_index++;
+        system = _main_systems[_main_systems_index];
+        _has_changed = false;
+    }
+    system->input_update();
+}
+
+
+static enum MainSystemModeStatus _system_update(void) {
+    if (_main_systems[_main_systems_index]->system_update() == MAIN_SYSTEM_MODE_DONE) {
+        _main_systems_index++;
+        if (_main_systems_index >= _main_systems_length) {
+            return MAIN_SYSTEM_MODE_DONE;
+        }
+        _has_changed = true;
+    }
+    return MAIN_SYSTEM_MODE_RUNNING;
+}
+
+
+static void _render(void) {
+    _main_systems[_main_systems_index]->render();
+}
+
+
+struct MainSystemMode g_main_system_sequence = {
+    "MAIN_SYSTEM_SEQUENCE",
+    &_init,
+    &_release,
+    &_input_update,
+    &_system_update,
+    &_render
+};

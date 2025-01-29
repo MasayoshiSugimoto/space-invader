@@ -1,6 +1,12 @@
 #include "animation_test.h"
 
 
+enum FriendlyIdAnimation {
+    FRIENDLY_ID_NONE,
+    FRIENDLY_ID_FIRST_ANIMATION
+};
+
+
 static const struct EntityData _entity_datas[] = {
     {
         .coordinates = {6, 4}, 
@@ -11,6 +17,7 @@ static const struct EntityData _entity_datas[] = {
         .z = 1
     },
     {
+        .friendly_id = FRIENDLY_ID_FIRST_ANIMATION,
         .coordinates = {6, 4}, 
         .active = true,
         .faction_id = FACTION_ID_ALIEN,
@@ -84,25 +91,9 @@ static void _input_update(void) {
 
 static enum MainSystemModeStatus _system_update(void) {
     game_update();
-    for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-        struct SpriteComponentUnit sprite_component = sprite_component_get(entity_id);
-        if (sprite_component.sprite_buffer == NULL) continue;
-        if (
-            strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_SPACESHIP) != 0
-            && strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_ALIEN) != 0
-        ) continue;
-        if (collision_manager_is_collision(entity_id)) {
-            sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_red);
-        } else {
-            sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_white);
-        }
-        // Exit when the alien is out of the screen.
-        if (
-            strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_ALIEN) == 0
-            && !window_manager_window_is_inside_window(sprite_component_window_get(entity_id), game_screen_get())
-        ) {
-            return MAIN_SYSTEM_MODE_DONE;
-        }
+    EntityId entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_FIRST_ANIMATION);
+    if (entity_id != ENTITY_ID_INVALID && animation_is_done(entity_id)) {
+        return MAIN_SYSTEM_MODE_DONE;
     }
     return MAIN_SYSTEM_MODE_RUNNING;
 }

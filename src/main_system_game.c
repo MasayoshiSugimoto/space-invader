@@ -2,14 +2,54 @@
 
 
 const struct EntityData _entity_datas[] = {
-  {{37, 16}, true, FACTION_ID_PLAYER, SPRITE_LOADER_FILE_NAME_SPACESHIP},
-  {{10, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{17, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{24, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{31, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{38, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{45, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
-  {{52, 1}, true, FACTION_ID_ALIEN, SPRITE_LOADER_FILE_NAME_ALIEN},
+    {
+        .coordinates = {37, 16}, 
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP
+    },
+    {
+        .coordinates = {10, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {17, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {24, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {31, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {38, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {45, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
+    {
+        .coordinates = {52, 1}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+    },
 };
 
 

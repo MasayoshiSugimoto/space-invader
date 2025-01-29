@@ -2,12 +2,14 @@
 #define ENTITY_SYSTEM_H
 
 
+#include <stdint.h>
 #include <stdbool.h>
 #include "vector.h"
 #include "log.h"
 
 
 #define ENTITY_MAX 100
+#define ENTITY_ID_INVALID ENTITY_MAX
 
 
 #define assert_entity_id(entity_id) { \
@@ -32,6 +34,9 @@ void entity_system_set_coordinates(EntityId entity_id, struct Vector coordinates
 void entity_system_add_coordinates(EntityId entity_id, struct Vector delta);
 void entity_system_disable(EntityId entity_id);
 bool entity_system_is_active(EntityId entity_id);
+void entity_system_set_friendly_id(EntityId entity_id, uint16_t friendly_id);
+uint16_t entity_system_get_friendly_id(EntityId entity_id);
+EntityId entity_system_get_by_friendly_id(uint16_t friendly_id);
 
 
 #endif
