@@ -2,12 +2,13 @@
 
 
 static struct MainSystemMode* _main_systems_test[] = {
-    &g_animation_test
+    &g_animation_test,
+    &g_entity_spaceship_test
 };
 static struct MainSystemMode** _main_systems = _main_systems_test;
 static uint16_t _main_systems_index = 0;
-static uint16_t _main_systems_length = 1;
-static bool _has_changed = false;
+static uint16_t _main_systems_length = 2;
+static bool _increment = false;
 
 
 static void _init(void) {
@@ -27,24 +28,29 @@ static void _release(void) {
 static void _input_update(void) {
     // We swap the systems here because this function is called first and is in the appropriate timing.
     struct MainSystemMode* system = _main_systems[_main_systems_index];
-    if (_has_changed) {
+    if (_increment) {
+        system->release();
         event_on_system_release();
-        event_on_system_start();
         _main_systems_index++;
+        if (_main_systems_index >= _main_systems_length) {
+            _increment = false;
+            return;
+        }
+        event_on_system_start();
+        _main_systems[_main_systems_index]->init();
         system = _main_systems[_main_systems_index];
-        _has_changed = false;
+        _increment = false;
     }
     system->input_update();
 }
 
 
 static enum MainSystemModeStatus _system_update(void) {
+    if (_main_systems_index >= _main_systems_length) {
+        return MAIN_SYSTEM_MODE_DONE;
+    }
     if (_main_systems[_main_systems_index]->system_update() == MAIN_SYSTEM_MODE_DONE) {
-        _main_systems_index++;
-        if (_main_systems_index >= _main_systems_length) {
-            return MAIN_SYSTEM_MODE_DONE;
-        }
-        _has_changed = true;
+        _increment = true;
     }
     return MAIN_SYSTEM_MODE_RUNNING;
 }

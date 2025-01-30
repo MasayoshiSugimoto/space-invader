@@ -17,8 +17,8 @@ bool _is_collisions[ENTITY_MAX];
 
 
 int _collision_buffer_index(int x, int y) {
-  assert(x < _width, "x too big");
-  assert(y < _height, "y too big");
+  assert(0 <= x && x < _width, "x too big or negative");
+  assert(0 <= y && y < _height, "y too big or negative");
   return y * _width + x;
 }
 
@@ -78,7 +78,11 @@ void collision_manager_update(void) {
     const struct SpriteBuffer* sprite = window->buffer;
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
-        buffer[_collision_buffer_index(v.x + dx, v.y + dy)] |= (1 << faction_component_faction_id_get(i));
+        int x = v.x + dx;
+        int y = v.y + dy;
+        if (x < 0 || _width <= x) continue;
+        if (y < 0 || _height <= y) continue;
+        buffer[_collision_buffer_index(x, y)] |= (1 << faction_component_faction_id_get(i));
       }
     }
   }
@@ -91,7 +95,11 @@ void collision_manager_update(void) {
     struct Vector v = {window->offset_x - game_window->offset_x, window->offset_y - game_window->offset_y};
     for (int dy = 0; dy < sprite->height; dy++) {
       for (int dx = 0; dx < sprite->width; dx++) {
-        if (buffer[_collision_buffer_index(v.x + dx, v.y + dy)] != (1 << faction_component_faction_id_get(i))) {
+        int x = v.x + dx;
+        int y = v.y + dy;
+        if (x < 0 || _width <= x) continue;
+        if (y < 0 || _height <= y) continue;
+        if (buffer[_collision_buffer_index(x, y)] != (1 << faction_component_faction_id_get(i))) {
           _is_collisions[i] = true;
           break;
         }

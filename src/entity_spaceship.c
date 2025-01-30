@@ -25,7 +25,7 @@ void entity_spaceship_fire(KeyboardKey key) {
   if (window == NULL) return;
   struct Vector spaceship_position = entity_system_get_coordinates(entity_id);
   struct Vector bullet_position = {
-    spaceship_position.x + window->buffer->width / 2,
+    spaceship_position.x,
     spaceship_position.y
   };
   bullet_component_fire(bullet_position);

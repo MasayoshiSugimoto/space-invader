@@ -12,7 +12,10 @@ void recurring_frame_timer_set(struct RecuringFrameTimer* timer, void (*on_time_
 
 
 void recurring_frame_timer_update(struct RecuringFrameTimer* timer) {
-    int divisor = frame_timer_get_elapsed_time(&timer->timer) / timer->frequency;
+    int divisor = 
+        timer->frequency != 0
+        ? frame_timer_get_elapsed_time(&timer->timer) / timer->frequency
+        : 0;
     if (divisor != timer->divisor) {
         timer->on_time_out(timer->param);
         timer->divisor = divisor;
