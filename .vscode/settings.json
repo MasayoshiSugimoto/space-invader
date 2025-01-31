@@ -67,6 +67,9 @@
         "virtual_window_2.h": "c",
         "faction_component.h": "c",
         "main_system_sequence.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "arena.h": "c",
+        "stdio.h": "c",
+        "arena_test.h": "c"
     }
 }
