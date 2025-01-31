@@ -3,11 +3,13 @@
 
 static struct MainSystemMode* _main_systems_test[] = {
     &g_animation_test,
-    &g_entity_spaceship_test
+    &g_entity_spaceship_test,
+    &g_collision_manager_test,
+    &g_start_screen_main_system_mode
 };
 static struct MainSystemMode** _main_systems = _main_systems_test;
 static uint16_t _main_systems_index = 0;
-static uint16_t _main_systems_length = 2;
+static uint16_t _main_systems_length = array_size(_main_systems_test);
 static bool _increment = false;
 
 
