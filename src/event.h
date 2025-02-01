@@ -14,6 +14,7 @@
 #include "entity_spaceship_test.h"
 #include "animation_test.h"
 #include "main_system_sequence.h"
+#include "arena.h"
 
 
 void event_on_program_start(void);

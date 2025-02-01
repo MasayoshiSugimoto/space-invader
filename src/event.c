@@ -14,6 +14,7 @@ void event_on_program_start(void) {
         keypad(stdscr, TRUE);
         color_init();
     }
+    arena_frame_create();
 
     main_system_mode_set(&g_game_main_system_mode);
     // main_system_mode_set(&g_start_screen_main_system_mode);
@@ -21,7 +22,7 @@ void event_on_program_start(void) {
     // main_system_mode_set(&g_collision_manager_test);
     // main_system_mode_set(&g_entity_spaceship_test);
     // main_system_mode_set(&g_animation_test);
-    main_system_mode_set(&g_main_system_sequence);
+    // main_system_mode_set(&g_main_system_sequence);
 }
 
 
@@ -41,6 +42,7 @@ void event_on_system_start(void) {
 
 
 void event_on_frame_start(void) {
+    arena_frame_reset();
     terminal_check_minimum_size();
     frame_timer_on_frame_start();
 }
@@ -67,6 +69,7 @@ void event_on_system_release(void) {
 
 void event_on_program_shutdown(void) {
     log_info("Executing program shutdown sequence.");
+    arena_frame_release();
     if (!DEBUG_NO_SCREEN_OUTPUT) {
         endwin();  // End ncurses.
     }

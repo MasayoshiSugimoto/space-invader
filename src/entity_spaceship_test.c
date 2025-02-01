@@ -18,17 +18,17 @@ static const struct EntityData _entity_datas[] = {
 
 
 static void _move_left(void) {
-    entity_spaceship_move_left('a');
+    entity_spaceship_move_left();
 }
 
 
 static void _move_right(void) {
-    entity_spaceship_move_right('d');
+    entity_spaceship_move_right();
 }
 
 
 static void _fire(void) {
-    entity_spaceship_fire(' ');
+    entity_spaceship_fire();
 }
 
 static void (*_event_handlers[])(void) = {

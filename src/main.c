@@ -15,12 +15,11 @@
 
 
 int main() {
-  atexit(event_on_program_shutdown);
-
   #if TEST_MODE_ENABLE
     test_suite_run();
   #endif
 
+  atexit(event_on_program_shutdown);
   event_on_program_start();
   const struct MainSystemMode* main_system_mode = NULL;
 
@@ -42,7 +41,6 @@ int main() {
     event_on_render_end();
   }
 
-  event_on_program_shutdown();
   return 0;
 }
 

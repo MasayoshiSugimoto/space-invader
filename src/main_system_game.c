@@ -53,54 +53,63 @@ const struct EntityData _entity_datas[] = {
 };
 
 
+static void _move_left(KeyboardKey key) {
+    entity_spaceship_move_left();
+}
+
+
+static void _move_right(KeyboardKey key) {
+    entity_spaceship_move_right();
+}
+
+
+static void _fire(KeyboardKey key) {
+    entity_spaceship_fire();
+}
+
+
 static void _init(void) {
-    
+    log_info("Initializing main game system.");
+    sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
+    game_screen_init(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    game_init();
+    game_init_entities(_entity_datas, array_size(_entity_datas));
+
+    color_reset();
 }
 
 
 static void _release(void) {
     log_info("Releasing main game system.");
-    
+    game_screen_release();
 }
 
 
-void _space_ship_fire(KeyboardKey key) {
-    
-}
-
-
-void _space_ship_move_left(KeyboardKey key) {
-    
-}
-
-
-void _space_ship_move_right(KeyboardKey key) {
-    
-}
-
-
-// static struct InputMapping _input_mapping[] = {
-//   {KEY_LEFT, _space_ship_move_left},
-//   {KEY_RIGHT, _space_ship_move_right},
-//   {' ', _space_ship_fire},
-//   {'a', _space_ship_move_left},
-//   {'d', _space_ship_move_right},
-// };
+static struct InputMapping _input_mapping[] = {
+  {KEY_LEFT, _move_left},
+  {KEY_RIGHT, _move_right},
+  {' ', _fire},
+  {'a', _move_left},
+  {'d', _move_right},
+};
 
 
 static void _input_update(void) {
-   
+   input_process(_input_mapping, array_size(_input_mapping), input_get());
 }
 
 
 static enum MainSystemModeStatus _system_update(void) {
-    
+    game_update();
     return MAIN_SYSTEM_MODE_RUNNING;
 }
 
 
 static void _render(void) {
-    
+    window_manager_cursor_hide();
+    game_render();
+    virtual_screen_render();
 }
 
 

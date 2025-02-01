@@ -9,10 +9,10 @@
 #include "input.h"
 
 
-void entity_spaceship_fire(KeyboardKey key);
+void entity_spaceship_fire(void);
 EntityId entity_spaceship_get_entity_id(void);
-void entity_spaceship_move_left(KeyboardKey key);
-void entity_spaceship_move_right(KeyboardKey key);
+void entity_spaceship_move_left(void);
+void entity_spaceship_move_right(void);
 
 
 const struct InputMapping g_entity_spaceship_input_mapping[5];

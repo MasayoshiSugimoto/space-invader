@@ -17,7 +17,7 @@ void entity_spaceship_init(void) {
 }
 
 
-void entity_spaceship_fire(KeyboardKey key) {
+void entity_spaceship_fire(void) {
   log_info("Entity spaceship fire event.");
   EntityId entity_id = entity_spaceship_get_entity_id();
   if (!sprite_component_is_active(entity_id)) return;
@@ -46,7 +46,7 @@ EntityId entity_spaceship_get_entity_id(void) {
 }
 
 
-void entity_spaceship_move_left(KeyboardKey key) {
+void entity_spaceship_move_left(void) {
   log_info("Entity spaceship move left event.");
   struct Vector dv = {-1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
@@ -58,7 +58,7 @@ void entity_spaceship_move_left(KeyboardKey key) {
 }
 
 
-void entity_spaceship_move_right(KeyboardKey key) {
+void entity_spaceship_move_right(void) {
   log_info("Entity spaceship move right event.");
   struct Vector dv = {1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
