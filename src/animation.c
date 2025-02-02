@@ -67,17 +67,15 @@ void animation_init(void) {
 
 
 void animation_setup(void) {
-  _animations_steps[0].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EMPTY);
-  _animations_steps[0].duration = milliseconds_as_duration(400);
-  _animations_steps[1].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_3);
-  _animations_steps[1].duration = milliseconds_as_duration(400);
-  _animations_steps[2].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_2);
-  _animations_steps[2].duration = milliseconds_as_duration(400);
-  _animations_steps[3].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_1);
-  _animations_steps[3].duration = milliseconds_as_duration(400);
+  _animations_steps[0].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_3);
+  _animations_steps[0].duration = milliseconds_as_duration(100);
+  _animations_steps[1].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_2);
+  _animations_steps[1].duration = milliseconds_as_duration(100);
+  _animations_steps[2].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_1);
+  _animations_steps[2].duration = milliseconds_as_duration(100);
   _animations[0].animation_name = ANIMATION_NAME_EXPLOSION;
   _animations[0].animation_begin = &_animations_steps[0];
-  _animations[0].animation_end = &_animations_steps[4];
+  _animations[0].animation_end = &_animations_steps[3];
 }
 
 
@@ -97,12 +95,14 @@ void animation_update(void) {
     } else {
       // End of the animation. Disable sprite component.
       sprite_component_disable(entity_id);
+      _animation_component.active[entity_id] = false;
     }
   }
 }
 
 
 void animation_set(EntityId entity_id, const char* animation_name) {
+  log_info_f("Setting animation: entity_id=%zu, animation_name=%s", entity_id, animation_name);
   assert_entity_id(entity_id);
   _animation_component.active[entity_id] = true;
   _animation_component.status[entity_id].animation = _animation_get(animation_name);

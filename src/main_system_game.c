@@ -68,6 +68,17 @@ static void _fire(KeyboardKey key) {
 }
 
 
+static void _on_collision(EntityId entity_id) {
+    log_info_f("Entity collided: entity_id=%zu", entity_id);
+    collision_manager_deactivate(entity_id);
+    if (bullet_component_is_active(entity_id)) {
+        bullet_component_disable(entity_id);
+    } else {
+        animation_set(entity_id, ANIMATION_NAME_EXPLOSION);
+    }
+}
+
+
 static void _init(void) {
     log_info("Initializing main game system.");
     sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
@@ -75,6 +86,9 @@ static void _init(void) {
 
     game_init();
     game_init_entities(_entity_datas, array_size(_entity_datas));
+    for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
+        collision_manager_set_collision_handler(entity_id, _on_collision);
+    }
 
     color_reset();
 }

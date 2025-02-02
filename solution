@@ -1,0 +1,9 @@
+manual.o: src/manual.c src/manual.h src/log.h src/consts.h src/util.h
+
+src/manual.h:
+
+src/log.h:
+
+src/consts.h:
+
+src/util.h:

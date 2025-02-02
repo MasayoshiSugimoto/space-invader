@@ -8,6 +8,7 @@
 #include "keyboard.h"
 #include "entity_spaceship.h"
 #include "input.h"
+#include "bullet_component.h"
 
 
 struct MainSystemMode g_game_main_system_mode;

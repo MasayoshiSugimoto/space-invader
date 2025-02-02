@@ -13,12 +13,39 @@ struct BulletComponent _bullet_components[BULLET_SPACESHIP_BULLET_MAX];
 struct RecuringFrameTimer _timer;
 
 
-void _on_timer(void* param) {
+static void _on_timer(void* param) {
   struct Vector v = {0, -1};
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     if (!_bullet_components[i].active) continue;
     entity_system_add_coordinates(_bullet_components[i].entity_id, v);
   }
+}
+
+
+static void _deactivate(struct BulletComponent* bullet_component) {
+  log_info_f("Deactivate bullet component: entity_id = %zu", bullet_component->entity_id);
+  bullet_component->active = false;
+  sprite_component_disable(bullet_component->entity_id);
+  collision_manager_deactivate(bullet_component->entity_id);
+}
+
+
+static void _activate(struct BulletComponent* bullet_component) {
+  log_info_f("Activate bullet component: entity_id = %zu", bullet_component->entity_id);
+  bullet_component->active = true;
+  sprite_component_enable(bullet_component->entity_id);
+  collision_manager_activate(bullet_component->entity_id);
+}
+
+
+struct BulletComponent* _bullet_component_get(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
+    if (_bullet_components[i].entity_id == entity_id) {
+      return &_bullet_components[i];
+    }
+  }
+  return NULL;
 }
 
 
@@ -36,11 +63,11 @@ void bullet_component_setup(void) {
   log_info("Setting up bullet component.");
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     EntityId entity_id = entity_system_create_entity();
+    _bullet_components[i].active = false;
     _bullet_components[i].entity_id = entity_id;
     sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
-    sprite_component_disable(entity_id);
-    _bullet_components[i].active = false;
     faction_component_set(entity_id, FACTION_ID_PLAYER);
+    _deactivate(&_bullet_components[i]);
   }
 }
 
@@ -58,9 +85,8 @@ void bullet_component_fire(struct Vector bullet_position) {
     log_info("No remaining available bullet.");
     return;  // Already fired the max number of bullets.
   }
-  bullet->active = true;
+  _activate(bullet);
   entity_system_set_coordinates(bullet->entity_id, bullet_position);
-  sprite_component_enable(bullet->entity_id);
 }
 
 
@@ -70,12 +96,20 @@ void bullet_component_update(void) {
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     struct BulletComponent* bullet = &_bullet_components[i];
     if (!bullet->active) continue;
-    if (!sprite_component_is_active(bullet->entity_id)) continue;
+    if (!sprite_component_is_active(bullet->entity_id)) {
+      _deactivate(bullet);
+      continue;
+    }
     const struct VirtualWindow* window = sprite_component_window_get(bullet->entity_id);
-    if (window == NULL) continue;
-    if (window_manager_window_is_inside_window(window, game_screen)) continue;
-    _bullet_components[i].active = false;
-    sprite_component_disable(bullet->entity_id);
+    if (window == NULL) {
+      bullet_component_disable(bullet->entity_id);
+      _deactivate(bullet);
+      continue;
+    }
+    if (!window_manager_window_is_inside_window(window, game_screen)) {
+      _deactivate(bullet);
+      continue;
+    }
   }
 }
 
@@ -83,20 +117,28 @@ void bullet_component_update(void) {
 void bullet_component_cleanup(void) {
   for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
     EntityId entity_id = _bullet_components[i].entity_id;
+    log_info_f("Deactivate bullet component: entity_id = %zu", entity_id);
+    _bullet_components[i].active = false;
+    _bullet_components[i].entity_id = 0;
     entity_system_disable(entity_id);
     sprite_component_disable(entity_id);
     faction_component_disable(entity_id);
+    collision_manager_deactivate(entity_id);
   }
 }
 
 
 void bullet_component_disable(EntityId entity_id) {
   assert_entity_id(entity_id);
-  for (int i = 0; i < BULLET_SPACESHIP_BULLET_MAX; i++) {
-    if (_bullet_components->entity_id == entity_id) {
-      _bullet_components->active = false;
-      sprite_component_disable(entity_id);
-      break;
-    }
-  }
+  struct BulletComponent* bullet_component = _bullet_component_get(entity_id);
+  if (bullet_component == NULL) return;
+  _deactivate(bullet_component);
+}
+
+
+bool bullet_component_is_active(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  struct BulletComponent* bullet_component = _bullet_component_get(entity_id);
+  if (bullet_component == NULL) return false;
+  return bullet_component->active;
 }

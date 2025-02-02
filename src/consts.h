@@ -7,7 +7,7 @@
 #define DEBUG_NO_SCREEN_OUTPUT false  // Needed to see the memory sanitizer output
 
 #define TEST_MODE_ENABLE false
-#define TEST_MODE_IS_SINGLE_TEST true
+#define TEST_MODE_IS_SINGLE_TEST false
 
 #define TERMINAL_MIN_WIDTH 100
 #define TERMINAL_MIN_HEIGHT 30

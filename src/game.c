@@ -15,13 +15,16 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
   for (int i = 0; i < entity_datas_length; i++) {
     EntityId entity_id = entity_system_create_entity();
     const struct EntityData* entity_data_ptr = &entity_datas[i];
+    if (entity_data_ptr->active) {
+      entity_system_enable(entity_id);
+    } else {
+      entity_system_disable(entity_id);
+    }
     entity_system_set_coordinates(entity_id, entity_data_ptr->coordinates);
     entity_system_set_friendly_id(entity_id, entity_data_ptr->friendly_id);
 
-    struct SpriteComponentUnit sprite_unit = sprite_component_get(entity_id);
-    sprite_unit.active = entity_data_ptr->active;
-    sprite_unit.sprite_buffer = sprite_loader_sprite_get(entity_data_ptr->sprite_file_name);
-    sprite_component_set(&sprite_unit);
+    sprite_component_enable(entity_id);
+    sprite_component_sprite_buffer_set(entity_id, sprite_loader_sprite_get(entity_data_ptr->sprite_file_name));
     sprite_component_z_set(entity_id, entity_data_ptr->z);
 
     faction_component_set(entity_id, entity_data_ptr->faction_id);

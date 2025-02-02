@@ -1,29 +1,72 @@
 #include "collision_manager_test.h"
 
 
+enum FRIENDLY_ID {
+    NONE,
+    FRIENDLY_ID_SPACESHIP_1,
+    FRIENDLY_ID_SPACESHIP_2,
+    FRIENDLY_ID_SPACESHIP_3,
+    FRIENDLY_ID_SPACESHIP_4,
+    FRIENDLY_ID_SPACESHIP_5,
+    FRIENDLY_ID_ALIEN,
+    FRIENDLY_ID_MAX
+};
+
+
+static const int _screen_width = 25;
+static const int _screen_height = 10;
+static const struct Color BLACK = {0, 0, 0};
+static const struct Color RED = {255, 0, 0};
+static const struct Color WHITE = {255, 255, 255};
+static ColorPairId _color_pair_id_white;
+static ColorPairId _color_pair_id_red;
 static const struct EntityData _entity_datas[] = {
     {
         .coordinates = {12, 5},
         .active = true, 
         .faction_id = FACTION_ID_PLAYER,
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
-        .is_basic_ai_active = false
+        .is_basic_ai_active = false,
+        .friendly_id = FRIENDLY_ID_SPACESHIP_1,
     },
     {
         .coordinates = {2, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN, 
-        .is_basic_ai_active = true
+        .is_basic_ai_active = true,
+        .friendly_id = FRIENDLY_ID_ALIEN,
+    },
+    {
+        .coordinates = {0, 0}, 
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+        .friendly_id = FRIENDLY_ID_SPACESHIP_2,
+    },
+    {
+        .coordinates = {_screen_width, 0}, 
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+        .friendly_id = FRIENDLY_ID_SPACESHIP_3,
+    },
+    {
+        .coordinates = {_screen_width, _screen_height}, 
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+        .friendly_id = FRIENDLY_ID_SPACESHIP_4,
+    },
+    {
+        .coordinates = {0, _screen_height}, 
+        .active = true, 
+        .faction_id = FACTION_ID_PLAYER, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
+        .friendly_id = FRIENDLY_ID_SPACESHIP_5,
     },
 };
-static int _screen_width = 25;
-static int _screen_height = 10;
-static const struct Color BLACK = {0, 0, 0};
-static const struct Color RED = {255, 0, 0};
-static const struct Color WHITE = {255, 255, 255};
-static ColorPairId _color_pair_id_white;
-static ColorPairId _color_pair_id_red;
+
 
 
 static void _init(void) {
@@ -66,25 +109,36 @@ static void _input_update(void) {
 
 static enum MainSystemModeStatus _system_update(void) {
     game_update();
-    for (int entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-        struct SpriteComponentUnit sprite_component = sprite_component_get(entity_id);
-        if (sprite_component.sprite_buffer == NULL) continue;
-        if (
-            strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_SPACESHIP) != 0
-            && strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_ALIEN) != 0
-        ) continue;
-        if (collision_manager_is_collision(entity_id)) {
-            sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_red);
-        } else {
-            sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_white);
-        }
-        // Exit when the alien is out of the screen.
-        if (
-            strcmp(sprite_component.sprite_buffer->file_name, SPRITE_LOADER_FILE_NAME_ALIEN) == 0
-            && !window_manager_window_is_inside_window(sprite_component_window_get(entity_id), game_screen_get())
-        ) {
+    {
+        EntityId alien_entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_ALIEN);
+        if (!window_manager_window_is_inside_window(sprite_component_window_get(alien_entity_id), game_screen_get())) {
             return MAIN_SYSTEM_MODE_DONE;
         }
+        struct SpriteComponentUnit sprite_component = sprite_component_get(alien_entity_id);
+        if (sprite_component.sprite_buffer != NULL) {
+            if (collision_manager_is_collision(alien_entity_id)) {
+                sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_red);
+            } else {
+                sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_white);
+            }
+        }
+    }
+    bool is_collision_ship = false;
+    for (int i = FRIENDLY_ID_SPACESHIP_1; i <= FRIENDLY_ID_SPACESHIP_5; i++) {
+        EntityId entity_id = entity_system_get_by_friendly_id(i);
+        struct SpriteComponentUnit sprite_component = sprite_component_get(entity_id);
+        if (sprite_component.sprite_buffer == NULL) continue;
+        if (collision_manager_is_collision(entity_id)) {
+            is_collision_ship = true;
+            break;
+        }
+    }
+    EntityId entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_SPACESHIP_1);
+    struct SpriteComponentUnit sprite_component = sprite_component_get(entity_id);
+    if (is_collision_ship) {
+        sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_red);
+    } else {
+        sprite_buffer_color_fill(sprite_component.sprite_buffer, _color_pair_id_white);
     }
     return MAIN_SYSTEM_MODE_RUNNING;
 }

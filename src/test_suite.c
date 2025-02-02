@@ -19,7 +19,8 @@ void test_suite_run() {
       window_manager_2_test,
       virtual_cursor_2_test,
       log_buffer_test,
-      sprite_loader_test
+      sprite_loader_test,
+      arena_test
     };
     for (int i = 0; i < array_size(fs); i++) {
       event_on_system_start();
