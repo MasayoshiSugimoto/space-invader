@@ -15,9 +15,9 @@
 
 
 int main() {
-  #if TEST_MODE_ENABLE
+  if (TEST_MODE == TEST_MODE_SINGLE_TEST || TEST_MODE == TEST_MODE_TEST_SUITE) {
     test_suite_run();
-  #endif
+  }
 
   atexit(event_on_program_shutdown);
   event_on_program_start();

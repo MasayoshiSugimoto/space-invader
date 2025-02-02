@@ -11,7 +11,7 @@ static struct SpriteBuffer _sprite_buffers[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COU
 static struct VirtualWindow _windows[WINDOW_MANAGER_TEST_SPRITE_BUFFER_COUNT];
 static int _x;
 static int _y;
-static char _debug_buffer[2048];
+static char _debug_buffer[1024 * 4];
 
 
 static int _rand_size(void) {

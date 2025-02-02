@@ -3,7 +3,7 @@
 
 const struct EntityData _entity_datas[] = {
     {
-        .coordinates = {37, 16}, 
+        .coordinates = {37, 18}, 
         .active = true, 
         .faction_id = FACTION_ID_PLAYER, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP

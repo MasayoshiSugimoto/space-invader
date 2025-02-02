@@ -127,4 +127,10 @@ void virtual_cursor_2_test() {
     event_on_render_end();
 
     sleep(5);
+
+    sprite_buffer_free(&sprite_buffer_0);
+    sprite_buffer_free(&sprite_buffer_1);
+    sprite_buffer_free(&sprite_buffer_1);
+    sprite_buffer_free(&sprite_buffer_2);
+    sprite_buffer_free(&sprite_buffer_3);
 }

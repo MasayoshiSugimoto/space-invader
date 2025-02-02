@@ -22,7 +22,9 @@ void event_on_program_start(void) {
     // main_system_mode_set(&g_collision_manager_test);
     // main_system_mode_set(&g_entity_spaceship_test);
     // main_system_mode_set(&g_animation_test);
-    // main_system_mode_set(&g_main_system_sequence);
+    if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) {
+        main_system_mode_set(&g_main_system_sequence);
+    }
 }
 
 

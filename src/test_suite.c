@@ -8,11 +8,11 @@ static void _single_test() {
 
 void test_suite_run() {
   event_on_program_start();
-  if (TEST_MODE_IS_SINGLE_TEST) {
+  if (TEST_MODE == TEST_MODE_SINGLE_TEST) {
     event_on_system_start();
     _single_test();
     event_on_system_release();
-  } else {
+  } else if (TEST_MODE == TEST_MODE_TEST_SUITE) {
     void (*fs[])(void) = {
       color_test,
       virtual_screen_test,

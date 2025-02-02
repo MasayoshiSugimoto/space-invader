@@ -6,8 +6,13 @@
 #define DEBUG_COLLISION_VISUALISATION_MODE true
 #define DEBUG_NO_SCREEN_OUTPUT false  // Needed to see the memory sanitizer output
 
-#define TEST_MODE_ENABLE false
-#define TEST_MODE_IS_SINGLE_TEST false
+enum TestMode {
+    TEST_MODE_DISABLED,
+    TEST_MODE_SINGLE_TEST,
+    TEST_MODE_TEST_SUITE,
+    TEST_MODE_GAME_MODE_SEQUENCE,
+};
+#define TEST_MODE TEST_MODE_DISABLED
 
 #define TERMINAL_MIN_WIDTH 100
 #define TERMINAL_MIN_HEIGHT 30

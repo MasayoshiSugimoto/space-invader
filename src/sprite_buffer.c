@@ -14,7 +14,7 @@ void sprite_buffer_init(struct SpriteBuffer* sprite_buffer) {
 
 
 void sprite_buffer_allocate(struct SpriteBuffer* sprite_buffer, int width, int height) {
-    sprite_buffer->buffer = malloc(sizeof(struct VirtualPixel*) * width * height);
+    sprite_buffer->buffer = malloc(sizeof(*sprite_buffer->buffer) * width * height);
     sprite_buffer->width = width;
     sprite_buffer->height = height;
 }
