@@ -16,6 +16,7 @@ struct EntityData {
   bool is_basic_ai_active;
   const char* animation_name;
   uint8_t z;
+  bool deactivate_collision;
 };
 
 

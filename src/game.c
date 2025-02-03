@@ -36,6 +36,10 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     if (entity_data_ptr->animation_name != NULL) {
       animation_set(entity_id, entity_data_ptr->animation_name);
     }
+
+    if (!entity_data_ptr->deactivate_collision) {
+      collision_manager_activate(entity_id);
+    }
   }
 }
 

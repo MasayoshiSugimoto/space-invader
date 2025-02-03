@@ -15,7 +15,6 @@ static int _width;
 static int _height;
 static bool _is_collisions[ENTITY_MAX];
 static void (*_on_collision[ENTITY_MAX])(EntityId entity_id);
-static bool _is_active[ENTITY_MAX];
 
 
 static void _no_op(EntityId entity_id) {
@@ -36,8 +35,8 @@ int _buffer_length_get(void) {
 
 
 bool _is_active_entity(EntityId entity_id) {
-  if (!_is_active[entity_id]) return false;
   if (!entity_system_is_active(entity_id)) return false;
+  if (!entity_system_component_is_active(entity_id, COMPONENT_ID_COLLISION)) return false;
   if (!sprite_component_is_active(entity_id)) return false;
   if (faction_component_faction_id_get(entity_id) == FACTION_ID_NEUTRAL) return false;
   if (faction_component_faction_id_get(entity_id) >= FACTION_ID_MAX) return false;
@@ -52,7 +51,6 @@ void collision_manager_init(void) {
   memset(_is_collisions, 0, ENTITY_MAX * sizeof(_is_collisions[0]));
   for (int i = 0; i < ENTITY_MAX; i++) {
     _on_collision[i] = _no_op;
-    _is_active[i] = true;
   }
 }
 
@@ -72,7 +70,6 @@ void collision_manager_release(void) {
   memset(_is_collisions, 0, ENTITY_MAX * sizeof(_is_collisions[0]));
   for (int i = 0; i < ENTITY_MAX; i++) {
     _on_collision[i] = _no_op;
-    _is_active[i] = false;
   }
 }
 
@@ -135,7 +132,7 @@ void collision_manager_update(void) {
 
 bool collision_manager_is_collision(EntityId entity_id) {
   assert_entity_id(entity_id);
-  return _is_collisions[entity_id];
+  return entity_system_component_is_active(entity_id, COMPONENT_ID_COLLISION) && _is_collisions[entity_id];
 }
 
 
@@ -146,12 +143,10 @@ void collision_manager_set_collision_handler(EntityId entity_id, void (*on_colli
 
 
 void collision_manager_deactivate(EntityId entity_id) {
-  assert_entity_id(entity_id);
-  _is_active[entity_id] = false;
+  entity_system_component_deactivate(entity_id, COMPONENT_ID_COLLISION);
 }
 
 
 void collision_manager_activate(EntityId entity_id) {
-  assert_entity_id(entity_id);
-  _is_active[entity_id] = true;
+  entity_system_component_activate(entity_id, COMPONENT_ID_COLLISION);
 }
