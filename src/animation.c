@@ -30,7 +30,6 @@ struct AnimationStatus {
 
 
 static struct AnimationComponent {
-  bool active[ENTITY_MAX];
   struct AnimationStatus status[ENTITY_MAX];
 } _animation_component;
 
@@ -58,7 +57,7 @@ void animation_init(void) {
     _animations[i].animation_name = NULL;
   }
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    _animation_component.active[entity_id] = false;
+    entity_system_component_deactivate(entity_id, COMPONENT_ID_ANIMATION);
     struct AnimationStatus* status = &_animation_component.status[entity_id];
     status->animation = NULL;
     frame_timer_timer_init(&status->_time_from_begin);
@@ -81,7 +80,7 @@ void animation_setup(void) {
 
 void animation_update(void) {
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    if (!_animation_component.active[entity_id]) continue;
+    if (!entity_system_component_is_active(entity_id, COMPONENT_ID_ANIMATION)) continue;
     struct AnimationStatus* status = &_animation_component.status[entity_id];
     Duration duration = 0;
     const struct AnimationStep* step = status->animation->animation_begin;
@@ -95,7 +94,7 @@ void animation_update(void) {
     } else {
       // End of the animation. Disable sprite component.
       sprite_component_disable(entity_id);
-      _animation_component.active[entity_id] = false;
+      entity_system_component_deactivate(entity_id, COMPONENT_ID_ANIMATION);
     }
   }
 }
@@ -104,7 +103,7 @@ void animation_update(void) {
 void animation_set(EntityId entity_id, const char* animation_name) {
   log_info_f("Setting animation: entity_id=%zu, animation_name=%s", entity_id, animation_name);
   assert_entity_id(entity_id);
-  _animation_component.active[entity_id] = true;
+  entity_system_component_activate(entity_id, COMPONENT_ID_ANIMATION);
   _animation_component.status[entity_id].animation = _animation_get(animation_name);
   frame_timer_timer_init(&_animation_component.status[entity_id]._time_from_begin);
   frame_timer_start(&_animation_component.status[entity_id]._time_from_begin, DURATION_ONE_DAY);

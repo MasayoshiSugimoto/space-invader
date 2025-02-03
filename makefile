@@ -3,6 +3,7 @@ CFLAGS = -Wall -g -fsanitize=address -fno-omit-frame-pointer -O1
 DEP_OPT = -MM -MP
 SRC_DIR = src
 BUILD_DIR = .build
+SCRIPT_DIR = scripts
 SOURCES = $(foreach d, $(SRC_DIR), $(wildcard $(addprefix $(d)/*, .c)))
 DEPS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.d))
 OBJS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.o))
@@ -20,10 +21,16 @@ $(BUILD_DIR)/%.d: $(SRC_DIR)/%.c
 
 # Generate objects files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@echo ./$(SCRIPT_DIR)/generate_array.sh > $@
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean build try run tags
+# $(SRC_DIR)/main.c: $(SRC_DIR)/array.h
 
+$(SRC_DIR)/array.h: $(SCRIPT_DIR)/generate_array.sh
+	@echo ./$(SCRIPT_DIR)/generate_array.sh > $@
+	./$(SCRIPT_DIR)/generate_array.sh > $@
+
+.PHONY: clean build try run tags
 
 clean:
 	rm -rf .build
