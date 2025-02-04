@@ -12,43 +12,50 @@ const struct EntityData _entity_datas[] = {
         .coordinates = {10, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {17, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {24, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {31, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {38, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {45, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
     {
         .coordinates = {52, 1}, 
         .active = true, 
         .faction_id = FACTION_ID_ALIEN, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
     },
 };
 

@@ -23,7 +23,6 @@ struct EnemyAiBasicComponent {
   uint64_t timer_millisecond;
   int margin_from_border;
   int update_rate_millisecond;
-  bool is_active[ENTITY_MAX];
 } _ai;
 
 
@@ -31,9 +30,6 @@ void enemy_ai_basic_init(void) {
   log_info("Initializing enemy basic ai.");
   _ai.direction = DIRECTION_RIGHT;
   _ai.timer_millisecond = 0;
-  for (int i = 0; i < ENTITY_MAX; i++) {
-    _ai.is_active[i] = false;
-  }
   _ai.margin_from_border = MARGIN_FROM_BORDER;
   _ai.update_rate_millisecond = UPDATE_RATE_MILLISECOND;
 }
@@ -41,7 +37,7 @@ void enemy_ai_basic_init(void) {
 
 bool _is_active(EntityId entity_id) {
   if (!entity_system_is_active(entity_id)) return false;
-  if (!_ai.is_active[entity_id]) return false;
+  if (!entity_system_component_is_active(entity_id, COMPONENT_ID_BASIC_AI)) return false;
   if (!sprite_component_is_active(entity_id)) return false;
   return true;
 }
@@ -88,8 +84,7 @@ void enemy_ai_basic_update(uint64_t delta_time_millisecond) {
 
 
 void enemy_ai_basic_disable(EntityId entity_id) {
-  assert_entity_id(entity_id);
-  _ai.is_active[entity_id] = false;
+  entity_system_component_deactivate(entity_id, COMPONENT_ID_BASIC_AI);
 }
 
 
@@ -99,6 +94,5 @@ void enemy_ai_basic_margin_from_border_set(int margin_from_border) {
 
 
 void enemy_ai_basic_activate(EntityId entity_id) {
-  assert_entity_id(entity_id);
-  _ai.is_active[entity_id] = true;
+  entity_system_component_activate(entity_id, COMPONENT_ID_BASIC_AI);
 }
