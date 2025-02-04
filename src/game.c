@@ -28,6 +28,7 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     sprite_component_z_set(entity_id, entity_data_ptr->z);
 
     faction_component_set(entity_id, entity_data_ptr->faction_id);
+    faction_component_enable(entity_id);
 
     if (entity_data_ptr->is_basic_ai_active) {
       enemy_ai_basic_activate(entity_id);
