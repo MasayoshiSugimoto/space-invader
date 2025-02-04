@@ -1,22 +1,6 @@
 #include "entity_spaceship.h"
 
 
-#define ENTITY_SPACESHIP_BULLET_COUNT 3
-
-
-static EntityId _bullets[ENTITY_SPACESHIP_BULLET_COUNT];
-
-
-void entity_spaceship_init(void) {
-  log_info("Entity spaceship initialization.");
-  for (int i = 0; i < ENTITY_SPACESHIP_BULLET_COUNT; i++) {
-    EntityId entity_id = entity_system_create_entity();
-    _bullets[i] = entity_id;
-    sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
-  }
-}
-
-
 void entity_spaceship_fire(void) {
   log_info("Entity spaceship fire event.");
   EntityId entity_id = entity_spaceship_get_entity_id();
