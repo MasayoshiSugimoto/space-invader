@@ -24,11 +24,16 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo ./$(SCRIPT_DIR)/generate_array.sh > $@
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# $(SRC_DIR)/main.c: $(SRC_DIR)/array.h
+$(SRC_DIR)/main.c: $(SRC_DIR)/array.h $(SRC_DIR)/array.c
 
 $(SRC_DIR)/array.h: $(SCRIPT_DIR)/generate_array.sh
-	@echo ./$(SCRIPT_DIR)/generate_array.sh > $@
-	./$(SCRIPT_DIR)/generate_array.sh > $@
+	@echo ./$(SCRIPT_DIR)/generate_array.sh h> $@
+	./$(SCRIPT_DIR)/generate_array.sh h> $@
+
+$(SRC_DIR)/array.c: $(SCRIPT_DIR)/generate_array.sh
+	@echo ./$(SCRIPT_DIR)/generate_array.sh c> $@
+	./$(SCRIPT_DIR)/generate_array.sh c> $@
+
 
 .PHONY: clean build try run tags
 
