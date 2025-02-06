@@ -14,14 +14,18 @@ function generate_array_h {
     local type_name=$2
     local function_suffix=$3
     cat << EOF
-struct Array${structure_suffix};
+struct Array${structure_suffix} {
+    ${type_name}* data;
+    uint32_t length;
+    uint32_t capacity;
+};
 
 
-void array_${function_suffix}_init(struct Array${structure_suffix}* array, uint32_t capacity);
 void array_${function_suffix}_allocate(struct Array${structure_suffix}* array, uint32_t capacity);
 ${type_name} array_${function_suffix}_get(const struct Array${structure_suffix}* array, uint32_t index);
 void array_${function_suffix}_set(struct Array${structure_suffix}* array, uint32_t index, ${type_name} value);
 void array_${function_suffix}_add(struct Array${structure_suffix}* array, ${type_name} value);
+void array_${function_suffix}_release(struct Array${structure_suffix}* array);
 
 
 EOF
@@ -33,20 +37,6 @@ function generate_array_c {
     local type_name=$2
     local function_suffix=$3
     cat << EOF
-struct Array${structure_suffix} {
-    ${type_name}* data;
-    uint32_t length;
-    uint32_t capacity;
-};
-
-
-void array_${function_suffix}_init(struct Array${structure_suffix}* array, uint32_t capacity) {
-    array->data = NULL;
-    array->length = 0;
-    array->capacity = capacity;
-}
-
-
 void array_${function_suffix}_allocate(struct Array${structure_suffix}* array, uint32_t capacity) {
     array->data = malloc(sizeof(${type_name}) * capacity);
     array->length = 0;
@@ -69,6 +59,15 @@ void array_${function_suffix}_set(struct Array${structure_suffix}* array, uint32
 void array_${function_suffix}_add(struct Array${structure_suffix}* array, ${type_name} value) {
     assert_f(array->length <= array->capacity, "Array already full: capacity=%d, length=%d", array->capacity, array->length);
     array->data[array->length++] = value;
+}
+
+
+void array_${function_suffix}_release(struct Array${structure_suffix}* array) {
+    if (array->data != NULL) {
+        free(array->data);
+    }
+    array->length = 0;
+    array->capacity = 0;
 }
 
 

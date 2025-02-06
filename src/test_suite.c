@@ -2,7 +2,7 @@
 
 
 static void _single_test() {
-  arena_test();
+  array_test();
 }
 
 

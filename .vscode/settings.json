@@ -73,6 +73,7 @@
         "arena_test.h": "c",
         "array_bit.h": "c",
         "cstddef": "c",
-        "array.h": "c"
+        "array.h": "c",
+        "array_test.h": "c"
     }
 }

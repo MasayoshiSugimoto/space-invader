@@ -11,6 +11,7 @@
 #include "log_buffer_test.h"
 #include "sprite_loader_test.h"
 #include "arena_test.h"
+#include "array_test.h"
 
 
 void test_suite_run();
