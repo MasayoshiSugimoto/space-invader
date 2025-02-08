@@ -23,5 +23,10 @@ byte* arena_frame_alloc(uint64_t size);  // Allocate for the lifecycle of a fram
 void arena_frame_release(void);
 void arena_frame_reset(void);
 
+void arena_system_create(void);  // Create frame arena
+byte* arena_system_alloc(uint64_t size);  // Allocate for the lifecycle of a frame.
+void arena_system_release(void);
+void arena_system_reset(void);
+
 
 #endif

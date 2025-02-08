@@ -11,6 +11,8 @@
 #include "log_buffer.h"
 #include "keyboard.h"
 #include "input.h"
+#include <dirent.h> 
+#include <stdio.h> 
 
 
 struct MainSystemMode g_main_system_mode_sprite_editor_2;

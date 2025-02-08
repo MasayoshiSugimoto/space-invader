@@ -6,6 +6,8 @@
 
 
 static const int LOG_BUFFER_SIZE = 1024 * 50;
+static uint32_t _current_file_index = 0;
+static char _current_sprite_name[SYSTEM_FILE_NAME_MAX];
 
 
 enum Mode {
@@ -122,6 +124,28 @@ static void _paste(KeyboardKey key) {
 }
 
 
+static void _load_sprite(void) {
+  const char* directory_path = "./data/sprites";
+  uint32_t file_count = 0;
+  {
+    DIR* d = opendir(directory_path);
+    struct dirent *dir;
+    assert_f(d != NULL, "Failed to read directory: %s", directory_path);
+    while ((dir = readdir(d)) != NULL) {
+      if (strcmp(dir->d_name, ".") == 0) continue;
+      if (strcmp(dir->d_name, "..") == 0) continue;
+      if (file_count == _current_file_index) {
+        sprite_loader_release();
+        sprite_loader_one_sprite_load(dir->d_name);
+        strcpy(_current_sprite_name, dir->d_name);
+      }
+      file_count++;
+    }
+    closedir(d);
+  }
+}
+
+
 static struct InputMapping _input_mappings_default[] = {
   {KEY_UP, _cursor_move_up},
   {KEY_RIGHT, _cursor_move_right},
@@ -144,9 +168,15 @@ static struct InputMapping _input_mappings_edit[] = {
 
 
 static void _init(void) {
+  log_info("Initializing sprite editor.");
+  _load_sprite();
+
   int border = 1;
 
-  _widget_init(&_widget_edit, SPRITE_EDITOR_WINDOW_EDIT_WIDTH, virtual_screen_get_height() - SPRITE_EDITOR_WINDOW_LOG_HEIGHT - 3 * border);
+  _widget_edit.sprite_buffer = *sprite_loader_sprite_get(_current_sprite_name);
+  virtual_cursor_init(&_widget_edit.cursor, &_widget_edit.sprite_buffer);
+  window_manager_window_init(&_widget_edit.window);
+  _widget_edit.window.buffer = &_widget_edit.sprite_buffer;
   _widget_edit.window.has_border = true;
   _widget_edit.window.offset_x = border;
   _widget_edit.window.offset_y = border;

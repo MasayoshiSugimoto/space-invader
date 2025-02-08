@@ -7,6 +7,7 @@ struct Arena {
     uint64_t capacity;
 };
 static struct Arena* _arena_frame = NULL;
+static struct Arena* _arena_system = NULL;
 
 
 struct Arena* arena_create(uint64_t capacity) {
@@ -52,9 +53,31 @@ byte* arena_frame_alloc(uint64_t size) {
 
 void arena_frame_release(void) {
     arena_release(_arena_frame);
+    _arena_frame = NULL;
 }
 
 
 void arena_frame_reset(void) {
     arena_reset(_arena_frame);
+}
+
+
+void arena_system_create(void) {
+    _arena_system = arena_create(ARENA_SYSTEM_SIZE);
+}
+
+
+byte* arena_system_alloc(uint64_t size) {
+    return arena_alloc(_arena_system, size);
+}
+
+
+void arena_system_release(void) {
+    arena_release(_arena_system);
+    _arena_system = NULL;
+}
+
+
+void arena_system_reset(void) {
+    arena_reset(_arena_system);
 }

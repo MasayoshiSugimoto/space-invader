@@ -17,19 +17,17 @@ void event_on_program_start(void) {
     arena_frame_create();
 
     main_system_mode_set(&g_game_main_system_mode);
-    // main_system_mode_set(&g_start_screen_main_system_mode);
-    // main_system_mode_set(&g_main_system_mode_sprite_editor_2);
-    // main_system_mode_set(&g_collision_manager_test);
-    // main_system_mode_set(&g_entity_spaceship_test);
-    // main_system_mode_set(&g_animation_test);
     if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) {
         main_system_mode_set(&g_main_system_sequence);
+    } else if (TEST_MODE == TEST_MODE_SPRITE_EDITOR) {
+        main_system_mode_set(&g_main_system_mode_sprite_editor_2);
     }
 }
 
 
 void event_on_system_start(void) {
     log_info("Executing system initialization sequence.");
+    arena_system_create();
     color_color_set_default();
     virtual_screen_init();
     virtual_screen_allocate();
@@ -66,6 +64,7 @@ void event_on_system_release(void) {
     collision_manager_release();
     sprite_loader_release();
     virtual_screen_release();
+    arena_system_release();
 }
 
 
