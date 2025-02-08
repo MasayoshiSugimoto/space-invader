@@ -82,6 +82,7 @@ static void _on_collision(EntityId entity_id) {
         bullet_component_disable(entity_id);
     } else {
         animation_set(entity_id, ANIMATION_NAME_EXPLOSION);
+        enemy_ai_basic_disable(entity_id);
     }
 }
 

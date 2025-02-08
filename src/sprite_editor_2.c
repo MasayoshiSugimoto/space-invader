@@ -7,6 +7,7 @@
 
 static const int LOG_BUFFER_SIZE = 1024 * 50;
 static uint32_t _current_file_index = 0;
+static uint32_t _file_count = 0;
 static char _current_sprite_name[SYSTEM_FILE_NAME_MAX];
 
 
@@ -32,6 +33,28 @@ static struct Widget _widget_edit;
 static struct Widget _widget_log;
 static struct Widget _widget_palette;
 static struct LogBuffer _log_buffer;
+
+
+static void _load_sprite(void) {
+  const char* directory_path = "./data/sprites";
+  _file_count = 0;
+  {
+    DIR* d = opendir(directory_path);
+    struct dirent *dir;
+    assert_f(d != NULL, "Failed to read directory: %s", directory_path);
+    while ((dir = readdir(d)) != NULL) {
+      if (strcmp(dir->d_name, ".") == 0) continue;
+      if (strcmp(dir->d_name, "..") == 0) continue;
+      if (_file_count == _current_file_index) {
+        sprite_loader_release();
+        sprite_loader_one_sprite_load(dir->d_name);
+        strcpy(_current_sprite_name, dir->d_name);
+      }
+      _file_count++;
+    }
+    closedir(d);
+  }
+}
 
 
 static void _log(const char* text) {
@@ -104,6 +127,26 @@ static void _cursor_move_left(KeyboardKey key) {
 }
 
 
+static void _load_previous_sprite(KeyboardKey key) {
+  log_info("Loading previous sprite.");
+  _current_file_index = (_current_file_index + _file_count - 1 ) % _file_count;
+  _load_sprite();
+  _widget_edit.sprite_buffer = *sprite_loader_sprite_get(_current_sprite_name);
+  virtual_cursor_init(&_widget_edit.cursor, &_widget_edit.sprite_buffer);
+  _widget_edit.window.buffer = &_widget_edit.sprite_buffer;
+}
+
+
+static void _load_next_sprite(KeyboardKey key) {
+  log_info("Loading next sprite.");
+  _current_file_index = (_current_file_index + 1) % _file_count;
+  _load_sprite();
+  _widget_edit.sprite_buffer = *sprite_loader_sprite_get(_current_sprite_name);
+  virtual_cursor_init(&_widget_edit.cursor, &_widget_edit.sprite_buffer);
+  _widget_edit.window.buffer = &_widget_edit.sprite_buffer;
+}
+
+
 static void _key_handle_key_default(KeyboardKey key) {
   // All printable characters.
   int space = 32;
@@ -124,33 +167,13 @@ static void _paste(KeyboardKey key) {
 }
 
 
-static void _load_sprite(void) {
-  const char* directory_path = "./data/sprites";
-  uint32_t file_count = 0;
-  {
-    DIR* d = opendir(directory_path);
-    struct dirent *dir;
-    assert_f(d != NULL, "Failed to read directory: %s", directory_path);
-    while ((dir = readdir(d)) != NULL) {
-      if (strcmp(dir->d_name, ".") == 0) continue;
-      if (strcmp(dir->d_name, "..") == 0) continue;
-      if (file_count == _current_file_index) {
-        sprite_loader_release();
-        sprite_loader_one_sprite_load(dir->d_name);
-        strcpy(_current_sprite_name, dir->d_name);
-      }
-      file_count++;
-    }
-    closedir(d);
-  }
-}
-
-
 static struct InputMapping _input_mappings_default[] = {
   {KEY_UP, _cursor_move_up},
   {KEY_RIGHT, _cursor_move_right},
   {KEY_DOWN, _cursor_move_down},
   {KEY_LEFT, _cursor_move_left},
+  {KEY_PPAGE, _load_previous_sprite},
+  {KEY_NPAGE, _load_next_sprite},
 };
 
 
