@@ -5,10 +5,34 @@ struct Game {
   enum GameState game_state;
   EntityId spaceship_id;
   uint64_t last_frame_time_millisecond;
+  enum GameOverResult game_over_result;
 };
 
 
 static struct Game _game;
+
+
+void _game_over_update(void) {
+  int active_counts[FACTION_ID_MAX];
+  for (int i = 0; i < FACTION_ID_MAX; i++) {
+    active_counts[i] = 0;
+  }
+  for (int i = 0; i < ENTITY_MAX; i++) {
+    if (!entity_system_is_active(i)) continue;
+    if (!faction_component_is_enabled(i)) continue;
+    if (bullet_component_is_active(i)) continue;
+    active_counts[faction_component_faction_id_get(i)]++;
+  }
+  if (active_counts[FACTION_ID_ALIEN] == 0 && active_counts[FACTION_ID_PLAYER] == 0) {
+    _game.game_over_result = GAME_OVER_LOOSE;
+  } else if (active_counts[FACTION_ID_ALIEN] == 0) {
+    _game.game_over_result = GAME_OVER_WIN;
+  } else if (active_counts[FACTION_ID_PLAYER] == 0) {
+    _game.game_over_result = GAME_OVER_LOOSE;
+  } else {
+    _game.game_over_result = GAME_OVER_NONE;
+  }
+}
 
 
 void game_init_entities(const struct EntityData* entity_datas, size_t entity_datas_length) {
@@ -49,11 +73,11 @@ void game_init(void) {
   log_info("game_init()");
   _game.game_state = GAME_INIT_GAME_STATE;
   _game.last_frame_time_millisecond = get_current_millisecond();
+  _game.game_over_result = GAME_OVER_NONE;
 
   // Initialization
   sprite_component_init();
   entity_system_init();
-  // animation_init();
   enemy_ai_basic_init();
   bullet_component_init();
   animation_init();
@@ -72,22 +96,9 @@ void game_set_game_state(enum GameState game_state) {
 }
 
 
-void game_apply_collision_to_enemies() {
-  // for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-  //   if (
-  //       collision_manager_is_collision(entity_id)
-  //       && sprite_component_get_sprite_id(entity_id) == SPRITE_ID_ALIEN
-  //   ) {
-  //     animation_set(entity_id, ANIMATION_ID_EXPLOSION);
-  //   }
-  // }
-}
-
-
 void game_update(void) {
   sprite_component_update();
   collision_manager_update();
-  game_apply_collision_to_enemies();
 
   uint64_t now_millisecond = get_current_millisecond();
   uint64_t delta_time_millisecond = now_millisecond - _game.last_frame_time_millisecond;
@@ -95,10 +106,16 @@ void game_update(void) {
   enemy_ai_basic_update(delta_time_millisecond);
   bullet_component_update();
   animation_update();
+  _game_over_update();
 }
 
 
 void game_render(void) {
   game_screen_render();
   sprite_component_render();
+}
+
+
+enum GameOverResult game_game_over_result_get(void) {
+  return _game.game_over_result;
 }

@@ -18,6 +18,7 @@ void faction_component_set(EntityId entity_id, enum FactionId faction_id);
 bool faction_component_is_enemy(EntityId entity_id_1, EntityId entity_id_2);
 void faction_component_enable(EntityId entity_id);
 void faction_component_disable(EntityId entity_id);
+bool faction_component_is_enabled(EntityId entity_id);
 enum FactionId faction_component_faction_id_get(EntityId entity_id);
 
 

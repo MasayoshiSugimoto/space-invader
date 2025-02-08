@@ -36,6 +36,11 @@ void faction_component_disable(EntityId entity_id) {
 }
 
 
+bool faction_component_is_enabled(EntityId entity_id) {
+  return entity_system_component_is_active(entity_id, COMPONENT_ID_FACTION);
+}
+
+
 enum FactionId faction_component_faction_id_get(EntityId entity_id) {
   assert_entity_id(entity_id);
   return faction_component.faction_map[entity_id];

@@ -58,6 +58,8 @@ const struct EntityData _entity_datas[] = {
         .is_basic_ai_active = true,
     },
 };
+static struct FrameTimer _timer;
+static bool _is_game_over;
 
 
 static void _move_left(KeyboardKey key) {
@@ -78,6 +80,7 @@ static void _fire(KeyboardKey key) {
 static void _on_collision(EntityId entity_id) {
     log_info_f("Entity collided: entity_id=%zu", entity_id);
     collision_manager_deactivate(entity_id);
+    faction_component_disable(entity_id);
     if (bullet_component_is_active(entity_id)) {
         bullet_component_disable(entity_id);
     } else {
@@ -99,6 +102,8 @@ static void _init(void) {
     }
 
     color_reset();
+    frame_timer_timer_init(&_timer);
+    _is_game_over = false;
 }
 
 
@@ -124,6 +129,14 @@ static void _input_update(void) {
 
 static enum MainSystemModeStatus _system_update(void) {
     game_update();
+    if (game_game_over_result_get() != GAME_OVER_NONE && !_is_game_over) {
+        log_info("GAME OVER");
+        _is_game_over = true;
+        frame_timer_start(&_timer, milliseconds_as_duration(1000));
+    }
+    if (_is_game_over && frame_timer_is_done(&_timer)) {
+        return MAIN_SYSTEM_MODE_DONE;
+    }
     return MAIN_SYSTEM_MODE_RUNNING;
 }
 

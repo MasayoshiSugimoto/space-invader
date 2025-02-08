@@ -15,6 +15,13 @@
 #include "entity_data.h"
 
 
+enum GameOverResult {
+    GAME_OVER_NONE,
+    GAME_OVER_WIN,
+    GAME_OVER_LOOSE,
+};
+
+
 struct MainSystemMode g_game_main_system_mode;
 
 
@@ -24,6 +31,7 @@ void game_print_state(enum GameState game_state);
 void game_set_game_state(enum GameState game_state);
 void game_update(void);
 void game_render(void);
+enum GameOverResult game_game_over_result_get(void);
 
 
 #endif
