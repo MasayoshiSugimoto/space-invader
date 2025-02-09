@@ -1,5 +1,5 @@
-#ifndef START_SCREEN_H
-#define START_SCREEN_H
+#ifndef GAME_OVER_SCREEN_H
+#define GAME_OVER_SCREEN_H
 
 
 #include "util.h"
@@ -11,7 +11,7 @@
 #include "main_system_mode.h"
 
 
-struct MainSystemMode g_start_screen_main_system_mode;
+struct MainSystemMode g_game_over_screen_main_system_mode;
 
 
 #endif

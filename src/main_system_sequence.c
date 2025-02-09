@@ -14,6 +14,7 @@ static struct SliceMainSystemMode _slice_main_systems_test = {
 static struct MainSystemMode* g_main_system_sequence_list[] = {
     &g_start_screen_main_system_mode,
     &g_game_main_system_mode,
+    &g_game_over_screen_main_system_mode,
 };
 static struct SliceMainSystemMode _slice_main_system_sequence = {
     g_main_system_sequence_list,

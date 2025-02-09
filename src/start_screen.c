@@ -11,16 +11,6 @@ static void _release(void) {
 }
 
 
-struct MainSystemMode g_start_screen_main_system_mode = {
-    "MAIN_SYSTEM_MODE_START_SCREEN",
-    &start_screen_init,
-    &_release,
-    &main_system_no_op,
-    &start_screen_update,
-    &start_screen_render
-};
-
-
 enum State {
   STATE_CREDITS_FADE_IN,
   STATE_CREDITS_DISPLAY,
@@ -43,13 +33,13 @@ static struct FrameTimer _timer;
 static struct VirtualWindow _windows[WINDOW_ID_MAX];
 
 
-void _fade_in_title_start(void) {
+static void _fade_in_title_start(void) {
   _state = STATE_CREDITS_FADE_IN;
   color_fade_start_fade_in(ONE_SECOND);
 }
 
 
-void _state_update(void) {
+static void _state_update(void) {
   switch (_state) {
     case STATE_CREDITS_FADE_IN:
     case STATE_CREDITS_DISPLAY:
@@ -86,7 +76,7 @@ void _state_update(void) {
 }
 
 
-void start_screen_init(void) {
+static void _start_screen_init(void) {
   sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_CREDITS);
   sprite_loader_one_sprite_load(SPRITE_LOADER_FILE_NAME_TITLE);
   for (int i = 0; i < WINDOW_ID_TITLE; i++) {
@@ -106,12 +96,12 @@ void start_screen_init(void) {
 }
 
 
-enum MainSystemModeStatus start_screen_update(void) {
+static enum MainSystemModeStatus _start_screen_update(void) {
   return _state == STATE_DONE ? MAIN_SYSTEM_MODE_DONE : MAIN_SYSTEM_MODE_RUNNING;
 }
 
 
-void start_screen_render(void) {
+void _start_screen_render(void) {
   curs_set(CURSOR_VISIBILITY_INVISIBLE);
 
   _state_update();
@@ -119,3 +109,12 @@ void start_screen_render(void) {
   virtual_screen_render();
 }
 
+
+struct MainSystemMode g_start_screen_main_system_mode = {
+    "MAIN_SYSTEM_MODE_START_SCREEN",
+    &_start_screen_init,
+    &_release,
+    &main_system_no_op,
+    &_start_screen_update,
+    &_start_screen_render
+};

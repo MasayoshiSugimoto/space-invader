@@ -11,6 +11,7 @@
 #include "entity_spaceship_test.h"
 #include "collision_manager_test.h"
 #include "slice.h"
+#include "game_over_screen.h"
 
 
 struct MainSystemMode g_main_system_sequence;
