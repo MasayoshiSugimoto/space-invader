@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "log.h"
+#include "main_system_mode.h"
 
 struct ArrayUint8 {
     uint8_t* data;

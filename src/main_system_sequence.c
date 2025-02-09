@@ -7,51 +7,65 @@ static struct MainSystemMode* _main_systems_test[] = {
     &g_collision_manager_test,
     &g_start_screen_main_system_mode
 };
-static struct MainSystemMode** _main_systems = _main_systems_test;
+static struct SliceMainSystemMode _slice_main_systems_test = {
+    _main_systems_test,
+    array_size(_main_systems_test)
+};
+static struct MainSystemMode* g_main_system_sequence_list[] = {
+    &g_start_screen_main_system_mode,
+    &g_game_main_system_mode,
+};
+static struct SliceMainSystemMode _slice_main_system_sequence = {
+    g_main_system_sequence_list,
+    array_size(g_main_system_sequence_list)
+};
+static struct SliceMainSystemMode* _slice_main_system = &_slice_main_system_sequence;
 static uint16_t _main_systems_index = 0;
-static uint16_t _main_systems_length = array_size(_main_systems_test);
 static bool _increment = false;
+
+
+static struct MainSystemMode* _main_system_get_active(void) {
+    return slice_main_system_mode_get(_slice_main_system, _main_systems_index);
+}
 
 
 static void _init(void) {
     log_info("Initializing main system sequence.");
-    _main_systems[0]->init();
+    slice_main_system_mode_get(_slice_main_system, 0)->init();
 }
 
 
 static void _release(void) {
     log_info("Releasing main system sequence.");
-    if (_main_systems_index < _main_systems_length) {
-        _main_systems[_main_systems_index]->release();
+    if (_main_systems_index < _slice_main_system->length) {
+        _main_system_get_active()->release();
     }
 }
 
 
 static void _input_update(void) {
     // We swap the systems here because this function is called first and is in the appropriate timing.
-    struct MainSystemMode* system = _main_systems[_main_systems_index];
     if (_increment) {
-        system->release();
+        _main_system_get_active()->release();
         event_on_system_release();
         _main_systems_index++;
-        if (_main_systems_index >= _main_systems_length) {
+        if (_main_systems_index >= _slice_main_system->length) {
             _increment = false;
             return;
         }
         event_on_system_start();
-        _main_systems[_main_systems_index]->init();
-        system = _main_systems[_main_systems_index];
+        _main_system_get_active()->init();
         _increment = false;
     }
-    system->input_update();
+    _main_system_get_active()->input_update();
 }
 
 
 static enum MainSystemModeStatus _system_update(void) {
-    if (_main_systems_index >= _main_systems_length) {
+    if (_main_systems_index >= _slice_main_system->length) {
         return MAIN_SYSTEM_MODE_DONE;
     }
-    if (_main_systems[_main_systems_index]->system_update() == MAIN_SYSTEM_MODE_DONE) {
+    if (_main_system_get_active()->system_update() == MAIN_SYSTEM_MODE_DONE) {
         _increment = true;
     }
     return MAIN_SYSTEM_MODE_RUNNING;
@@ -59,7 +73,7 @@ static enum MainSystemModeStatus _system_update(void) {
 
 
 static void _render(void) {
-    _main_systems[_main_systems_index]->render();
+    _main_system_get_active()->render();
 }
 
 

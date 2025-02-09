@@ -10,6 +10,7 @@
 #include "animation_test.h"
 #include "entity_spaceship_test.h"
 #include "collision_manager_test.h"
+#include "slice.h"
 
 
 struct MainSystemMode g_main_system_sequence;

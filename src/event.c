@@ -16,7 +16,7 @@ void event_on_program_start(void) {
     }
     arena_frame_create();
 
-    main_system_mode_set(&g_game_main_system_mode);
+    main_system_mode_set(&g_main_system_sequence);
     if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) {
         main_system_mode_set(&g_main_system_sequence);
     } else if (TEST_MODE == TEST_MODE_SPRITE_EDITOR) {
