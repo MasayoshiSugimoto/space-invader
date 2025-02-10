@@ -6,7 +6,11 @@ const struct EntityData _entity_datas[] = {
         .coordinates = {37, 18}, 
         .active = true, 
         .faction_id = FACTION_ID_PLAYER, 
-        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP,
+        .animation_name = ANIMATION_NAME_SPACESHIP,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
+        .friendly_id = FRIENDLY_ID_SPACESHIP,
     },
     {
         .coordinates = {10, 1}, 
@@ -85,6 +89,7 @@ static void _on_collision(EntityId entity_id) {
         bullet_component_disable(entity_id);
     } else {
         animation_set(entity_id, ANIMATION_NAME_EXPLOSION);
+        animation_start(entity_id);
         enemy_ai_basic_disable(entity_id);
     }
 }

@@ -17,16 +17,7 @@ void entity_spaceship_fire(void) {
 
 
 EntityId entity_spaceship_get_entity_id(void) {
-  // TODO: Find a better solution
-  for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
-    const struct VirtualWindow* window = sprite_component_window_get(entity_id);
-    if (window == NULL) continue;
-    if (!sprite_component_is_active(entity_id)) continue;
-    if (strcmp(window->buffer->file_name, SPRITE_LOADER_FILE_NAME_SPACESHIP) == 0) {
-      return entity_id;
-    }
-  }
-  return ENTITY_MAX;
+  return entity_system_get_by_friendly_id(FRIENDLY_ID_SPACESHIP);
 }
 
 

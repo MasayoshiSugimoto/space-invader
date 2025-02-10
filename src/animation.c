@@ -1,24 +1,16 @@
 #include "animation.h"
 
 
-#define ANIMATION_ANIMATION_STEP_MAX 5
-#define ANIMATION_ANIMATION_MAX 1
+#define ANIMATION_ANIMATION_STEP_MAX 6
+#define ANIMATION_ANIMATION_MAX 2
 
 
 #define ANIMATION_ID_EXPLOSION "animation.explosion.dat"
 
 
-// New data structure
-struct AnimationStep {
-  struct SpriteBuffer* sprite_buffer;
-  Duration duration;
-};
-
-
 struct Animation {
   const char* animation_name;
-  const struct AnimationStep* animation_begin;
-  const struct AnimationStep* animation_end;
+  struct SliceAnimationStep slice_animation_step;
 };
 
 
@@ -26,6 +18,7 @@ struct AnimationStatus {
   const struct Animation* animation;
   struct FrameTimer _time_from_begin;
   void (*on_animation_end)(EntityId entity_id);
+  bool is_loop;
 };
 
 
@@ -46,15 +39,30 @@ const struct Animation* _animation_get(const char* animation_name) {
 }
 
 
+uint32_t _current_step_get(EntityId entity_id) {
+  assert_entity_id(entity_id);
+  Duration duration = 0;
+  struct AnimationStatus* status = &_animation_component.status[entity_id];
+  const struct SliceAnimationStep* slice = &status->animation->slice_animation_step;
+  uint32_t i = 0;
+  while (i < slice->length) {
+    struct AnimationStep* step = slice_animation_step_get(slice, i);
+    duration += step->duration;
+    if (duration >= frame_timer_get_elapsed_time(&status->_time_from_begin)) break;
+    i++;
+  }
+  return i;
+}
+
+
 void animation_init(void) {
   for (int i = 0; i < ANIMATION_ANIMATION_STEP_MAX; i++) {
     _animations_steps[i].sprite_buffer = NULL;
     _animations_steps[i].duration = 0;
   }
   for (int i = 0; i < ANIMATION_ANIMATION_MAX; i++) {
-    _animations[i].animation_begin = NULL;
-    _animations[i].animation_end = NULL;
     _animations[i].animation_name = NULL;
+    slice_animation_step_init(&_animations[i].slice_animation_step);
   }
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     entity_system_component_deactivate(entity_id, COMPONENT_ID_ANIMATION);
@@ -72,9 +80,16 @@ void animation_setup(void) {
   _animations_steps[1].duration = milliseconds_as_duration(200);
   _animations_steps[2].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_EXPLOSION_1);
   _animations_steps[2].duration = milliseconds_as_duration(200);
+  _animations_steps[3].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP);
+  _animations_steps[3].duration = milliseconds_as_duration(50);
+  _animations_steps[4].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_2);
+  _animations_steps[4].duration = milliseconds_as_duration(50);
   _animations[0].animation_name = ANIMATION_NAME_EXPLOSION;
-  _animations[0].animation_begin = &_animations_steps[0];
-  _animations[0].animation_end = &_animations_steps[3];
+  _animations[0].slice_animation_step.data = &_animations_steps[0];
+  _animations[0].slice_animation_step.length = 3;
+  _animations[1].animation_name = ANIMATION_NAME_SPACESHIP;
+  _animations[1].slice_animation_step.data = &_animations_steps[3];
+  _animations[1].slice_animation_step.length = 2;
 }
 
 
@@ -82,15 +97,13 @@ void animation_update(void) {
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!entity_system_component_is_active(entity_id, COMPONENT_ID_ANIMATION)) continue;
     struct AnimationStatus* status = &_animation_component.status[entity_id];
-    Duration duration = 0;
-    const struct AnimationStep* step = status->animation->animation_begin;
-    while (step < status->animation->animation_end) {
-      duration += step->duration;
-      if (duration >= frame_timer_get_elapsed_time(&status->_time_from_begin)) break;
-      step++;
-    }
-    if (step < status->animation->animation_end) {
-      sprite_component_sprite_buffer_set(entity_id, step->sprite_buffer);
+    const struct SliceAnimationStep* slice = &status->animation->slice_animation_step;
+    uint32_t current_step_index = _current_step_get(entity_id);
+    if (current_step_index < slice->length) {
+      sprite_component_sprite_buffer_set(entity_id, slice_animation_step_get(slice, current_step_index)->sprite_buffer);
+    } else if (status->is_loop) {
+      animation_set(entity_id, status->animation->animation_name);
+      animation_start(entity_id);
     } else {
       // End of the animation. Disable sprite component.
       sprite_component_disable(entity_id);
@@ -103,22 +116,27 @@ void animation_update(void) {
 void animation_set(EntityId entity_id, const char* animation_name) {
   log_info_f("Setting animation: entity_id=%zu, animation_name=%s", entity_id, animation_name);
   assert_entity_id(entity_id);
-  entity_system_component_activate(entity_id, COMPONENT_ID_ANIMATION);
   _animation_component.status[entity_id].animation = _animation_get(animation_name);
+}
+
+
+void animation_start(EntityId entity_id) {
+  log_info_f("Animation start: entity_id=%zu", entity_id);
+  assert_entity_id(entity_id);
   frame_timer_timer_init(&_animation_component.status[entity_id]._time_from_begin);
   frame_timer_start(&_animation_component.status[entity_id]._time_from_begin, DURATION_ONE_DAY);
+  entity_system_component_activate(entity_id, COMPONENT_ID_ANIMATION);
 }
 
 
 bool animation_is_done(EntityId entity_id) {
   assert_entity_id(entity_id);
-  struct AnimationStatus* status = &_animation_component.status[entity_id];
-  Duration duration = 0;
-  const struct AnimationStep* step = status->animation->animation_begin;
-  while (step < status->animation->animation_end) {
-    duration += step->duration;
-    if (duration >= frame_timer_get_elapsed_time(&status->_time_from_begin)) break;
-    step++;
-  }
-  return step >= status->animation->animation_end;
+  return _current_step_get(entity_id) < _animation_component.status[entity_id].animation->slice_animation_step.length;
+}
+
+
+void animation_is_loop_set(EntityId entity_id, bool is_loop) {
+  log_info_f("Enabling animation loop: entity_id=%zu", entity_id);
+  assert_entity_id(entity_id);
+  _animation_component.status[entity_id].is_loop = is_loop;
 }

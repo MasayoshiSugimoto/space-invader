@@ -7,7 +7,8 @@ readonly TYPE_META_DATAS=(
     'Uint8' 'uint8_t' 'uint8_t' $POINTER_DISABLED
     'Uint16' 'uint16_t' 'uint16_t' $POINTER_DISABLED
     'Uint32' 'uint32_t' 'uint32_t' $POINTER_DISABLED
-    'MainSystemMode' 'struct MainSystemMode*' 'main_system_mode' $POINTER_DISABLED
+    'MainSystemMode' 'struct MainSystemMode*' 'main_system_mode' $POINTER_DISABLED    
+    'AnimationStep' 'struct AnimationStep' 'animation_step' $POINTER_ENABLED
 )
 readonly TYPE_COUNT=$((${#TYPE_META_DATAS[@]}/4))
 
@@ -26,6 +27,7 @@ ${slice_struct} {
 };
 
 
+void slice_${function_suffix}_init(${slice_struct}* slice);
 ${type_name}${pointer_mark} slice_${function_suffix}_get(const ${slice_struct}* slice, uint32_t index);
 
 
@@ -41,6 +43,12 @@ function generate_slice_c {
     local slice_struct="struct Slice${structure_suffix}"
     local pointer_mark=$([[ $is_pointer_enabled == $POINTER_ENABLED ]] && echo '*')
     cat << EOF
+void slice_${function_suffix}_init(${slice_struct}* slice) {
+    slice->data = NULL;
+    slice->length = 0;
+}
+
+
 ${type_name}${pointer_mark} slice_${function_suffix}_get(const ${slice_struct}* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return $(
@@ -66,6 +74,8 @@ function generate_slices_h {
 #include <stdint.h>
 #include "log.h"
 #include "main_system_mode.h"
+#include "animation_step.h"
+
 
 $(
     for x in $(seq $TYPE_COUNT); do

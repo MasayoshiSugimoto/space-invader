@@ -61,6 +61,10 @@ void game_init_entities(const struct EntityData* entity_datas, size_t entity_dat
     if (entity_data_ptr->animation_name != NULL) {
       animation_set(entity_id, entity_data_ptr->animation_name);
     }
+    animation_is_loop_set(entity_id, entity_data_ptr->animation_is_loop);
+    if (entity_data_ptr->animation_auto_start) {
+      animation_start(entity_id);
+    }
 
     if (!entity_data_ptr->deactivate_collision) {
       collision_manager_activate(entity_id);

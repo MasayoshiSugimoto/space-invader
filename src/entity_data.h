@@ -15,6 +15,8 @@ struct EntityData {
   const char* sprite_file_name;
   bool is_basic_ai_active;
   const char* animation_name;
+  bool animation_is_loop;
+  bool animation_auto_start;
   uint8_t z;
   bool deactivate_collision;
 };

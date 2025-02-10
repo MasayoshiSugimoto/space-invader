@@ -21,6 +21,12 @@
 typedef size_t EntityId;
 
 
+enum FriendlyId {
+  FRIENDLY_ID_NONE,
+  FRIENDLY_ID_SPACESHIP,
+};
+
+
 enum ComponentId {
     COMPONENT_ID_MASTER,
     COMPONENT_ID_SPRITE,

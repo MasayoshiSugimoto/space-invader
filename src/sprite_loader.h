@@ -10,6 +10,7 @@
 #define SPRITE_LOADER_FILE_NAME_EMPTY "empty.dat"
 #define SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET "spaceship_bullet.dat"
 #define SPRITE_LOADER_FILE_NAME_SPACESHIP "spaceship.dat"
+#define SPRITE_LOADER_FILE_NAME_SPACESHIP_2 "ship_2.dat"
 #define SPRITE_LOADER_FILE_NAME_ALIEN "alien.dat"
 #define SPRITE_LOADER_FILE_NAME_TITLE "title.dat"
 #define SPRITE_LOADER_FILE_NAME_CREDITS "credits.dat"

@@ -2,8 +2,8 @@
 
 
 enum FriendlyIdAnimation {
-    FRIENDLY_ID_NONE,
-    FRIENDLY_ID_FIRST_ANIMATION
+    FRIENDLY_ID_ANIMATION_NONE,
+    FRIENDLY_ID_ANIMATION_FIRST_ANIMATION
 };
 
 
@@ -17,7 +17,7 @@ static const struct EntityData _entity_datas[] = {
         .z = 1
     },
     {
-        .friendly_id = FRIENDLY_ID_FIRST_ANIMATION,
+        .friendly_id = FRIENDLY_ID_ANIMATION_FIRST_ANIMATION,
         .coordinates = {6, 4}, 
         .active = true,
         .faction_id = FACTION_ID_ALIEN,
@@ -91,7 +91,7 @@ static void _input_update(void) {
 
 static enum MainSystemModeStatus _system_update(void) {
     game_update();
-    EntityId entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_FIRST_ANIMATION);
+    EntityId entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_ANIMATION_FIRST_ANIMATION);
     if (entity_id != ENTITY_ID_INVALID && animation_is_done(entity_id)) {
         return MAIN_SYSTEM_MODE_DONE;
     }
