@@ -12,7 +12,10 @@ static const struct EntityData _entity_datas[] = {
     .active = true, 
     .faction_id = FACTION_ID_PLAYER, 
     .sprite_file_name = SPRITE_LOADER_FILE_NAME_SPACESHIP, 
-    .is_basic_ai_active = false
+    .animation_name = ANIMATION_NAME_SPACESHIP,
+    .animation_is_loop = true,
+    .animation_auto_start = true,
+    .friendly_id = FRIENDLY_ID_SPACESHIP,
   },
 };
 

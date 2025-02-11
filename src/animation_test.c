@@ -14,7 +14,7 @@ static const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN,
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = false,
-        .z = 1
+        .z = 1,
     },
     {
         .friendly_id = FRIENDLY_ID_ANIMATION_FIRST_ANIMATION,
@@ -23,7 +23,8 @@ static const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN,
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = false,
-        .animation_name = ANIMATION_NAME_EXPLOSION
+        .animation_name = ANIMATION_NAME_EXPLOSION,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {12, 4}, 
@@ -31,7 +32,8 @@ static const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN, 
         .is_basic_ai_active = false,
-        .animation_name = ANIMATION_NAME_EXPLOSION
+        .animation_name = ANIMATION_NAME_EXPLOSION,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {18, 4}, 
@@ -39,7 +41,8 @@ static const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN, 
         .is_basic_ai_active = false,
-        .animation_name = ANIMATION_NAME_EXPLOSION
+        .animation_name = ANIMATION_NAME_EXPLOSION,
+        .animation_auto_start = true,
     },
 };
 static int _screen_width = 25;
@@ -52,7 +55,7 @@ static ColorPairId _color_pair_id_red;
 
 
 static void _init(void) {
-    log_info("Initializing collision manager test.");
+    log_info("Initializing animation test.");
     sprite_loader_load_sprite_set(SPRITE_LOADER_SPRITE_SET_LEVEL_1);
     
     game_init();
@@ -79,7 +82,7 @@ static void _init(void) {
 
 
 static void _release(void) {
-    log_info("Releasing collision manager test.");
+    log_info("Releasing animation test.");
     game_screen_release();
 }
 

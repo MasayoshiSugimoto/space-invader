@@ -131,7 +131,7 @@ void animation_start(EntityId entity_id) {
 
 bool animation_is_done(EntityId entity_id) {
   assert_entity_id(entity_id);
-  return _current_step_get(entity_id) < _animation_component.status[entity_id].animation->slice_animation_step.length;
+  return _current_step_get(entity_id) >= _animation_component.status[entity_id].animation->slice_animation_step.length;
 }
 
 
