@@ -9,6 +9,8 @@
 
 static const struct Color BLACK = {0, 0, 0};
 static const struct Color WHITE = {255, 255, 255};
+static const struct Color RED = {255, 0, 0};
+static const struct Color MAGENTA = {255, 0, 255};
 static const ColorId COLOR_FIRST_COLOR_ID = 8;
 
 
@@ -84,12 +86,17 @@ void _fade_update() {
 
 
 void color_color_set_default(void) {
+  log_info("Setting default colors.");
   color_reset();
   enum ColorPaletteId color_palette_id = 0;
   color_color_palette_activate(color_palette_id);
   ColorId black_id = color_color_palette_add(BLACK);
   ColorId white_id = color_color_palette_add(WHITE);
+  ColorId red_id = color_color_palette_add(RED);
+  ColorId magenta_id = color_color_palette_add(MAGENTA);
   color_color_pair_add(black_id, white_id);
+  color_color_pair_add(black_id, red_id);
+  color_color_pair_add(black_id, magenta_id);
   color_color_palette_push(color_palette_id);
   color_color_pair_push();
 }
@@ -110,6 +117,7 @@ enum ColorPaletteId color_color_palette_get_last_pushed() {
 
 
 void color_color_palette_activate(enum ColorPaletteId color_palette_id) {
+  log_info_f("Activating color palette: %d", color_palette_id);
   assert_f(_color_palette_id_is_valid(color_palette_id), "Invalid color_palette_id: %d", color_palette_id);
   _palette_active_id = color_palette_id;
 }
@@ -170,6 +178,7 @@ void color_color_pair_push() {
 
 
 void color_fade_start_fade_out(Duration duration) {
+  log_info_f("Color fade out start: duration=%ld", duration);
   frame_timer_start(&_fade.timer, duration);
   _fade.alpha_start = 1.0f;
   _fade.alpha_end = 0.0f;
@@ -177,6 +186,7 @@ void color_fade_start_fade_out(Duration duration) {
 
 
 void color_fade_start_fade_in(Duration duration) {
+  log_info_f("Color fade in start: duration=%ld", duration);
   frame_timer_start(&_fade.timer, duration);
   _fade.alpha_start = 0.0f;
   _fade.alpha_end = 1.0f;
@@ -224,6 +234,7 @@ void color_init() {
 
 
 void color_reset() {
+  log_info("Resetting colors.");
   memset(&_color_palette, 0, sizeof(_color_palette));
   memset(&_color_palette_sizes, 0, sizeof(_color_palette_sizes));
   for (size_t i = 0; i < COLOR_PALETTE_ID_MAX; i++) {

@@ -9,7 +9,7 @@
 
 
 #define MARGIN_FROM_BORDER 5
-#define UPDATE_RATE_MILLISECOND 100
+#define UPDATE_RATE_MILLISECOND 50
 
 
 enum Direction {

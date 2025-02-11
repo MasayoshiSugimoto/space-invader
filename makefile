@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -g -fsanitize=address -fno-omit-frame-pointer -O1
+CFLAGS = -Wall -g -fsanitize=address -fno-omit-frame-pointer
 DEP_OPT = -MM -MP
 SRC_DIR = src
 BUILD_DIR = .build

@@ -109,6 +109,17 @@ void _sprite_loader_load(struct SpriteBuffer* sprite, const char* file_name) {
       assert(c == '\n', "Failed to load sprite. New line expected.");
     }
   }
+  if (width > 0 && height > 0) {
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        char c[4] = {fgetc(file), fgetc(file), fgetc(file), 0};
+        uint8_t color_id = atoi(c);
+        sprite_buffer_access(sprite, x, y)->color_pair_id = color_id;
+      }
+      char c = fgetc(file);
+      assert(c == '\n' || c == EOF, "Failed to load sprite. New line expected.");
+    }
+  }
   sprite_buffer_file_name_set(sprite, file_name);
   fclose(file);
 }

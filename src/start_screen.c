@@ -89,7 +89,6 @@ static void _start_screen_init(void) {
   window_manager_window_center_screen_y(&_windows[WINDOW_ID_CREDITS]);
   window_manager_window_center_screen_x(&_windows[WINDOW_ID_TITLE]);
   window_manager_window_center_screen_y(&_windows[WINDOW_ID_TITLE]);
-  color_color_set_default();
 
   _fade_in_title_start();
   frame_timer_start(&_timer, 0);

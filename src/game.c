@@ -23,6 +23,7 @@ void _game_over_update(void) {
     if (bullet_component_is_active(i)) continue;
     active_counts[faction_component_faction_id_get(i)]++;
   }
+  enum GameOverResult result = _game.game_over_result;
   if (active_counts[FACTION_ID_ALIEN] == 0 && active_counts[FACTION_ID_PLAYER] == 0) {
     _game.game_over_result = GAME_OVER_LOOSE;
   } else if (active_counts[FACTION_ID_ALIEN] == 0) {
@@ -31,6 +32,10 @@ void _game_over_update(void) {
     _game.game_over_result = GAME_OVER_LOOSE;
   } else {
     _game.game_over_result = GAME_OVER_NONE;
+  }
+  if (result == GAME_OVER_NONE && _game.game_over_result != GAME_OVER_NONE) {
+    color_color_palette_activate(COLOR_PALETTE_ID_DEFAULT);
+    color_fade_start_fade_out(DURATION_ONE_SECOND);
   }
 }
 

@@ -61,9 +61,56 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
     },
+    {
+        .coordinates = {10, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {17, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {24, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {31, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {38, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {45, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
+    {
+        .coordinates = {52, 6}, 
+        .active = true, 
+        .faction_id = FACTION_ID_ALIEN, 
+        .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
+        .is_basic_ai_active = true,
+    },
 };
-static struct FrameTimer _timer;
-static bool _is_game_over;
 
 
 static void _move_left(KeyboardKey key) {
@@ -105,10 +152,6 @@ static void _init(void) {
     for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
         collision_manager_set_collision_handler(entity_id, _on_collision);
     }
-
-    color_reset();
-    frame_timer_timer_init(&_timer);
-    _is_game_over = false;
 }
 
 
@@ -134,12 +177,8 @@ static void _input_update(void) {
 
 static enum MainSystemModeStatus _system_update(void) {
     game_update();
-    if (game_game_over_result_get() != GAME_OVER_NONE && !_is_game_over) {
+    if (game_game_over_result_get() != GAME_OVER_NONE && color_fade_is_done()) {
         log_info("GAME OVER");
-        _is_game_over = true;
-        frame_timer_start(&_timer, milliseconds_as_duration(1000));
-    }
-    if (_is_game_over && frame_timer_is_done(&_timer)) {
         return MAIN_SYSTEM_MODE_DONE;
     }
     return MAIN_SYSTEM_MODE_RUNNING;

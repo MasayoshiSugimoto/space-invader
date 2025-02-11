@@ -130,7 +130,7 @@ void bullet_component_cleanup(void) {
 
 void bullet_component_disable(EntityId entity_id) {
   assert_entity_id(entity_id);
-  struct BulletComponent* bullet_component = _bullet_component_get(entity_id);
+   struct BulletComponent* bullet_component = _bullet_component_get(entity_id);
   if (bullet_component == NULL) return;
   _deactivate(bullet_component);
 }

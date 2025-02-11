@@ -22,6 +22,7 @@ void event_on_program_start(void) {
     } else if (TEST_MODE == TEST_MODE_SPRITE_EDITOR) {
         main_system_mode_set(&g_main_system_mode_sprite_editor_2);
     }
+    // main_system_mode_set(&g_game_main_system_mode);
 }
 
 
