@@ -50,8 +50,8 @@ void event_on_frame_start(void) {
 
 
 void event_on_render_start(void) {
-    color_update();
     erase();
+    color_update();
 }
 
 

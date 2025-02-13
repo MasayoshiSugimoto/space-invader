@@ -65,7 +65,6 @@ static void _game_over_screen_init(void) {
   _windows[WINDOW_ID_GAME_OVER].buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_GAME_OVER);
   window_manager_window_center_screen_x(&_windows[WINDOW_ID_GAME_OVER]);
   window_manager_window_center_screen_y(&_windows[WINDOW_ID_GAME_OVER]);
-  color_color_set_default();
 
   _fade_in_title_start();
   frame_timer_start(&_timer, 0);
