@@ -75,6 +75,9 @@
         "cstddef": "c",
         "array.h": "c",
         "array_test.h": "c",
-        "slice.h": "c"
+        "slice.h": "c",
+        "color_loader.h": "c",
+        "string.h": "c",
+        "string_buffer.h": "c"
     }
 }

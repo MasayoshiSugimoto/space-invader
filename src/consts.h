@@ -21,6 +21,7 @@ enum TestMode {
 #define DATA_DIRECTORY "data"
 #define DATA_SPRITE_DIRECTORY (DATA_DIRECTORY "/sprites")
 #define DATA_SPRITE_SET_DIRECTORY (DATA_DIRECTORY "/sprite_sets")
+#define DATA_COLOR_PALETTE_DIRECTORY (DATA_DIRECTORY "/color_palettes")
 
 #define SPRITE_DIRECTORY "sprites"
 #define SPRITE_EMPTY_SPRITE_FILE_NAME "uninitialized.dat"
