@@ -41,6 +41,7 @@ void event_on_system_start(void) {
     collision_manager_allocate(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     color_loader_load_color_palette("color_palette_default.dat");
+    color_loader_color_pair_palette_load("color_pair_palette_default.dat");
 }
 
 

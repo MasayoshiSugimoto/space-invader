@@ -10,6 +10,7 @@
 
 
 void color_loader_load_color_palette(const char* color_palette_file_name);
+void color_loader_color_pair_palette_load(const char* color_pair_palette_file_name);
 
 
 #endif

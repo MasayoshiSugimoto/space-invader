@@ -22,6 +22,7 @@ enum TestMode {
 #define DATA_SPRITE_DIRECTORY (DATA_DIRECTORY "/sprites")
 #define DATA_SPRITE_SET_DIRECTORY (DATA_DIRECTORY "/sprite_sets")
 #define DATA_COLOR_PALETTE_DIRECTORY (DATA_DIRECTORY "/color_palettes")
+#define DATA_COLOR_PAIR_PALETTE_DIRECTORY (DATA_DIRECTORY "/color_pair_palettes")
 
 #define SPRITE_DIRECTORY "sprites"
 #define SPRITE_EMPTY_SPRITE_FILE_NAME "uninitialized.dat"
@@ -34,6 +35,7 @@ enum TestMode {
 #define GAME_INIT_GAME_STATE GAME_STATE_IN_GAME_2_INIT
 
 #define SYSTEM_FILE_NAME_MAX 256
+#define SYSTEM_PATH_LENGTH_MAX 4096
 
 #define ARENA_FRAME_SIZE (1024 * 100)
 #define ARENA_SYSTEM_SIZE (1024 * 100)
