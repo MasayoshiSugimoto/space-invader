@@ -1,9 +1,6 @@
 #include "color_loader.h"
 
 
-
-
-
 void color_loader_load_color_palette(const char* color_palette_file_name) {
     log_info_f("Loading color palette: color_palette_file_name=%s", color_palette_file_name);
     char file_path_buffer[SYSTEM_PATH_LENGTH_MAX];

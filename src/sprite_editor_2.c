@@ -72,6 +72,12 @@ static void _widget_init(struct Widget* widget, int width, int height) {
 }
 
 
+static void _reset_color(void) {
+  color_loader_load_color_palette(COLOR_LOADER_COLOR_PALETTE_FILE_NAME_DEFAULT);
+  color_loader_color_pair_palette_load(COLOR_LOADER_COLOR_PAIR_PALETTE_FILE_NAME_DEFAULT);
+}
+
+
 // static void _selection_init(void) {
 //   memset(&_selection, 0, sizeof(_selection));
 // }
@@ -129,6 +135,7 @@ static void _cursor_move_left(KeyboardKey key) {
 
 static void _load_previous_sprite(KeyboardKey key) {
   log_info("Loading previous sprite.");
+  _reset_color();
   _current_file_index = (_current_file_index + _file_count - 1 ) % _file_count;
   _load_sprite();
   _widget_edit.sprite_buffer = *sprite_loader_sprite_get(_current_sprite_name);
@@ -139,6 +146,7 @@ static void _load_previous_sprite(KeyboardKey key) {
 
 static void _load_next_sprite(KeyboardKey key) {
   log_info("Loading next sprite.");
+  _reset_color();
   _current_file_index = (_current_file_index + 1) % _file_count;
   _load_sprite();
   _widget_edit.sprite_buffer = *sprite_loader_sprite_get(_current_sprite_name);
