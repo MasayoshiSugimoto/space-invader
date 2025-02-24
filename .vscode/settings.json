@@ -78,6 +78,7 @@
         "slice.h": "c",
         "color_loader.h": "c",
         "string.h": "c",
-        "string_buffer.h": "c"
+        "string_buffer.h": "c",
+        "space.h": "c"
     }
 }

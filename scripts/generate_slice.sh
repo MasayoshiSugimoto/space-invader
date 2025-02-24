@@ -9,6 +9,7 @@ readonly TYPE_META_DATAS=(
     'Uint32' 'uint32_t' 'uint32_t' $POINTER_DISABLED
     'MainSystemMode' 'struct MainSystemMode*' 'main_system_mode' $POINTER_DISABLED    
     'AnimationStep' 'struct AnimationStep' 'animation_step' $POINTER_ENABLED
+    'Vector' 'struct Vector' vector $POINTER_ENABLED
 )
 readonly TYPE_COUNT=$((${#TYPE_META_DATAS[@]}/4))
 
@@ -75,6 +76,7 @@ function generate_slices_h {
 #include "log.h"
 #include "main_system_mode.h"
 #include "animation_step.h"
+#include "vector.h"
 
 
 $(

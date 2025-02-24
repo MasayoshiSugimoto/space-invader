@@ -63,6 +63,7 @@ static void _input_update(void) {
 
 
 static enum MainSystemModeStatus _system_update(void) {
+    space_update();
     if (_main_systems_index >= _slice_main_system->length) {
         return MAIN_SYSTEM_MODE_DONE;
     }

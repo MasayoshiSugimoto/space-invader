@@ -16,6 +16,7 @@
 #include "main_system_sequence.h"
 #include "arena.h"
 #include "color_loader.h"
+#include "space.h"
 
 
 void event_on_program_start(void);

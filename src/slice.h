@@ -5,6 +5,7 @@
 #include "log.h"
 #include "main_system_mode.h"
 #include "animation_step.h"
+#include "vector.h"
 
 
 struct SliceUint8 {
@@ -55,6 +56,16 @@ struct SliceAnimationStep {
 
 void slice_animation_step_init(struct SliceAnimationStep* slice);
 struct AnimationStep* slice_animation_step_get(const struct SliceAnimationStep* slice, uint32_t index);
+
+
+struct SliceVector {
+    struct Vector* data;
+    uint32_t length;
+};
+
+
+void slice_vector_init(struct SliceVector* slice);
+struct Vector* slice_vector_get(const struct SliceVector* slice, uint32_t index);
 
 
 #endif

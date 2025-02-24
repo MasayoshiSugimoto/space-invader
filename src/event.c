@@ -34,14 +34,15 @@ void event_on_system_start(void) {
     virtual_screen_allocate();
     frame_timer_init();
     timer_frame_init();
-    
     sprite_loader_init();
-
+    space_init();
+    space_allocate();
+    
     collision_manager_init();
     collision_manager_allocate(SCREEN_WIDTH, SCREEN_HEIGHT);
-
     color_loader_load_color_palette(COLOR_LOADER_COLOR_PALETTE_FILE_NAME_DEFAULT);
     color_loader_color_pair_palette_load(COLOR_LOADER_COLOR_PAIR_PALETTE_FILE_NAME_DEFAULT);
+    space_setup();
 }
 
 
@@ -59,6 +60,7 @@ void event_on_render_start(void) {
 
 
 void event_on_render_end(void) {
+    space_draw();
     refresh();
 }
 
@@ -69,6 +71,7 @@ void event_on_system_release(void) {
     sprite_loader_release();
     virtual_screen_release();
     arena_system_release();
+    space_release();
 }
 
 

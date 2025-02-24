@@ -59,3 +59,15 @@ struct AnimationStep* slice_animation_step_get(const struct SliceAnimationStep* 
     return &slice->data[index];
 }
 
+
+void slice_vector_init(struct SliceVector* slice) {
+    slice->data = NULL;
+    slice->length = 0;
+}
+
+
+struct Vector* slice_vector_get(const struct SliceVector* slice, uint32_t index) {
+    assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
+    return &slice->data[index];
+}
+
