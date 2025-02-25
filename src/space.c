@@ -39,7 +39,7 @@ uint32_t _star_length_get(void) {
 
 
 static void _on_time_out_dot(void* p) {
-    _offset_dot_y = (_offset_dot_y + 1) % (_screen_width_get() * 2);
+    _offset_dot_y = (_offset_dot_y + 1) % (_screen_width_get() * 4);
 }
 
 
@@ -56,6 +56,7 @@ static void _space_generate(struct SliceVector* vectors) {
 void space_init(void) {
     _dot_vectors = NULL;
     slice_vector_init(&_dots);
+    slice_vector_init(&_stars);
     _offset_dot_y = 0;
 }
 
