@@ -64,7 +64,7 @@ void space_allocate(void) {
     _dot_vectors = malloc(sizeof(*_dot_vectors) * _dot_length_get());
     _dots.data = _dot_vectors;
     _dots.length = _dot_length_get();
-    _star_vectors = malloc(sizeof(*_star_vectors) * _dot_length_get());
+    _star_vectors = malloc(sizeof(*_star_vectors) * _star_length_get());
     _stars.data = _star_vectors;
     _stars.length = _star_length_get();
 }
