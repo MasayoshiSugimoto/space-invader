@@ -11,6 +11,7 @@ const struct EntityData _entity_datas[] = {
         .animation_is_loop = true,
         .animation_auto_start = true,
         .friendly_id = FRIENDLY_ID_SPACESHIP,
+        .z = 2,
     },
     {
         .coordinates = {10, 1}, 
@@ -18,6 +19,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {17, 1}, 
@@ -25,6 +27,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {24, 1}, 
@@ -32,6 +35,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {31, 1}, 
@@ -39,6 +43,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {38, 1}, 
@@ -46,6 +51,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {45, 1}, 
@@ -53,6 +59,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {52, 1}, 
@@ -60,6 +67,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {10, 6}, 
@@ -67,6 +75,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {17, 6}, 
@@ -74,6 +83,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {24, 6}, 
@@ -81,6 +91,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {31, 6}, 
@@ -88,6 +99,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {38, 6}, 
@@ -95,6 +107,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {45, 6}, 
@@ -102,6 +115,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
     {
         .coordinates = {52, 6}, 
@@ -109,6 +123,7 @@ const struct EntityData _entity_datas[] = {
         .faction_id = FACTION_ID_ALIEN, 
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
+        .z = 1,
     },
 };
 
@@ -137,6 +152,7 @@ static void _on_collision(EntityId entity_id) {
     } else {
         animation_set(entity_id, ANIMATION_NAME_EXPLOSION);
         animation_start(entity_id);
+        sprite_component_z_set(entity_id, 0);
         enemy_ai_basic_disable(entity_id);
     }
 }
