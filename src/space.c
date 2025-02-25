@@ -1,7 +1,7 @@
 #include "space.h"
 
 
-#define SPACE_DOT_POURCENTAGE 20
+#define SPACE_DOT_POURCENTAGE 10
 #define SPACE_STAR_POURCENTAGE 2
 
 
@@ -95,6 +95,6 @@ void space_draw(void) {
     }
     for (uint32_t i = 0; i < _stars.length; i++) {
         struct Vector* v = slice_vector_get(&_stars, i);
-        virtual_screen_set_char(v->x, (v->y + _offset_dot_y) % _screen_height_get(), '*');
+        virtual_screen_set_char(v->x, (v->y + _offset_dot_y / 2) % _screen_height_get(), '*');
     }
 }
