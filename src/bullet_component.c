@@ -2,7 +2,7 @@
 
 
 #define BULLET_SPACESHIP_BULLET_MAX 3
-#define UPDATE_RATE_MILLISECOND 100
+#define UPDATE_RATE_MILLISECOND 40
 
 
 struct BulletComponent {
