@@ -1,8 +1,8 @@
 #include "animation.h"
 
 
-#define ANIMATION_ANIMATION_STEP_MAX 6
-#define ANIMATION_ANIMATION_MAX 2
+#define ANIMATION_ANIMATION_STEP_MAX 8
+#define ANIMATION_ANIMATION_MAX 3
 
 
 #define ANIMATION_ID_EXPLOSION "animation.explosion.dat"
@@ -84,12 +84,19 @@ void animation_setup(void) {
   _animations_steps[3].duration = milliseconds_as_duration(50);
   _animations_steps[4].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_2);
   _animations_steps[4].duration = milliseconds_as_duration(50);
+  _animations_steps[5].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN);
+  _animations_steps[5].duration = milliseconds_as_duration(200);
+  _animations_steps[6].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN_2);
+  _animations_steps[6].duration = milliseconds_as_duration(200);
   _animations[0].animation_name = ANIMATION_NAME_EXPLOSION;
   _animations[0].slice_animation_step.data = &_animations_steps[0];
   _animations[0].slice_animation_step.length = 3;
   _animations[1].animation_name = ANIMATION_NAME_SPACESHIP;
   _animations[1].slice_animation_step.data = &_animations_steps[3];
   _animations[1].slice_animation_step.length = 2;
+  _animations[2].animation_name = ANIMATION_NAME_ALIEN;
+  _animations[2].slice_animation_step.data = &_animations_steps[5];
+  _animations[2].slice_animation_step.length = 2;
 }
 
 

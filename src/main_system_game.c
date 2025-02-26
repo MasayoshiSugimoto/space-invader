@@ -20,6 +20,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {17, 1}, 
@@ -28,6 +31,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {24, 1}, 
@@ -36,6 +42,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {31, 1}, 
@@ -44,6 +53,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {38, 1}, 
@@ -52,6 +64,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {45, 1}, 
@@ -60,6 +75,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {52, 1}, 
@@ -68,6 +86,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {10, 6}, 
@@ -76,6 +97,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {17, 6}, 
@@ -84,6 +108,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {24, 6}, 
@@ -92,6 +119,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {31, 6}, 
@@ -100,6 +130,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {38, 6}, 
@@ -108,6 +141,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {45, 6}, 
@@ -116,6 +152,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
     {
         .coordinates = {52, 6}, 
@@ -124,6 +163,9 @@ const struct EntityData _entity_datas[] = {
         .sprite_file_name = SPRITE_LOADER_FILE_NAME_ALIEN,
         .is_basic_ai_active = true,
         .z = 1,
+        .animation_name = ANIMATION_NAME_ALIEN,
+        .animation_is_loop = true,
+        .animation_auto_start = true,
     },
 };
 
