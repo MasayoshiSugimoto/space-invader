@@ -192,6 +192,7 @@ static void _on_collision(EntityId entity_id) {
     if (bullet_component_is_active(entity_id)) {
         bullet_component_disable(entity_id);
     } else {
+        animation_is_loop_set(entity_id, false);
         animation_set(entity_id, ANIMATION_NAME_EXPLOSION);
         animation_start(entity_id);
         sprite_component_z_set(entity_id, 0);
