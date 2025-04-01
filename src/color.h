@@ -18,15 +18,6 @@ typedef short ColorId;
 typedef short ColorPairId;
 
 
-enum ColorPairId {
-  COLOR_PAIR_ID_DEFAULT,
-  COLOR_PAIR_ID_COLLISION_ON,
-  COLOR_PAIR_ID_MENU_SELECTION,
-  COLOR_PAIR_ID_MENU_TITLE,
-  COLOR_PAIR_ID_MAX
-};
-
-
 enum ColorPaletteId {
   COLOR_PALETTE_ID_DEFAULT,
   COLOR_PALETTE_ID_POST_RENDERING,

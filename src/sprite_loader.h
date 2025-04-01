@@ -13,6 +13,8 @@
 #define SPRITE_LOADER_FILE_NAME_SPACESHIP_2 "ship_2.dat"
 #define SPRITE_LOADER_FILE_NAME_ALIEN "alien.dat"
 #define SPRITE_LOADER_FILE_NAME_ALIEN_2 "alien_2.dat"
+#define SPRITE_LOADER_FILE_NAME_ALIEN_SQUID_1 "alien_squid_1.dat"
+#define SPRITE_LOADER_FILE_NAME_ALIEN_SQUID_2 "alien_squid_2.dat"
 #define SPRITE_LOADER_FILE_NAME_TITLE "title.dat"
 #define SPRITE_LOADER_FILE_NAME_CREDITS "credits.dat"
 #define SPRITE_LOADER_FILE_NAME_EXPLOSION_1 "explosion_1.dat"

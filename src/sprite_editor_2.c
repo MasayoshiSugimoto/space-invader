@@ -1,7 +1,7 @@
 #include "sprite_editor_2.h"
 
 
-#define SPRITE_EDITOR_WINDOW_EDIT_WIDTH 40
+#define SPRITE_EDITOR_WINDOW_EDIT_WIDTH 100
 #define SPRITE_EDITOR_WINDOW_LOG_HEIGHT 5
 
 
@@ -160,7 +160,7 @@ static void _key_handle_key_default(KeyboardKey key) {
   int space = 32;
   int tilde = 126;
   if (space <= key && key <= tilde) {
-    virtual_cursor_character_set(&_widget_edit.cursor, key, COLOR_PAIR_ID_DEFAULT);
+    virtual_cursor_character_set(&_widget_edit.cursor, key, COLOR_COLOR_PAIR_ID_DEFAULT);
   }
 }
 

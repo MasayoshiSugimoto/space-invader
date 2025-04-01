@@ -104,6 +104,7 @@ void color_color_set_default(void) {
 
 void color_color_palette_push(enum ColorPaletteId color_palette_id) {
   assert_f(_color_palette_id_is_valid(color_palette_id), "Invalid color_palette_id: %d", color_palette_id);
+  log_info_f("Pushing color palette: color_palette_id=%d", color_palette_id);
   for (ColorId color_id = COLOR_FIRST_COLOR_ID; color_id < COLOR_COLOR_MAX; color_id++) {
     struct Color color = _color_palette[color_palette_id][color_id];
     init_color(color_id, _as_ncurse_intensity(color.red), _as_ncurse_intensity(color.green), _as_ncurse_intensity(color.blue));

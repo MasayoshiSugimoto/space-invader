@@ -29,7 +29,7 @@ void event_on_program_start(void) {
 void event_on_system_start(void) {
     log_info("Executing system initialization sequence.");
     arena_system_create();
-    color_color_set_default();
+    color_reset();
     virtual_screen_init();
     virtual_screen_allocate();
     frame_timer_init();
@@ -54,13 +54,13 @@ void event_on_frame_start(void) {
 
 
 void event_on_render_start(void) {
-    erase();
-    color_update();
+    
 }
 
 
 void event_on_render_end(void) {
-    space_draw();
+    color_update();
+    if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) space_draw();
     refresh();
 }
 
