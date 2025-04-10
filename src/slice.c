@@ -1,72 +1,72 @@
 #include "slice.h"
 
-void slice_uint8_t_init(struct SliceUint8* slice) {
+void SLICE__uint8_t_init(struct SLICE__Uint8* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-uint8_t slice_uint8_t_get(const struct SliceUint8* slice, uint32_t index) {
+uint8_t SLICE__uint8_t_get(const struct SLICE__Uint8* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return slice->data[index];
 }
 
 
-void slice_uint16_t_init(struct SliceUint16* slice) {
+void SLICE__uint16_t_init(struct SLICE__Uint16* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-uint16_t slice_uint16_t_get(const struct SliceUint16* slice, uint32_t index) {
+uint16_t SLICE__uint16_t_get(const struct SLICE__Uint16* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return slice->data[index];
 }
 
 
-void slice_uint32_t_init(struct SliceUint32* slice) {
+void SLICE__uint32_t_init(struct SLICE__Uint32* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-uint32_t slice_uint32_t_get(const struct SliceUint32* slice, uint32_t index) {
+uint32_t SLICE__uint32_t_get(const struct SLICE__Uint32* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return slice->data[index];
 }
 
 
-void slice_main_system_mode_init(struct SliceMainSystemMode* slice) {
+void SLICE__main_system_mode_init(struct SLICE__MainSystemMode* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-struct MainSystemMode* slice_main_system_mode_get(const struct SliceMainSystemMode* slice, uint32_t index) {
+struct MainSystemMode* SLICE__main_system_mode_get(const struct SLICE__MainSystemMode* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return slice->data[index];
 }
 
 
-void slice_animation_step_init(struct SliceAnimationStep* slice) {
+void SLICE__animation_step_init(struct SLICE__AnimationStep* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-struct AnimationStep* slice_animation_step_get(const struct SliceAnimationStep* slice, uint32_t index) {
+struct AnimationStep* SLICE__animation_step_get(const struct SLICE__AnimationStep* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return &slice->data[index];
 }
 
 
-void slice_vector_init(struct SliceVector* slice) {
+void SLICE__vector_init(struct SLICE__Vector* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-struct Vector* slice_vector_get(const struct SliceVector* slice, uint32_t index) {
+struct Vector* SLICE__vector_get(const struct SLICE__Vector* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return &slice->data[index];
 }

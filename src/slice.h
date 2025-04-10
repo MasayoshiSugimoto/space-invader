@@ -8,64 +8,64 @@
 #include "vector.h"
 
 
-struct SliceUint8 {
+struct SLICE__Uint8 {
     uint8_t* data;
     uint32_t length;
 };
 
 
-void slice_uint8_t_init(struct SliceUint8* slice);
-uint8_t slice_uint8_t_get(const struct SliceUint8* slice, uint32_t index);
+void SLICE__uint8_t_init(struct SLICE__Uint8* slice);
+uint8_t SLICE__uint8_t_get(const struct SLICE__Uint8* slice, uint32_t index);
 
 
-struct SliceUint16 {
+struct SLICE__Uint16 {
     uint16_t* data;
     uint32_t length;
 };
 
 
-void slice_uint16_t_init(struct SliceUint16* slice);
-uint16_t slice_uint16_t_get(const struct SliceUint16* slice, uint32_t index);
+void SLICE__uint16_t_init(struct SLICE__Uint16* slice);
+uint16_t SLICE__uint16_t_get(const struct SLICE__Uint16* slice, uint32_t index);
 
 
-struct SliceUint32 {
+struct SLICE__Uint32 {
     uint32_t* data;
     uint32_t length;
 };
 
 
-void slice_uint32_t_init(struct SliceUint32* slice);
-uint32_t slice_uint32_t_get(const struct SliceUint32* slice, uint32_t index);
+void SLICE__uint32_t_init(struct SLICE__Uint32* slice);
+uint32_t SLICE__uint32_t_get(const struct SLICE__Uint32* slice, uint32_t index);
 
 
-struct SliceMainSystemMode {
+struct SLICE__MainSystemMode {
     struct MainSystemMode** data;
     uint32_t length;
 };
 
 
-void slice_main_system_mode_init(struct SliceMainSystemMode* slice);
-struct MainSystemMode* slice_main_system_mode_get(const struct SliceMainSystemMode* slice, uint32_t index);
+void SLICE__main_system_mode_init(struct SLICE__MainSystemMode* slice);
+struct MainSystemMode* SLICE__main_system_mode_get(const struct SLICE__MainSystemMode* slice, uint32_t index);
 
 
-struct SliceAnimationStep {
+struct SLICE__AnimationStep {
     struct AnimationStep* data;
     uint32_t length;
 };
 
 
-void slice_animation_step_init(struct SliceAnimationStep* slice);
-struct AnimationStep* slice_animation_step_get(const struct SliceAnimationStep* slice, uint32_t index);
+void SLICE__animation_step_init(struct SLICE__AnimationStep* slice);
+struct AnimationStep* SLICE__animation_step_get(const struct SLICE__AnimationStep* slice, uint32_t index);
 
 
-struct SliceVector {
+struct SLICE__Vector {
     struct Vector* data;
     uint32_t length;
 };
 
 
-void slice_vector_init(struct SliceVector* slice);
-struct Vector* slice_vector_get(const struct SliceVector* slice, uint32_t index);
+void SLICE__vector_init(struct SLICE__Vector* slice);
+struct Vector* SLICE__vector_get(const struct SLICE__Vector* slice, uint32_t index);
 
 
 #endif

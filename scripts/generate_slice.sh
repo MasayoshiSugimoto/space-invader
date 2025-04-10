@@ -19,7 +19,7 @@ function generate_slice_h {
     local type_name="$2"
     local function_suffix="$3"
     local is_pointer_enabled="$4"
-    local slice_struct="struct Slice${structure_suffix}"
+    local slice_struct="struct SLICE__${structure_suffix}"
     local pointer_mark=$([[ $is_pointer_enabled == $POINTER_ENABLED ]] && echo '*')
     cat << EOF
 ${slice_struct} {
@@ -28,8 +28,8 @@ ${slice_struct} {
 };
 
 
-void slice_${function_suffix}_init(${slice_struct}* slice);
-${type_name}${pointer_mark} slice_${function_suffix}_get(const ${slice_struct}* slice, uint32_t index);
+void SLICE__${function_suffix}_init(${slice_struct}* slice);
+${type_name}${pointer_mark} SLICE__${function_suffix}_get(const ${slice_struct}* slice, uint32_t index);
 
 
 EOF
@@ -41,16 +41,16 @@ function generate_slice_c {
     local type_name="$2"
     local function_suffix="$3"
     local is_pointer_enabled="$4"
-    local slice_struct="struct Slice${structure_suffix}"
+    local slice_struct="struct SLICE__${structure_suffix}"
     local pointer_mark=$([[ $is_pointer_enabled == $POINTER_ENABLED ]] && echo '*')
     cat << EOF
-void slice_${function_suffix}_init(${slice_struct}* slice) {
+void SLICE__${function_suffix}_init(${slice_struct}* slice) {
     slice->data = NULL;
     slice->length = 0;
 }
 
 
-${type_name}${pointer_mark} slice_${function_suffix}_get(const ${slice_struct}* slice, uint32_t index) {
+${type_name}${pointer_mark} SLICE__${function_suffix}_get(const ${slice_struct}* slice, uint32_t index) {
     assert_f(index < slice->length, "Index out of bound: length=%d, index=%d", slice->length, index);
     return $(
         if [[ $is_pointer_enabled == $POINTER_ENABLED ]]; then

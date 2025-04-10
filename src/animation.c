@@ -10,7 +10,7 @@
 
 struct Animation {
   const char* animation_name;
-  struct SliceAnimationStep slice_animation_step;
+  struct SLICE__AnimationStep slice_animation_step;
 };
 
 
@@ -43,10 +43,10 @@ uint32_t _current_step_get(EntityId entity_id) {
   assert_entity_id(entity_id);
   Duration duration = 0;
   struct AnimationStatus* status = &_animation_component.status[entity_id];
-  const struct SliceAnimationStep* slice = &status->animation->slice_animation_step;
+  const struct SLICE__AnimationStep* slice = &status->animation->slice_animation_step;
   uint32_t i = 0;
   while (i < slice->length) {
-    struct AnimationStep* step = slice_animation_step_get(slice, i);
+    struct AnimationStep* step = SLICE__animation_step_get(slice, i);
     duration += step->duration;
     if (duration >= frame_timer_get_elapsed_time(&status->_time_from_begin)) break;
     i++;
@@ -62,7 +62,7 @@ void animation_init(void) {
   }
   for (int i = 0; i < ANIMATION_ANIMATION_MAX; i++) {
     _animations[i].animation_name = NULL;
-    slice_animation_step_init(&_animations[i].slice_animation_step);
+    SLICE__animation_step_init(&_animations[i].slice_animation_step);
   }
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     entity_system_component_deactivate(entity_id, COMPONENT_ID_ANIMATION);
@@ -111,10 +111,10 @@ void animation_update(void) {
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
     if (!entity_system_component_is_active(entity_id, COMPONENT_ID_ANIMATION)) continue;
     struct AnimationStatus* status = &_animation_component.status[entity_id];
-    const struct SliceAnimationStep* slice = &status->animation->slice_animation_step;
+    const struct SLICE__AnimationStep* slice = &status->animation->slice_animation_step;
     uint32_t current_step_index = _current_step_get(entity_id);
     if (current_step_index < slice->length) {
-      sprite_component_sprite_buffer_set(entity_id, slice_animation_step_get(slice, current_step_index)->sprite_buffer);
+      sprite_component_sprite_buffer_set(entity_id, SLICE__animation_step_get(slice, current_step_index)->sprite_buffer);
     } else if (status->is_loop) {
       animation_set(entity_id, status->animation->animation_name);
       animation_start(entity_id);
