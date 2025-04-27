@@ -46,7 +46,7 @@ static void _on_time_out_dot(void* p) {
 static void _space_generate(struct SLICE__Vector* vectors) {
     for (uint32_t i = 0; i < vectors->length; i++) {
         uint32_t index = rand() % _screen_length_get();
-        struct Vector* v = SLICE__vector_get(vectors, i);
+        struct Vector* v = SLICE__Vector__get(vectors, i);
         v->x = index % _screen_width_get();
         v->y = index / _screen_width_get();
     }
@@ -55,8 +55,8 @@ static void _space_generate(struct SLICE__Vector* vectors) {
 
 void space_init(void) {
     _dot_vectors = NULL;
-    SLICE__vector_init(&_dots);
-    SLICE__vector_init(&_stars);
+    SLICE__Vector__init(&_dots);
+    SLICE__Vector__init(&_stars);
     _offset_dot_y = 0;
 }
 
@@ -91,11 +91,11 @@ void space_update(void) {
 
 void space_draw(void) {
     for (uint32_t i = 0; i < _dots.length; i++) {
-        struct Vector* v = SLICE__vector_get(&_dots, i);
+        struct Vector* v = SLICE__Vector__get(&_dots, i);
         virtual_screen_set_char(v->x, (v->y + _offset_dot_y / 4) % _screen_height_get(), '.');
     }
     for (uint32_t i = 0; i < _stars.length; i++) {
-        struct Vector* v = SLICE__vector_get(&_stars, i);
+        struct Vector* v = SLICE__Vector__get(&_stars, i);
         virtual_screen_set_char(v->x, (v->y + _offset_dot_y / 2) % _screen_height_get(), '*');
     }
 }

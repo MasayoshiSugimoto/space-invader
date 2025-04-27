@@ -79,6 +79,8 @@
         "color_loader.h": "c",
         "string.h": "c",
         "string_buffer.h": "c",
-        "space.h": "c"
+        "space.h": "c",
+        "game_over_screen.h": "c",
+        "slice__animationstep.h": "c"
     }
 }

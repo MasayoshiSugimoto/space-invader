@@ -7,7 +7,7 @@ static struct MainSystemMode* _main_systems_test[] = {
     &g_collision_manager_test,
     &g_start_screen_main_system_mode
 };
-static struct SLICE__MainSystemMode _slice_main_systems_test = {
+static struct SLICE__MainSystemMode_ptr _slice_main_systems_test = {
     _main_systems_test,
     array_size(_main_systems_test)
 };
@@ -16,23 +16,23 @@ static struct MainSystemMode* g_main_system_sequence_list[] = {
     &g_game_main_system_mode,
     &g_game_over_screen_main_system_mode,
 };
-static struct SLICE__MainSystemMode _slice_main_system_sequence = {
+static struct SLICE__MainSystemMode_ptr _slice_main_system_sequence = {
     g_main_system_sequence_list,
     array_size(g_main_system_sequence_list)
 };
-static struct SLICE__MainSystemMode* _slice_main_system = &_slice_main_system_sequence;
+static struct SLICE__MainSystemMode_ptr* _slice_main_system = &_slice_main_system_sequence;
 static uint16_t _main_systems_index = 0;
 static bool _increment = false;
 
 
 static struct MainSystemMode* _main_system_get_active(void) {
-    return SLICE__main_system_mode_get(_slice_main_system, _main_systems_index);
+    return *SLICE__MainSystemMode_ptr__get(_slice_main_system, _main_systems_index);
 }
 
 
 static void _init(void) {
     log_info("Initializing main system sequence.");
-    SLICE__main_system_mode_get(_slice_main_system, 0)->init();
+    (*SLICE__MainSystemMode_ptr__get(_slice_main_system, 0))->init();
 }
 
 

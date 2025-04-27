@@ -3,7 +3,7 @@
 
 
 #include <stdint.h>
-#include "slice.h"
+#include "generated/slice__vector.h"
 #include "virtual_screen.h"
 #include "recuring_frame_timer.h"
 

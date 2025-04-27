@@ -7,7 +7,6 @@
 #include "test_suite.h"
 #include "event.h"
 #include "main_system_mode.h"
-#include "slice.h"
 
 
 /********************************************************************************

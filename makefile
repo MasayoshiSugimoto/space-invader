@@ -1,16 +1,17 @@
-CC = clang
-CFLAGS = -Wall -g -fsanitize=address -fno-omit-frame-pointer
-DEP_OPT = -MM -MP
-SRC_DIR = src
-BUILD_DIR = .build
-SCRIPT_DIR = scripts
-SOURCES = $(foreach d, $(SRC_DIR), $(wildcard $(addprefix $(d)/*, .c)))
-DEPS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.d))
-OBJS = $(subst $(SRC_DIR), $(BUILD_DIR), $(SOURCES:.c=.o))
-PROGRAM = space-invaders
-LIBS = -lcurses -lncurses -lm
+CC := clang
+CFLAGS := -Wall -g -fsanitize=address -fno-omit-frame-pointer
+DEP_OPT := -MM -MP
+SRC_DIR := src
+BUILD_DIR := .build
+SCRIPT_DIR := scripts
+SOURCES := $(shell find $(SRC_DIR) -name "*.c" -type f)
+DEPS := $(subst $(SRC_DIR),$(BUILD_DIR),$(SOURCES:.c=.d))
+OBJS := $(subst $(SRC_DIR),$(BUILD_DIR),$(SOURCES:.c=.o))
+PROGRAM := space-invaders
+LIBS := -lcurses -lncurses -lm
 
-ignore := $(shell [ ! -d .build ] && mkdir -p .build)
+$(shell [ ! -d .build ] && mkdir -p .build && mkdir -p .build/generated)
+$(shell [ ! -d $(SRC_DIR)/generated ] && mkdir -p $(SRC_DIR)/generated)
 
 $(PROGRAM): $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
@@ -32,12 +33,6 @@ $(SRC_DIR)/array.h: $(SCRIPT_DIR)/generate_array.sh
 $(SRC_DIR)/array.c: $(SCRIPT_DIR)/generate_array.sh
 	./$(SCRIPT_DIR)/generate_array.sh c> $@
 
-$(SRC_DIR)/slice.h: $(SCRIPT_DIR)/generate_slice.sh
-	./$(SCRIPT_DIR)/generate_slice.sh h> $@
-
-$(SRC_DIR)/slice.c: $(SCRIPT_DIR)/generate_slice.sh
-	./$(SCRIPT_DIR)/generate_slice.sh c> $@
-
 
 .PHONY: clean build try run tags
 
@@ -45,6 +40,7 @@ clean:
 	rm -rf .build
 	rm -f $(PROGRAM)
 	rm -f tags
+	rm -rf $(SRC_DIR)/generated
 
 build: $(PROGRAM)
 
@@ -61,5 +57,8 @@ try:
 
 tags:
 	ctags -R .
+
+gen:
+	./generators/generate_slice.sh
 
 -include $(DEPS)

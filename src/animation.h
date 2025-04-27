@@ -8,7 +8,7 @@
 #include "sprite_component.h"
 #include "sprite_loader.h"
 #include "animation_step.h"
-#include "slice.h"
+#include "generated/slice__animationstep.h"
 
 
 #define ANIMATION_NAME_EXPLOSION "animation_explosion.dat"

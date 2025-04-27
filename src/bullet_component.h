@@ -13,6 +13,8 @@
 #include "game_screen.h"
 #include "window_manager.h"
 #include "collision_manager.h"
+#include "bullet_component_struct.h"
+#include "generated/slice__bulletcomponent.h"
 
 
 void bullet_component_init(void);

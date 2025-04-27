@@ -5,10 +5,7 @@
 #define UPDATE_RATE_MILLISECOND 20
 
 
-struct BulletComponent {
-  EntityId entity_id;
-  bool active;
-};
+struct SLICE__BulletComponent _bullet_component_slice;
 struct BulletComponent _bullet_components[BULLET_SPACESHIP_BULLET_MAX];
 struct RecuringFrameTimer _timer;
 
@@ -56,6 +53,7 @@ void bullet_component_init(void) {
     _bullet_components[i].active = false;
   }
   recurring_frame_timer_set(&_timer, _on_timer, NULL, milliseconds_as_duration(UPDATE_RATE_MILLISECOND));
+  SLICE__BulletComponent__init(&_bullet_component_slice);
 }
 
 
