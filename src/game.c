@@ -6,6 +6,7 @@ struct Game {
   EntityId spaceship_id;
   uint64_t last_frame_time_millisecond;
   enum GameOverResult game_over_result;
+  bool is_game_over_update;
 };
 
 
@@ -34,6 +35,7 @@ void _game_over_update(void) {
     _game.game_over_result = GAME_OVER_NONE;
   }
   if (result == GAME_OVER_NONE && _game.game_over_result != GAME_OVER_NONE) {
+    log_info("Game over detected.");
     color_color_palette_activate(COLOR_PALETTE_ID_DEFAULT);
     color_fade_start_fade_out(DURATION_ONE_SECOND);
   }
@@ -83,6 +85,7 @@ void game_init(void) {
   _game.game_state = GAME_INIT_GAME_STATE;
   _game.last_frame_time_millisecond = get_current_millisecond();
   _game.game_over_result = GAME_OVER_NONE;
+  _game.is_game_over_update = true;
 
   // Initialization
   sprite_component_init();
@@ -95,6 +98,11 @@ void game_init(void) {
   sprite_component_container_set(game_screen_get());
   bullet_component_setup();
   animation_setup();
+}
+
+
+void game_is_game_over_update_set(bool is_game_over_update) {
+  _game.is_game_over_update = true;
 }
 
 
@@ -115,7 +123,7 @@ void game_update(void) {
   enemy_ai_basic_update(delta_time_millisecond);
   bullet_component_update();
   animation_update();
-  _game_over_update();
+  if (_game.is_game_over_update) _game_over_update();
 }
 
 

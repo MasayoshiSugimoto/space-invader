@@ -2,10 +2,10 @@
 
 
 static struct MainSystemMode* _main_systems_test[] = {
-    &g_animation_test,
+    // &g_animation_test,
     &g_entity_spaceship_test,
-    &g_collision_manager_test,
-    &g_start_screen_main_system_mode
+    // &g_collision_manager_test,
+    // &g_start_screen_main_system_mode
 };
 static struct SLICE__MainSystemMode_ptr _slice_main_systems_test = {
     _main_systems_test,
@@ -20,7 +20,7 @@ static struct SLICE__MainSystemMode_ptr _slice_main_system_sequence = {
     g_main_system_sequence_list,
     array_size(g_main_system_sequence_list)
 };
-static struct SLICE__MainSystemMode_ptr* _slice_main_system = &_slice_main_system_sequence;
+static struct SLICE__MainSystemMode_ptr* _slice_main_system = &_slice_main_systems_test;
 static uint16_t _main_systems_index = 0;
 static bool _increment = false;
 

@@ -81,6 +81,8 @@
         "string_buffer.h": "c",
         "space.h": "c",
         "game_over_screen.h": "c",
-        "slice__animationstep.h": "c"
+        "slice__animationstep.h": "c",
+        "slice__bulletcomponent.h": "c",
+        "bullet_component_struct.h": "c"
     }
 }

@@ -34,7 +34,7 @@ $(SRC_DIR)/array.c: $(SCRIPT_DIR)/generate_array.sh
 	./$(SCRIPT_DIR)/generate_array.sh c> $@
 
 
-.PHONY: clean build try run tags
+.PHONY: clean build try run tags gen
 
 clean:
 	rm -rf .build
@@ -58,7 +58,5 @@ try:
 tags:
 	ctags -R .
 
-gen:
-	./generators/generate_slice.sh
 
 -include $(DEPS)

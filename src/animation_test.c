@@ -47,11 +47,6 @@ static const struct EntityData _entity_datas[] = {
 };
 static int _screen_width = 25;
 static int _screen_height = 10;
-static const struct Color BLACK = {0, 0, 0};
-static const struct Color RED = {255, 0, 0};
-static const struct Color WHITE = {255, 255, 255};
-static ColorPairId _color_pair_id_white;
-static ColorPairId _color_pair_id_red;
 
 
 static void _init(void) {
@@ -61,23 +56,8 @@ static void _init(void) {
     game_init();
     game_init_entities(_entity_datas, array_size(_entity_datas));
     game_screen_init(_screen_width, _screen_height);
+    game_is_game_over_update_set(false);
     enemy_ai_basic_margin_from_border_set(0);
-
-    // Set color palette
-    int color_palette_id = 1;
-    color_reset();
-    color_color_palette_activate(color_palette_id);
-    ColorId black_id = color_color_palette_add(BLACK);
-    ColorId white_id = color_color_palette_add(WHITE);
-    ColorId red_id = color_color_palette_add(RED);
-    color_color_palette_push(color_palette_id);
-    _color_pair_id_white = color_color_pair_add(black_id, white_id);
-    _color_pair_id_red = color_color_pair_add(black_id, red_id);
-    color_color_pair_push();
-
-    // Set sprite default color
-    sprite_buffer_color_fill(sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP), _color_pair_id_white);
-    sprite_buffer_color_fill(sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN), _color_pair_id_white);
 }
 
 
@@ -96,6 +76,7 @@ static enum MainSystemModeStatus _system_update(void) {
     game_update();
     EntityId entity_id = entity_system_get_by_friendly_id(FRIENDLY_ID_ANIMATION_FIRST_ANIMATION);
     if (entity_id != ENTITY_ID_INVALID && animation_is_done(entity_id)) {
+        log_info("Animation system shutdown...");
         return MAIN_SYSTEM_MODE_DONE;
     }
     return MAIN_SYSTEM_MODE_RUNNING;
