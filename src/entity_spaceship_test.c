@@ -111,9 +111,8 @@ static void _init(void) {
     game_screen_init(_width, _height);
 
     game_init();
+    game_is_game_over_update_set(false);
     game_init_entities(_entity_datas, array_size(_entity_datas));
-
-    color_reset();
 
     recurring_frame_timer_set(&_timer, _on_event, NULL, milliseconds_as_duration(100));
     _event_counter = 0;
