@@ -11,7 +11,7 @@ static void _release(void) {
 }
 
 
-enum State {
+static enum State {
   STATE_GAME_OVER_FADE_IN,
   STATE_GAME_OVER_DISPLAY,
   STATE_GAME_OVER_FADE_OUT,

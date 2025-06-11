@@ -9,7 +9,7 @@
 #include "window_manager.h"
 
 
-struct MainSystemMode g_animation_test;
+extern struct MainSystemMode g_animation_test;
 
 
 #endif

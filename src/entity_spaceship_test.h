@@ -8,7 +8,7 @@
 #include "recuring_frame_timer.h"
 
 
-struct MainSystemMode g_entity_spaceship_test;
+extern struct MainSystemMode g_entity_spaceship_test;
 
 
 #endif

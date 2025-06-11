@@ -11,7 +11,7 @@
 #include "main_system_mode.h"
 
 
-struct MainSystemMode g_start_screen_main_system_mode;
+extern struct MainSystemMode g_start_screen_main_system_mode;
 
 
 #endif

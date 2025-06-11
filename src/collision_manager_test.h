@@ -8,7 +8,7 @@
 #include "game_screen.h"
 
 
-struct MainSystemMode g_collision_manager_test;
+extern struct MainSystemMode g_collision_manager_test;
 
 
 #endif
