@@ -9,6 +9,6 @@ struct BulletComponent {
     EntityId entity_id;
     bool active;
 };
-
+ 
 
 #endif

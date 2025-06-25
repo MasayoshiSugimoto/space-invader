@@ -14,7 +14,7 @@
 #include "game_over_screen.h"
 
 
-struct MainSystemMode g_main_system_sequence;
+extern struct MainSystemMode g_main_system_sequence;
 
 
 #endif

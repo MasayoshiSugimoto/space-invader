@@ -15,7 +15,7 @@
 #include <stdio.h> 
 
 
-struct MainSystemMode g_main_system_mode_sprite_editor_2;
+extern struct MainSystemMode g_main_system_mode_sprite_editor_2;
 
 
 #endif

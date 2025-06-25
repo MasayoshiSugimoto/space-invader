@@ -22,13 +22,13 @@ enum GameOverResult {
 };
 
 
-struct MainSystemMode g_game_main_system_mode;
+extern struct MainSystemMode g_game_main_system_mode;
 
 
 void game_init(void);
 void game_init_entities(const struct EntityData* entity_datas, size_t entity_datas_length);
 void game_print_state(enum GameState game_state);
-void game_is_game_update_set(bool is_game_update);
+void game_is_game_over_update_set(bool is_game_over_update);
 void game_set_game_over_state(enum GameState game_state);
 void game_update(void);
 void game_render(void);

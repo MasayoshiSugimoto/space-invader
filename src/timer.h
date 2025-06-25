@@ -17,6 +17,7 @@
 #define duration_as_milliseconds(d) ((d) / 1000000ul)
 #define duration_as_second(d) (duration_as_milliseconds(d) / 1000ul)
 #define milliseconds_as_duration(m) ((m) * 1000000ul)
+#define seconds_as_duration(s) ((s) * 1000000000ul)
 #define DURATION_ONE_SECOND milliseconds_as_duration(1000)
 
 

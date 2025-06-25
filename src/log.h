@@ -9,55 +9,52 @@
 #include "consts.h"
 
 
-struct _IO_FILE* g_debug_file;
-
-
 #define log_info(text) { \
-  fprintf(g_debug_file, "[INFO][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, text); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[INFO][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), text); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
 }
 
 
 #define log_info_f(pattern, ...) { \
-  fprintf(g_debug_file, "[INFO][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, pattern, __VA_ARGS__); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[INFO][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), pattern, __VA_ARGS__); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
 }
 
 
 #define log_error(text) { \
-  fprintf(g_debug_file, "[ERROR][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, text); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[ERROR][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), text); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
 }
 
 
 #define log_error_f(pattern, ...) { \
-  fprintf(g_debug_file, "[ERROR][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, pattern, __VA_ARGS__); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[ERROR][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), pattern, __VA_ARGS__); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
 }
 
 
 #define log_fatal(text) { \
-  fprintf(g_debug_file, "[FATAL][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, text); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[FATAL][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), text); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
   exit(1); \
 }
 
 
 #define log_fatal_f(pattern, ...) { \
-  fprintf(g_debug_file, "[FATAL][%s:%d] ", __FILE__, __LINE__); \
-  fprintf(g_debug_file, pattern, __VA_ARGS__); \
-  fprintf(g_debug_file, "\n"); \
-  fflush(g_debug_file); \
+  fprintf(log_debug_file_get(), "[FATAL][%s:%d] ", __FILE__, __LINE__); \
+  fprintf(log_debug_file_get(), pattern, __VA_ARGS__); \
+  fprintf(log_debug_file_get(), "\n"); \
+  fflush(log_debug_file_get()); \
   exit(1); \
 }
 
@@ -76,7 +73,8 @@ struct _IO_FILE* g_debug_file;
 }
 
 
-void log_init();
+void log_init(void);
+struct _IO_FILE* log_debug_file_get(void);
 
 
 #endif

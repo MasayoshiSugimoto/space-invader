@@ -11,7 +11,7 @@ struct Vector {
 };
 
 
-const struct Vector VZERO;
+extern const struct Vector VZERO;
 
 
 void vector_as_string(char* buf, struct Vector v);
