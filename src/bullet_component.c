@@ -9,7 +9,7 @@
 #define BULLET_ENEMY_END BULLET_ALL_MAX
 #define UPDATE_RATE_MILLISECOND 20
 #define UPDATE_RATE_ENEMY_BULLER_MILLISECOND 200
-#define ENEMY_FIRE_RATE_SECOND 1
+#define ENEMY_FIRE_RATE_MILLISECOND 1500
 #define BULLET_Z_COORDINATE 9
 
 
@@ -23,12 +23,35 @@ struct RecuringFrameTimer _enemy_fire_timer;
 struct RecuringFrameTimer _enemy_bullet_update_timer;
 
 
+static bool _has_hit_the_top_of_the_screen(int bullet_index) {
+  struct BulletComponent* bullet = SLICE__BulletComponent__get(&_bullet_components, bullet_index);
+	struct Vector position = entity_system_get_coordinates(bullet->entity_id);
+	return position.y <= 0;
+}
+
+
 static void _on_spaceship_bullet_update(void* param) {
   struct Vector up = {0, -1};
   for (int i = BULLET_SPACESHIP_START; i < BULLET_SPACESHIP_END; i++) {
-    const struct BulletComponent* bullet = SLICE__BulletComponent__get(&_bullet_components, i);
+    struct BulletComponent* bullet = SLICE__BulletComponent__get(&_bullet_components, i);
     if (!bullet->active) continue;
-    entity_system_add_coordinates(bullet->entity_id, up);
+		// If the spaceship bullet reach the top of the screen, show an red explosion.
+		if (
+			bullet->state == BULLET_STATE_MOVING
+			&& _has_hit_the_top_of_the_screen(i)
+			&& !entity_system_component_is_active(bullet->entity_id, COMPONENT_ID_ANIMATION)
+		) {
+			bullet->state = BULLET_STATE_EXPLODING;
+			animation_set(bullet->entity_id, ANIMATION_NAME_BULLET_EXPLOSION);
+			animation_start(bullet->entity_id);
+			animation_is_loop_set(bullet->entity_id, false);
+		} else if (bullet->state == BULLET_STATE_MOVING) {
+			entity_system_add_coordinates(bullet->entity_id, up);
+		} else if (bullet->state == BULLET_STATE_EXPLODING && animation_is_done(bullet->entity_id)) {
+			// Move the bullet out of the screen once done for recycling
+			entity_system_add_coordinates(bullet->entity_id, up);
+			entity_system_component_deactivate(bullet->entity_id, COMPONENT_ID_ANIMATION);
+		}
   }
 }
 
@@ -54,12 +77,13 @@ static void _deactivate(struct BulletComponent* bullet_component) {
 static void _activate(struct BulletComponent* bullet_component) {
   log_info_f("Activate bullet component: entity_id = %zu", bullet_component->entity_id);
   bullet_component->active = true;
+	bullet_component->state = BULLET_STATE_MOVING;
   sprite_component_enable(bullet_component->entity_id);
   collision_manager_activate(bullet_component->entity_id);
 }
 
 
-struct BulletComponent* _bullet_component_get(EntityId entity_id) {
+static struct BulletComponent* _bullet_component_get(EntityId entity_id) {
   assert_entity_id(entity_id);
   for (int i = 0; i < BULLET_ALL_MAX; i++) {
     struct BulletComponent* bullet = SLICE__BulletComponent__get(&_bullet_components, i);
@@ -71,7 +95,7 @@ struct BulletComponent* _bullet_component_get(EntityId entity_id) {
 }
 
 
-void _on_enemy_fire_timer(void* params) {
+static void _on_enemy_fire_timer(void* params) {
   log_info("Enemy fire timer event.");
   int count = 0;
   for (EntityId entity_id = 0; entity_id < ENTITY_MAX; entity_id++) {
@@ -94,12 +118,12 @@ void _on_enemy_fire_timer(void* params) {
 }
 
 
-bool _is_spaceship_bullet_by_bullet_index(int bullet_index) {
+static bool _is_spaceship_bullet_by_bullet_index(int bullet_index) {
   return BULLET_SPACESHIP_START <= bullet_index && bullet_index < BULLET_SPACESHIP_END;
 }
 
 
-bool _is_enemy_bullet_by_bullet_index(int bullet_index) {
+static bool _is_enemy_bullet_by_bullet_index(int bullet_index) {
   return BULLET_ENEMY_START <= bullet_index && bullet_index < BULLET_ENEMY_END;
 }
 
@@ -113,7 +137,7 @@ void bullet_component_init(void) {
   }
   recurring_frame_timer_set(&_timer, _on_spaceship_bullet_update, NULL, milliseconds_as_duration(UPDATE_RATE_MILLISECOND));
   recurring_frame_timer_set(&_enemy_bullet_update_timer, _on_enemy_bullet_update, NULL, milliseconds_as_duration(UPDATE_RATE_ENEMY_BULLER_MILLISECOND));
-  recurring_frame_timer_set(&_enemy_fire_timer, _on_enemy_fire_timer, NULL, seconds_as_duration(ENEMY_FIRE_RATE_SECOND));
+  recurring_frame_timer_set(&_enemy_fire_timer, _on_enemy_fire_timer, NULL, milliseconds_as_duration(ENEMY_FIRE_RATE_MILLISECOND));
 }
 
 
@@ -122,8 +146,9 @@ void bullet_component_setup(void) {
   for (int i = 0; i < BULLET_ALL_MAX; i++) {
     EntityId entity_id = entity_system_create_entity();
     struct BulletComponent* bullet = SLICE__BulletComponent__get(&_bullet_components, i);
-    bullet->active = false;
     bullet->entity_id = entity_id;
+		bullet->state = BULLET_STATE_MOVING;
+    bullet->active = false;
 		if (_is_spaceship_bullet_by_bullet_index(i)) {
       sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
       faction_component_set(entity_id, FACTION_ID_PLAYER);
@@ -151,7 +176,9 @@ void bullet_component_fire(struct Vector bullet_position) {
     return;  // Already fired the max number of bullets.
   }
   _activate(bullet);
+	bullet_position.y -= 2;  // Move the bullet to the noze of the spaceship.
   entity_system_set_coordinates(bullet->entity_id, bullet_position);
+	sprite_component_setup(bullet->entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
 }
 
 
@@ -169,7 +196,9 @@ void bullet_component_fire_enemy(EntityId entity_id) {
     return;  // Already fired the max number of bullets.
   }
   _activate(bullet);
-  entity_system_set_coordinates(bullet->entity_id, entity_system_get_coordinates(entity_id));
+	struct Vector v = entity_system_get_coordinates(entity_id);
+	v.y += 1;
+  entity_system_set_coordinates(bullet->entity_id, v);
 }
 
 

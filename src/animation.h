@@ -15,6 +15,7 @@
 #define ANIMATION_NAME_SPACESHIP "animation_spaceship.dat"
 #define ANIMATION_NAME_ALIEN "animation_alien.dat"
 #define ANIMATION_NAME_ALIEN_SQUID "animation_alien_squid.dat"
+#define ANIMATION_NAME_BULLET_EXPLOSION "animation_bullet_explosion.dat"
 
 
 void animation_init(void);

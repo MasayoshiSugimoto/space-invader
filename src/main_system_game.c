@@ -1,7 +1,7 @@
 #include "main_system_game.h"
 
 
-const struct EntityData _entity_datas[] = {
+static const struct EntityData _entity_datas[] = {
     {
         .coordinates = {37, 18}, 
         .active = true, 

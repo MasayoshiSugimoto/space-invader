@@ -21,6 +21,7 @@
 #define SPRITE_LOADER_FILE_NAME_EXPLOSION_2 "explosion_2.dat"
 #define SPRITE_LOADER_FILE_NAME_EXPLOSION_3 "explosion_3.dat"
 #define SPRITE_LOADER_FILE_NAME_GAME_OVER "game_over.dat"
+#define SPRITE_LOADER_FILE_NAME_BULLET_EXPLOSION "bullet_explosion.dat"
 
 #define SPRITE_LOADER_SPRITE_SET_LEVEL_1 "level_1.dat"
 

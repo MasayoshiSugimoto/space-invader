@@ -102,7 +102,7 @@ void game_init(void) {
 
 
 void game_is_game_over_update_set(bool is_game_over_update) {
-  _game.is_game_over_update = true;
+  _game.is_game_over_update = is_game_over_update;
 }
 
 

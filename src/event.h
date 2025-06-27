@@ -17,6 +17,7 @@
 #include "arena.h"
 #include "color_loader.h"
 #include "space.h"
+#include "system_alien_test.h"
 
 
 void event_on_program_start(void);

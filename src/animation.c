@@ -1,8 +1,8 @@
 #include "animation.h"
 
 
-#define ANIMATION_ANIMATION_STEP_MAX 10
-#define ANIMATION_ANIMATION_MAX 4
+#define ANIMATION_ANIMATION_STEP_MAX 11
+#define ANIMATION_ANIMATION_MAX 5
 
 
 #define ANIMATION_ID_EXPLOSION "animation.explosion.dat"
@@ -31,7 +31,7 @@ static struct AnimationStep _animations_steps[ANIMATION_ANIMATION_STEP_MAX];
 static struct Animation _animations[ANIMATION_ANIMATION_MAX];
 
 
-const struct Animation* _animation_get(const char* animation_name) {
+struct Animation* _animation_get(const char* animation_name) {
   for (int i = 0; i < ANIMATION_ANIMATION_MAX; i++) {
     if (strcmp(_animations[i].animation_name, animation_name) == 0) return &_animations[i];
   }
@@ -92,6 +92,8 @@ void animation_setup(void) {
   _animations_steps[7].duration = milliseconds_as_duration(200);
   _animations_steps[8].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN_SQUID_2);
   _animations_steps[8].duration = milliseconds_as_duration(200);
+  _animations_steps[9].sprite_buffer = sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_BULLET_EXPLOSION);
+  _animations_steps[9].duration = milliseconds_as_duration(200);
   _animations[0].animation_name = ANIMATION_NAME_EXPLOSION;
   _animations[0].slice_animation_step.data = &_animations_steps[0];
   _animations[0].slice_animation_step.length = 3;
@@ -104,6 +106,9 @@ void animation_setup(void) {
   _animations[3].animation_name = ANIMATION_NAME_ALIEN_SQUID;
   _animations[3].slice_animation_step.data = &_animations_steps[7];
   _animations[3].slice_animation_step.length = 2;
+  _animations[4].animation_name = ANIMATION_NAME_BULLET_EXPLOSION;
+  _animations[4].slice_animation_step.data = &_animations_steps[9];
+  _animations[4].slice_animation_step.length = 1;
 }
 
 
