@@ -54,19 +54,20 @@ void event_on_frame_start(void) {
 
 
 void event_on_render_start(void) {
-    
+    if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) space_draw();
 }
 
 
 void event_on_render_end(void) {
     color_update();
-    if (TEST_MODE == TEST_MODE_GAME_MODE_SEQUENCE) space_draw();
     refresh();
 }
 
 
 void event_on_system_release(void) {
     log_info("Executing system release sequence.");
+		virtual_screen_render();
+		refresh();
     collision_manager_release();
     sprite_loader_release();
     virtual_screen_release();

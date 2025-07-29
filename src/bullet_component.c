@@ -153,7 +153,7 @@ void bullet_component_setup(void) {
       sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
       faction_component_set(entity_id, FACTION_ID_PLAYER);
 		} else if (_is_enemy_bullet_by_bullet_index(i)) {
-      sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_SPACESHIP_BULLET));
+      sprite_component_setup(entity_id, sprite_loader_sprite_get(SPRITE_LOADER_FILE_NAME_ALIEN_BULLET));
       faction_component_set(entity_id, FACTION_ID_ALIEN);
     }
     sprite_component_get(entity_id).window->z = BULLET_Z_COORDINATE;
