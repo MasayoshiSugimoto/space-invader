@@ -197,6 +197,7 @@ static void _on_collision(EntityId entity_id) {
         animation_start(entity_id);
         sprite_component_z_set(entity_id, 0);
         enemy_ai_basic_disable(entity_id);
+        if (entity_id == entity_spaceship_get_entity_id()) entity_spaceship_set_dead();
     }
 }
 

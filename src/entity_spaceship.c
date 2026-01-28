@@ -1,6 +1,9 @@
 #include "entity_spaceship.h"
 
 
+static bool _is_dead = false;
+
+
 void entity_spaceship_fire(void) {
   log_info("Entity spaceship fire event.");
   EntityId entity_id = entity_spaceship_get_entity_id();
@@ -22,6 +25,7 @@ EntityId entity_spaceship_get_entity_id(void) {
 
 
 void entity_spaceship_move_left(void) {
+  if (_is_dead) return;
   log_info("Entity spaceship move left event.");
   struct Vector dv = {-1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
@@ -34,6 +38,7 @@ void entity_spaceship_move_left(void) {
 
 
 void entity_spaceship_move_right(void) {
+  if (_is_dead) return;
   log_info("Entity spaceship move right event.");
   struct Vector dv = {1, 0};
   EntityId entity_id = entity_spaceship_get_entity_id();
@@ -42,4 +47,9 @@ void entity_spaceship_move_right(void) {
   if (!window_manager_window_is_inside_window_completely(sprite_component_window_get(entity_id), game_screen_get())) {
     sprite_component_position_set(entity_id, v);
   }
+}
+
+
+void entity_spaceship_set_dead(void) {
+  _is_dead = true;
 }
