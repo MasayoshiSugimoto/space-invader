@@ -11,7 +11,6 @@ struct Vector* _star_vectors;
 static struct SLICE__Vector _stars;
 static uint32_t _offset_dot_y;
 struct RecuringFrameTimer _timer_dot;
-bool _is_dead;
 
 
 uint32_t _screen_width_get(void) {
@@ -59,7 +58,6 @@ void space_init(void) {
     SLICE__Vector__init(&_dots);
     SLICE__Vector__init(&_stars);
     _offset_dot_y = 0;
-    _is_dead = false;
 }
 
 
